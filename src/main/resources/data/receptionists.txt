@@ -1,4 +1,4 @@
-staffId,staffName,password,phoneNumber,email,gender
+staff_id,staff_name,password,phone_number,email,gender
 STF001,Alice Johnson,Password1234,012-3456789,alicejohnson@gmail.com,Female
 STF002,Bob Smith,staff456,222-333-4444,bob.smith@example.com,Male
 STF003,Carol Williams,staff789,333-444-5555,carol.williams@example.com,Female
