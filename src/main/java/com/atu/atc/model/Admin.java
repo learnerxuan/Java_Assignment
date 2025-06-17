@@ -1,31 +1,29 @@
-// src/main/java/com/atu/atc/model/Admin.java
-// This class extends the abstract User class, demonstrating Inheritance.
-// It provides specific functionalities for an Admin user.
+// src/main/java/com/atu/atc/model/Admin.java (REVERTED/SIMPLIFIED FOR PHASE 2/3)
 
-package com.atu.atc.model; // This must match your package structure
+package com.atu.atc.model;
 
-import java.util.ArrayList; // Not directly used in this snippet but commonly needed
-import java.util.List;    // Not directly used in this snippet but commonly needed
+// IMPORTANT: Do NOT import AdminService here for now.
+// The AdminService and data layer are not ready yet.
 
 public class Admin extends User {
-    // Admin-specific attributes can be added here if needed (e.g., an admin ID number).
-    // For now, Admin doesn't have unique attributes beyond what User provides.
+    // Admin-specific attributes (if any)
+    // For now, no unique attributes beyond what User provides.
 
-    // Constructor for Admin. It calls the User class's constructor using 'super()'.
+    // No AdminService field needed here yet in Phase 2/3.
+    // private AdminService adminService;
+
+    // Constructor for Admin.
     public Admin(String username, String password) {
-        // "super" refers to the parent class (User). We pass the username, password,
-        // and explicitly set the role to "Admin".
         super(username, password, "Admin");
     }
 
-    // Implementation of the abstract login method from the User class.
-    // This demonstrates Polymorphism, as different user types will have their
-    // own login logic (though basic for now).
-    @Override // It's good practice to use @Override annotation for clarity
+    // No setter for AdminService needed yet.
+    // public void setAdminService(AdminService adminService) { ... }
+
+    @Override
     public boolean login(String enteredUsername, String enteredPassword) {
-        // Basic login check: username and password must match.
-        // In a real system, this would involve hashing passwords (see PasswordHasher in utils)
-        // and checking against stored data from a repository.
+        // This basic login check remains specific to the User model.
+        // AuthenticationService will orchestrate the full login process later.
         if (getUsername().equals(enteredUsername) && getPassword().equals(enteredPassword)) {
             System.out.println("Admin " + getUsername() + " logged in successfully.");
             return true;
@@ -35,48 +33,45 @@ public class Admin extends User {
         }
     }
 
-    // --- Admin-specific functionalities based on the assignment ---
+    // --- Admin-specific functionalities (TEMPORARILY SIMPLIFIED/PLACEHOLDER) ---
+    // These methods will just print a message for now.
+    // They will be updated later in Phase 5 to delegate to AdminService.
 
-    // Example method: Register a new Tutor
-    // (Note: This method would interact with a TutorRepository in a full system)
-    public void registerTutor(Tutor tutor) {
-        System.out.println("Admin " + getUsername() + " is registering new tutor: " + tutor.getUsername());
-        // Placeholder for actual logic: Save this tutor object to a file via a repository.
+    public boolean registerTutor(String username, String password) {
+        System.out.println("Admin " + getUsername() + ": Attempting to register tutor " + username + " (logic not yet implemented).");
+        // Placeholder for future logic: This would eventually call AdminService.registerTutor
+        return false; // For now, assume failure
     }
 
-    // Example method: Delete a Tutor
-    // (Note: This method would interact with a TutorRepository)
-    public void deleteTutor(String tutorId) {
-        System.out.println("Admin " + getUsername() + " is deleting tutor with ID: " + tutorId);
-        // Placeholder for actual logic: Remove this tutor from your data storage.
+    public boolean deleteTutor(String username) {
+        System.out.println("Admin " + getUsername() + ": Attempting to delete tutor " + username + " (logic not yet implemented).");
+        return false;
     }
 
-    // Example method: Register a new Receptionist
-    // (Note: This method would interact with a ReceptionistRepository)
-    public void registerReceptionist(Receptionist receptionist) {
-        System.out.println("Admin " + getUsername() + " is registering new receptionist: " + receptionist.getUsername());
-        // Placeholder for actual logic: Save receptionist to file.
+    public boolean registerReceptionist(String username, String password) {
+        System.out.println("Admin " + getUsername() + ": Attempting to register receptionist " + username + " (logic not yet implemented).");
+        return false;
     }
 
-    // Example method: Delete a Receptionist
-    // (Note: This method would interact with a ReceptionistRepository)
-    public void deleteReceptionist(String receptionistId) {
-        System.out.println("Admin " + getUsername() + " is deleting receptionist with ID: " + receptionistId);
-        // Placeholder for actual logic: Remove receptionist from file.
+    public boolean deleteReceptionist(String username) {
+        System.out.println("Admin " + getUsername() + ": Attempting to delete receptionist " + username + " (logic not yet implemented).");
+        return false;
     }
 
-    // Example method: Assign a tutor to a subject/course
-    // (Requires Course and Tutor classes to be fully defined and repositories to manage them)
-    public void assignTutorToCourse(Tutor tutor, Course course) {
-        System.out.println("Admin " + getUsername() + " is assigning tutor " + tutor.getUsername() + " to course " + course.getSubjectName() + " (Level: " + course.getLevel() + ")");
-        // Placeholder for actual logic: Update tutor's assigned courses and course's assigned tutor in data storage.
+    public boolean assignTutorToCourse(String tutorUsername, String courseId) {
+        System.out.println("Admin " + getUsername() + ": Attempting to assign tutor " + tutorUsername + " to course " + courseId + " (logic not yet implemented).");
+        return false;
     }
 
-    // Example method: View monthly income report
-    // (Requires Payment and Enrollment data from repositories)
-    public void viewMonthlyIncomeReport(String level, String subject) {
-        System.out.println("Admin " + getUsername() + " is viewing monthly income report for level: " + level + ", subject: " + subject);
-        // Placeholder for actual logic: This would involve reading payment/enrollment data from files
-        // and calculating the total income for the specified level and subject.
+    public String viewMonthlyIncomeReport(String level, String subject) {
+        System.out.println("Admin " + getUsername() + ": Attempting to view report for " + level + ", " + subject + " (logic not yet implemented).");
+        return "Report: Not yet available.";
+    }
+
+    @Override
+    public void updateProfile(String newUsername, String newPassword) {
+        super.updateProfile(newUsername, newPassword); // Calls the base User method
+        System.out.println("Admin " + getUsername() + ": Profile updated locally (persistence not yet implemented).");
+        // Placeholder for future logic: This would eventually call AdminService.updateAdminProfile
     }
 }
