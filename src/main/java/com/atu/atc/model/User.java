@@ -7,7 +7,7 @@ package com.atu.atc.model; // This must match your package structure
 
 public abstract class User {
     // Attributes common to all users
-    private String username;
+    String username;
     private String password;
     private String role; // e.g., "Admin", "Receptionist", "Tutor", "Student"
 
