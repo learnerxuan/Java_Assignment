@@ -82,4 +82,15 @@ public class FileUtils {
     public static void writeAllLines(String FILE_PATH, List<String> lines) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    // Check if the ID exist
+    public static boolean idExists(String filePath, String idToCheck) {
+        List<String> lines = readLines(filePath);
+        for (String line : lines) {
+            if (line.startsWith(idToCheck + "|")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
