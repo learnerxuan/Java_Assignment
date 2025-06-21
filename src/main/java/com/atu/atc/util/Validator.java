@@ -25,13 +25,20 @@ public class Validator {
         return text.matches("\\d+"); // Accepts only whole number digits
     }
 
-    // Checks if the form is valid
+    // Validate form using method overloading
+    // Method 1: Accepts a String (e.g. "3")
     public static boolean isFormValid(String formText) {
         try {
-            int form = Integer.parseInt(formText);
-            return isFormValid(formText);
+            int level = Integer.parseInt(formText); // Convert String to int
+            return isFormValid(level); // Java sees int, calls Method 2 below
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    // Method 2: Accepts an int (e.g., 1, 2, 3, 4, 5)
+    // This method is run when int is passed
+    public static boolean isFormValid(int level) {
+        return level >= 1 && level <= 5;
     }
 }
