@@ -87,7 +87,7 @@ public class FileUtils {
     public static boolean idExists(String filePath, String idToCheck) {
         List<String> lines = readLines(filePath);
         for (String line : lines) {
-            if (line.startsWith(idToCheck + "|")) {
+            if (line.startsWith(idToCheck + ",")) {
                 return true;
             }
         }
