@@ -26,18 +26,6 @@ public class Student extends User {
         this.enrollments = new ArrayList<>();
     }
  
-    public Student(String studentID, String studentName, String password, String role, String contactNumber,
-                  String email, String gender, String schoolEnrollmentStatus, String level) {
-       super(studentID, password, role);
-       this.studentName = studentName;
-       this.contactNumber = contactNumber;
-       this.email = email;
-       this.gender = gender;
-       this.schoolEnrollmentStatus = schoolEnrollmentStatus;
-       this.level = level;
-       this.enrollments = new ArrayList<>();
-
-    }
     public String getStudentID(){
         return getUsername();
     }
