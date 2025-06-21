@@ -2,14 +2,14 @@
 package com.atu.atc.model;
 
 public class Tutor extends User {
-    public Tutor(String username, String password, String fullName, String phoneNumber, String email, String gender) {
-        super(username, password, "Student", fullName, phoneNumber, email, gender);;
+    public Tutor(String id, String password, String fullName, String phoneNumber, String email, String gender) {
+        super(id, password, "Student", fullName, phoneNumber, email, gender);;
     }
 
     @Override
-    public boolean login(String enteredUsername, String enteredPassword) {
+    public boolean login(String enteredId, String enteredPassword) {
         // Basic login for now
-        return getUsername().equals(enteredUsername) && getPassword().equals(enteredPassword);
+        return getId().equals(enteredId) && getPassword().equals(enteredPassword);
     }
 
     // Placeholder for Tutor-specific methods

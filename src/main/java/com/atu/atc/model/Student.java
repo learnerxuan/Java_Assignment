@@ -106,12 +106,12 @@ public class Student extends User {
         
 
     @Override
-    public boolean login(String enteredUsername, String enteredPassword) {
-        return this.getUsername().equals(username) && getPassword().equals(enteredPassword);
+    public boolean login(String enteredId, String enteredPassword) {
+        return this.getId().equals(enteredId) && getPassword().equals(enteredPassword);
     }
 
     public String toFileString() {
-        return getUsername() + "," + 
+        return getId() + "," +
                fullName + "," +
                getPassword() + "," + 
                getRole() + "," +     

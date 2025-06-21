@@ -4,21 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Added common attributes to user class">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Make changes to the code that is involved with User class and its corresponding subclasses">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Enrollment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Payment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/data/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/data/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Admin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Receptionist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Receptionist.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Student.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Tutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Tutor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/util/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/util/Validator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -39,6 +45,9 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2yo4hxsYIz5efrUD9msB06bVDIi" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -50,7 +59,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/henge/OneDrive - Asia Pacific University/Object Oriented Programming/OOP Assignment/Java_Assignment",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie"
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java"
   }
 }]]></component>
   <component name="RunManager">
@@ -82,11 +91,20 @@
       <option name="project" value="LOCAL" />
       <updated>1750489137125</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Make changes to the code that is involved with User class and its corresponding subclasses">
+      <option name="closed" value="true" />
+      <created>1750491376810</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1750491376810</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added common attributes to user class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added common attributes to user class" />
+    <MESSAGE value="Make changes to the code that is involved with User class and its corresponding subclasses" />
+    <option name="LAST_COMMIT_MESSAGE" value="Make changes to the code that is involved with User class and its corresponding subclasses" />
   </component>
 </project>

@@ -2,20 +2,29 @@
 package com.atu.atc.model;
 
 public class Receptionist extends User {
-    public Receptionist(String username, String password, String fullName, String phoneNumber, String email, String gender) {
-        super(username, password, "Receptionist", fullName, phoneNumber, email, gender);
+    public Receptionist(String id, String password, String fullName, String phoneNumber, String email, String gender) {
+        super(id, password, "Receptionist", fullName, phoneNumber, email, gender);
     }
 
     @Override
-    public boolean login(String enteredUsername, String enteredPassword) {
+    public boolean login(String enteredId, String enteredPassword) {
         // Basic login for now
-        return getUsername().equals(enteredUsername) && getPassword().equals(enteredPassword);
+        return getId().equals(enteredId) && getPassword().equals(enteredPassword);
     }
 
-    // Placeholder for Receptionist-specific methods
+    // Register new student
     public void registerStudent() {
         
     }
+
+    public void updateEnrollment(){}
+
     public void acceptPayment() { /* ... */ }
     // Add all methods from your assignment description for Receptionist
+
+    public void deleteStudent(){}
+
+    // No need update profile override since it's the same
+
 }
+
