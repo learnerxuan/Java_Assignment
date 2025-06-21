@@ -10,12 +10,21 @@ public abstract class User {
     String username;
     private String password;
     private String role; // e.g., "Admin", "Receptionist", "Tutor", "Student"
+    private String fullName;
+    private String phoneNumber;
+    private String email;
+    private String gender;
+
 
     // Constructor to initialize a User object
-    public User(String username, String password, String role) {
+    public User(String username, String password, String role, String fullName, String phoneNumber, String email, String gender) {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.gender = gender;
     }
 
     // --- Getters ---
@@ -29,6 +38,22 @@ public abstract class User {
 
     public String getRole() {
         return role;
+    }
+
+    public String getFullName(){
+        return fullName;
+    }
+
+    public String getPhoneNumber(){
+        return phoneNumber;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public String getGender(){
+        return gender;
     }
 
     // --- Setters ---
@@ -47,6 +72,22 @@ public abstract class User {
     // we'll allow setting.
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     // --- Common User Behaviors (Methods) ---

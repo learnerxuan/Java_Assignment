@@ -3,7 +3,7 @@ package com.atu.atc.model;
 
 public class Tutor extends User {
     public Tutor(String username, String password) {
-        super(username, password, "Tutor");
+        super(id, password, "Student", fullName, phone, email, gender);;
     }
 
     @Override
