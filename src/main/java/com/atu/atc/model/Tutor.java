@@ -2,8 +2,8 @@
 package com.atu.atc.model;
 
 public class Tutor extends User {
-    public Tutor(String username, String password) {
-        super(id, password, "Student", fullName, phone, email, gender);;
+    public Tutor(String username, String password, String fullName, String phoneNumber, String email, String gender) {
+        super(username, password, "Student", fullName, phoneNumber, email, gender);;
     }
 
     @Override

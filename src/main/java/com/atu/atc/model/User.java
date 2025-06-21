@@ -40,19 +40,19 @@ public abstract class User {
         return role;
     }
 
-    public String getFullName(){
+    public String getFullName() {
         return fullName;
     }
 
-    public String getPhoneNumber(){
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public String getGender(){
+    public String getGender() {
         return gender;
     }
 
@@ -101,15 +101,25 @@ public abstract class User {
     // For simplicity, this example just prints a message. In a real system,
     // it would allow changing attributes like username, password, etc.
     // This demonstrates Encapsulation by allowing controlled modification of object state.
-    public void updateProfile(String newUsername, String newPassword) {
+    public void updateProfile(String newUsername, String newPassword, String newFullName,
+                              String newPhoneNumber, String newEmail, String newGender) {
         this.username = newUsername;
         this.password = newPassword;
+        this.fullName = newFullName;
+        this.phoneNumber = newPhoneNumber;
+        this.email = newEmail;
+        this.gender = newGender;
+
         System.out.println(this.role + " profile updated for " + this.username);
     }
 
     // A simple method to display user details (common to all users)
     public void displayUserDetails() {
         System.out.println("Username: " + username);
+        System.out.println("Full Name: " + fullName);
+        System.out.println("Phone Number: " + phoneNumber);
+        System.out.println("Email: " + email);
+        System.out.println("Gender: " + gender);
         System.out.println("Role: " + role);
         // Note: We don't display password for security reasons
     }

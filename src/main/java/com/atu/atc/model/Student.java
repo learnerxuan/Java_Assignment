@@ -19,7 +19,7 @@ public class Student extends User {
     public Student(String studentId, String password, String fullName, String phoneNumber,
                    String email, String gender, String icPassport, String address,
                    LocalDate monthOfEnroll, int level) {
-        super(studentId, password, "Student"); // Inherited from User
+        super(studentId, password, "Student", fullName, phoneNumber, email, gender); // Inherited from User
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.email = email;

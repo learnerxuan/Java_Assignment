@@ -24,14 +24,14 @@ public class Validator {
         if(text == null || text.isEmpty()) return false;
         return text.matches("\\d+"); // Accepts only whole number digits
     }
-    
-    // Check is the form is valid
-    public static boolean isFormValid(String form){
-        if (form == null) return false;
-        return form.equalsIgnoreCase("Form 1") ||
-               form.equalsIgnoreCase("Form 2") ||
-               form.equalsIgnoreCase("Form 3") ||
-               form.equalsIgnoreCase("Form 4") ||
-               form.equalsIgnoreCase("Form 5");
+
+    // Checks if the form is valid
+    public static boolean isFormValid(String formText) {
+        try {
+            int form = Integer.parseInt(formText);
+            return isFormValid(formText);
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }

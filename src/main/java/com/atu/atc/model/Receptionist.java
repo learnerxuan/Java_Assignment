@@ -2,8 +2,8 @@
 package com.atu.atc.model;
 
 public class Receptionist extends User {
-    public Receptionist(String username, String password) {
-        super(username, password, "Receptionist");
+    public Receptionist(String username, String password, String fullName, String phoneNumber, String email, String gender) {
+        super(username, password, "Receptionist", fullName, phoneNumber, email, gender);
     }
 
     @Override

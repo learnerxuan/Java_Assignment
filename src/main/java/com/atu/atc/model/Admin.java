@@ -13,8 +13,8 @@ public class Admin extends User {
     // private AdminService adminService;
 
     // Constructor for Admin.
-    public Admin(String username, String password) {
-        super(username, password, "Admin");
+    public Admin(String username, String password,  String fullName, String phoneNumber, String email, String gender) {
+        super(username, password, "Admin", fullName, phoneNumber, email, gender);
     }
 
     // No setter for AdminService needed yet.
@@ -69,8 +69,9 @@ public class Admin extends User {
     }
 
     @Override
-    public void updateProfile(String newUsername, String newPassword) {
-        super.updateProfile(newUsername, newPassword); // Calls the base User method
+    public void updateProfile(String newUsername, String newPassword, String newFullName,
+                              String newPhoneNumber, String newEmail, String newGender) {
+        super.updateProfile(newUsername, newPassword, newFullName, newPhoneNumber, newEmail, newGender); // Calls the base User method
         System.out.println("Admin " + getUsername() + ": Profile updated locally (persistence not yet implemented).");
         // Placeholder for future logic: This would eventually call AdminService.updateAdminProfile
     }
