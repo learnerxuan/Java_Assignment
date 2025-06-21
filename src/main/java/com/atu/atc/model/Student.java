@@ -3,60 +3,73 @@ package com.atu.atc.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class Student extends User {
-    private String studentName;
-    private String contactNumber;
+    private String fullName;
+    private String phoneNumber;
     private String email;
     private String gender;
-    private String schoolEnrollmentStatus;
-    private String level;
-    
-    private List<Enrollment> enrollments;
-    
-    public Student(String studentID, String studentName, String password, String contactNumber,
-                   String email, String gender, String schoolEnrollmentStatus, String level) {
-        super(studentID, password, "Student");
-        this.studentName = studentName;
-        this.contactNumber = contactNumber;
+    private final String icPassport;
+    private String address;
+    private final LocalDate monthOfEnroll;
+    private int level;
+
+    // Constructor
+    public Student(String studentId, String password, String fullName, String phoneNumber,
+                   String email, String gender, String icPassport, String address,
+                   LocalDate monthOfEnroll, int level) {
+        super(studentId, password, "Student"); // Inherited from User
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
         this.email = email;
         this.gender = gender;
-        this.schoolEnrollmentStatus = schoolEnrollmentStatus;
+        this.icPassport = icPassport;
+        this.address = address;
+        this.monthOfEnroll = monthOfEnroll;
         this.level = level;
-        this.enrollments = new ArrayList<>();
     }
- 
-    public String getStudentID(){
-        return getUsername();
+
+    // --- Getters ---
+    public String getFullName() {
+        return fullName;
     }
-    public String getStudentName(){
-        return studentName;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
-    public String getContactNumber(){
-        return contactNumber;
-    }
-    public String getEmail(){
+
+    public String getEmail() {
         return email;
     }
-    public String getGender(){
+
+    public String getGender() {
         return gender;
     }
-    public String getSchoolEnrollmentStatus(){
-        return schoolEnrollmentStatus;
+
+    public String getIcPassport() {
+        return icPassport;
     }
-    public String getLevel(){
+
+    public String getAddress() {
+        return address;
+    }
+
+    public LocalDate getMonthOfEnroll() {
+        return monthOfEnroll;
+    }
+
+    public int getLevel() {
         return level;
     }
-    public List<Enrollment> getEnrollments(){
-        return enrollments;
+
+    // --- Setters (For editable fields) ---
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
-    
-    public void setStudentName(String studentName){
-        this.studentName = studentName;
-    }
-    
-        public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setEmail(String email) {
@@ -67,17 +80,14 @@ public class Student extends User {
         this.gender = gender;
     }
 
-    public void setSchoolEnrollmentStatus(String schoolEnrollmentStatus) {
-        this.schoolEnrollmentStatus = schoolEnrollmentStatus;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
     }
-
-    public void setEnrollments(List<Enrollment> enrollments){
-        this.enrollments = enrollments;
-    } 
+    
     public void viewClassSchedule() {
         System.out.println("Viewing class schedule...");
     }
@@ -102,19 +112,13 @@ public class Student extends User {
 
     public String toFileString() {
         return getUsername() + "," + 
-               studentName + "," +
+               fullName + "," +
                getPassword() + "," + 
                getRole() + "," +     
-               contactNumber + "," +
+               phoneNumber + "," +
                email + "," +
                gender + "," +
-               schoolEnrollmentStatus + "," +
+               "," +
                level;
-    }
-
-    private static class Enrollment {
-
-        public Enrollment() {
-        }
     }
 }
