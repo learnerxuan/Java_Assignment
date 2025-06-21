@@ -1,12 +1,12 @@
 subject_Id,subject_Name,tutor_Id,level
-SB001,Mathematics,T001 T004,Form 1
-SB002,Science,T002 T001,Form 2
-SB003,English,T003 T005,Form 3
-SB004,History,T004 T010,Form 4
-SB005,Biology,T005 T007,Form 5
-SB006,Physics,T006 T008,Form 4
-SB007,Chemistry,T007 T009,Form 5
-SB008,Geography,T008 T003,Form 2
-SB009,Computer Science,T009 T004,Form 3
-SB010,Additional Mathematics,T010 T006,Form 5
+SB001,Mathematics,T001 T004,1
+SB002,Science,T002 T001,2
+SB003,English,T003 T005,3
+SB004,History,T004 T010,4
+SB005,Biology,T005 T007,5
+SB006,Physics,T006 T008,4
+SB007,Chemistry,T007 T009,5
+SB008,Geography,T008 T003,2
+SB009,Computer Science,T009 T004,3
+SB010,Additional Mathematics,T010 T006,5
 

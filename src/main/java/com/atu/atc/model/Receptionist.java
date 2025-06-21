@@ -13,7 +13,9 @@ public class Receptionist extends User {
     }
 
     // Placeholder for Receptionist-specific methods
-    public void registerStudent() { /* ... */ }
+    public void registerStudent() {
+        
+    }
     public void acceptPayment() { /* ... */ }
     // Add all methods from your assignment description for Receptionist
 }
