@@ -1,11 +1,11 @@
-staff_id,staff_name,password,phone_number,email,gender
-STF001,Alice Johnson,Password1234,012-3456789,alicejohnson@gmail.com,Female
-STF002,Bob Smith,staff456,222-333-4444,bob.smith@example.com,Male
-STF003,Carol Williams,staff789,333-444-5555,carol.williams@example.com,Female
-STF004,David Brown,staff2023,444-555-6666,david.brown@example.com,Male
-STF005,Eva Davis,staffPass,555-666-7777,eva.davis@example.com,Female
-STF006,Frank Wilson,staff101,666-777-8888,frank.wilson@example.com,Male
-STF007,Grace Lee,staffSafe,777-888-9999,grace.lee@example.com,Female
-STF008,Henry Miller,staffKey,888-999-0000,henry.miller@example.com,Male
-STF009,Irene Taylor,staffStrong,999-000-1111,irene.taylor@example.com,Female
-STF010,Jack Anderson,staffSecure,000-111-2222,jack.anderson@example.com,Male
+receptionist_id,receptionist_name,password,phone_number,email,gender
+R001,Alice Johnson,Password1234,012-3456789,alicejohnson@gmail.com,Female
+R002,Bob Smith,staff456,222-333-4444,bob.smith@example.com,Male
+R003,Carol Williams,staff789,333-444-5555,carol.williams@example.com,Female
+R004,David Brown,staff2023,444-555-6666,david.brown@example.com,Male
+R005,Eva Davis,staffPass,555-666-7777,eva.davis@example.com,Female
+R006,Frank Wilson,staff101,666-777-8888,frank.wilson@example.com,Male
+R007,Grace Lee,staffSafe,777-888-9999,grace.lee@example.com,Female
+R008,Henry Miller,staffKey,888-999-0000,henry.miller@example.com,Male
+R009,Irene Taylor,staffStrong,999-000-1111,irene.taylor@example.com,Female
+R010,Jack Anderson,staffSecure,000-111-2222,jack.anderson@example.com,Male

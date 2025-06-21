@@ -17,6 +17,11 @@ public class Receptionist extends User {
         
     }
 
+    public void enrollStudentInSubject(String studentId, String classId){
+        // Placeholder only
+        System.out.println("Enrolling student " + studentId + " into class " + classId);
+    }
+
     public void updateEnrollment(){}
 
     public void acceptPayment() { /* ... */ }
@@ -26,5 +31,9 @@ public class Receptionist extends User {
 
     // No need update profile override since it's the same
 
+    public String toFileString(){
+        return getId() + "," + getFullName() + "," + getPassword() + "," +
+                getPhoneNumber() + "," + getEmail() + "," + getGender();
+    }
 }
 

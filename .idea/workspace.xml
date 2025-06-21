@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Make changes to the code that is involved with User class and its corresponding subclasses">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Enrollment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Payment.java" afterDir="false" />
+    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="changed username to id">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Enrollment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Enrollment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Receptionist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Receptionist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Tutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Tutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,12 +94,32 @@
       <option name="project" value="LOCAL" />
       <updated>1750491376810</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="changed username to id">
+      <option name="closed" value="true" />
+      <created>1750494210364</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1750494210364</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added common attributes to user class" />
     <MESSAGE value="Make changes to the code that is involved with User class and its corresponding subclasses" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make changes to the code that is involved with User class and its corresponding subclasses" />
+    <MESSAGE value="changed username to id" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed username to id" />
   </component>
 </project>
