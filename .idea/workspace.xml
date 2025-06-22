@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="finished EnrollmentRepository">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/data/PaymentRepository.java" afterDir="false" />
-    </list>
+    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="finished PaymentRepository" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -172,7 +170,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750592181572</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="finished PaymentRepository">
+      <option name="closed" value="true" />
+      <created>1750592790112</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1750592790112</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -196,6 +202,7 @@
     <MESSAGE value="ReceptionistRepository finsihed" />
     <MESSAGE value="updated receptionist class" />
     <MESSAGE value="finished EnrollmentRepository" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished EnrollmentRepository" />
+    <MESSAGE value="finished PaymentRepository" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished PaymentRepository" />
   </component>
 </project>
