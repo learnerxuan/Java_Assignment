@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="ReceptionistRepository finsihed">
+    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="updated receptionist class">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/data/EnrollmentRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/enrolments.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data/enrolments.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750586689833</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="updated receptionist class">
+      <option name="closed" value="true" />
+      <created>1750590280273</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1750590280273</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -179,6 +187,7 @@
     <MESSAGE value="good" />
     <MESSAGE value="Renewed UserRepository.java" />
     <MESSAGE value="ReceptionistRepository finsihed" />
-    <option name="LAST_COMMIT_MESSAGE" value="ReceptionistRepository finsihed" />
+    <MESSAGE value="updated receptionist class" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated receptionist class" />
   </component>
 </project>
