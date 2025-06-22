@@ -5,8 +5,6 @@ package com.atu.atc.data;
  */
 
 import com.atu.atc.model.User;
-import com.atu.atc.util.FileUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
