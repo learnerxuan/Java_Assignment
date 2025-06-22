@@ -74,12 +74,4 @@ public class FileUtils {
 //        
 //        boolean writeSuccess = writeLines(testFilePath, linesToWrite);
 //    }
-
-    public static List<String> readAllLines(String FILE_PATH) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public static void writeAllLines(String FILE_PATH, List<String> lines) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
