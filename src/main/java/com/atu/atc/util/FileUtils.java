@@ -36,7 +36,13 @@ public class FileUtils {
         
         return lines;
     }
-    
+
+    // Reads all lines except the header
+    public static List<String> readDataLines(String file_path) {
+        List<String> lines = readLines(file_path);
+        return lines.size() > 1 ? lines.subList(1, lines.size()) : new ArrayList<>();
+    }
+
     // Write lines for a specific file, return True if success, False if failure.
     public static boolean writeLines(String filePath, List<String> lines) {
         

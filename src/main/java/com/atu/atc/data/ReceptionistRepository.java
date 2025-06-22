@@ -16,7 +16,7 @@ public class ReceptionistRepository extends UserRepository<Receptionist> {
     @Override
     public void load(){
         users.clear();
-        List<String> lines = FileUtils.readLines(FILE_PATH);
+        List<String> lines = FileUtils.readDataLines(FILE_PATH);
         for (String line : lines){
             String[] parts = line.split(",", -1); // -1: Include trailing empty string
             if (parts.length == 6) {

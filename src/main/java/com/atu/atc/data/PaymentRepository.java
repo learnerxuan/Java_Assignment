@@ -17,7 +17,7 @@ public class PaymentRepository {
 
     public void load(){
         payments.clear();
-        List<String> lines = FileUtils.readLines(FILE_PATH);
+        List<String> lines = FileUtils.readDataLines(FILE_PATH);
 
         for (String line : lines){
             String[] parts = line.split(",", -1);
