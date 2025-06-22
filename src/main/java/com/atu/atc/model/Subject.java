@@ -9,7 +9,7 @@ public class Subject {
     public Subject(String subjectId, String name, String tutorId, String level) {
         this.subjectId = subjectId;
         this.name = name;
-        this.tutorId = tutorId
+        this.tutorId = tutorId;
         this.level = level;
     }
 
