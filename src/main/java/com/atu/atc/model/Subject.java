@@ -50,7 +50,7 @@ public class Subject {
         return "Subject{" +
                "subjectId='" + subjectId + '\'' +
                ", name='" + name + '\'' +
-               ", tutorIds=" + tutorIds + // List will be printed nicely by default
+               ", tutorIds=" + tutorId + // List will be printed nicely by default
                ", level='" + level + '\'' +
                '}';
     }
