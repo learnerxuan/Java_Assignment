@@ -37,6 +37,7 @@ public class EnrollmentRepository {
     // Save all enrollments to file
     public void save(){
         List<String> lines = new ArrayList<>();
+        lines.add("course_enrollment_id,class_id,student_id");
         for (Enrollment e : enrollments){
             lines.add(e.toFileString());
         }

@@ -38,6 +38,7 @@ public class ReceptionistRepository extends UserRepository<Receptionist> {
     @Override
     public void save(){
         List<String> lines = new ArrayList<>();
+        lines.add("receptionist_id,receptionist_name,password,phone_number,email,gender");
         for (Receptionist r : users){
             lines.add(r.toFileString());
         }

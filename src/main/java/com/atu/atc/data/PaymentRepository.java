@@ -40,6 +40,8 @@ public class PaymentRepository {
 
     public void save() {
         List<String> lines = new ArrayList<>();
+        // Add header manually
+        lines.add("payment_id,student_id,amount,date,payment_method,status,receptionist_id");
         for (Payment p : payments) {
             lines.add(p.toFileString());
         }
