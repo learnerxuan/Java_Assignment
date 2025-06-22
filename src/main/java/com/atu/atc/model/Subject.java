@@ -34,7 +34,7 @@ public class Subject {
     }
 
     public void setTutorId(String tutorId) {
-        this.tutorId = tutorId
+        this.tutorId = tutorId;
     }
 
     public String getLevel() {
