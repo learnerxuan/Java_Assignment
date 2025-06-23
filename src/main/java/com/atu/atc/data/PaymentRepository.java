@@ -13,6 +13,7 @@ import java.util.List;
 
 public class PaymentRepository {
     private static final String FILE_PATH = "data/payments.txt";
+    private static final String HEADER = "payment_id,student_id,amount,date,payment_method,status,receptionist_id";
     private List<Payment> payments = new ArrayList<>();
 
     public void load(){
@@ -41,7 +42,7 @@ public class PaymentRepository {
     public void save() {
         List<String> lines = new ArrayList<>();
         // Add header manually
-        lines.add("payment_id,student_id,amount,date,payment_method,status,receptionist_id");
+        lines.add(HEADER);
         for (Payment p : payments) {
             lines.add(p.toFileString());
         }

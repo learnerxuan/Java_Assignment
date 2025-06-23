@@ -12,6 +12,7 @@ import java.util.List;
 
 public class ReceptionistRepository extends UserRepository<Receptionist> {
     private static final String FILE_PATH = "data/receptionist.txt";
+    private static final String HEADER = "receptionist_id,receptionist_name,password,phone_number,email,gender";
 
     @Override
     public void load(){
@@ -38,7 +39,7 @@ public class ReceptionistRepository extends UserRepository<Receptionist> {
     @Override
     public void save(){
         List<String> lines = new ArrayList<>();
-        lines.add("receptionist_id,receptionist_name,password,phone_number,email,gender");
+        lines.add(HEADER);
         for (Receptionist r : users){
             lines.add(r.toFileString());
         }

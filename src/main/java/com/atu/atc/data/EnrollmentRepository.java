@@ -12,6 +12,7 @@ import java.util.List;
 
 public class EnrollmentRepository {
     private static final String FILE_PATH = "data/enrollments.txt";
+    private static final String HEADER = "course_enrollment_id,class_id,student_id";
     private List<Enrollment> enrollments = new ArrayList<>();
 
     // Load all enrollments from file
@@ -37,7 +38,7 @@ public class EnrollmentRepository {
     // Save all enrollments to file
     public void save(){
         List<String> lines = new ArrayList<>();
-        lines.add("course_enrollment_id,class_id,student_id");
+        lines.add(HEADER);
         for (Enrollment e : enrollments){
             lines.add(e.toFileString());
         }
