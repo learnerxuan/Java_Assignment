@@ -40,18 +40,8 @@ public class Admin extends User {
         // Placeholder for future logic: This would eventually call AdminService.updateAdminProfile
     }
     
-    @Override
-    public String toString() {
-        // You can choose to call super.toString() if User has a good toString(),
-        // or manually include the inherited attributes using their getters.
-        return "Admin{" +
-               "id='" + getId() + '\'' +
-               ", role='" + getRole() + '\'' +
-               ", fullName='" + getFullName() + '\'' +
-               ", phoneNumber='" + getPhoneNumber() + '\'' +
-               ", email='" + getEmail() + '\'' +
-               ", gender='" + getGender() + '\'' +
-               // Note: Password is intentionally excluded for security when printing.
-               '}';
+    public String toFileString(){
+        return getId() + "," + getFullName() + "," + getPassword() + "," +
+                getPhoneNumber() + "," + getEmail() + "," + getGender();
     }
 }
