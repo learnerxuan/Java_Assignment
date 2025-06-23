@@ -11,6 +11,7 @@ public class DataSaver {
     private final EnrollmentRepository enrollmentRepo;
     private final PaymentRepository paymentRepo;
     private final RequestRepository requestRepo;
+    private final AdminRepository adminRepo;
 
     public DataSaver(StudentRepository studentRepo,
                      ReceptionistRepository receptionistRepo,
@@ -18,7 +19,8 @@ public class DataSaver {
                      CourseRepository courseRepo,
                      EnrollmentRepository enrollmentRepo,
                      PaymentRepository paymentRepo,
-                     RequestRepository requestRepo) {
+                     RequestRepository requestRepo,
+                     AdminRepository adminRepo) {
         this.studentRepo = studentRepo;
         this.receptionistRepo = receptionistRepo;
         this.tutorRepo = tutorRepo;
@@ -26,6 +28,7 @@ public class DataSaver {
         this.enrollmentRepo = enrollmentRepo;
         this.paymentRepo = paymentRepo;
         this.requestRepo = requestRepo;
+        this.adminRepo = adminRepo;
     }
 
     public void saveAllData() {
@@ -36,6 +39,7 @@ public class DataSaver {
         enrollmentRepo.save();
         paymentRepo.save();
         requestRepo.save();
+        adminRepo.save();
         System.out.println("All data saved.");
     }
 }
