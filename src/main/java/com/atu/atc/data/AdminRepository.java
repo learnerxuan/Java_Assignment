@@ -43,7 +43,7 @@ public class AdminRepository extends UserRepository<Admin>{
                     String gender = parts[5].trim();
                     
                     // Create a new Admin object 
-                    Admin admin = new Admin(id, fullName, password, phoneNumber, email, gender);
+                    Admin admin = new Admin(id, password, fullName, phoneNumber, email, gender);
                     
                     users.add(admin);
                     
