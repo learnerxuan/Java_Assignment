@@ -41,7 +41,23 @@ public class Admin extends User {
     }
     
     public String toFileString(){
-        return getId() + "," + getFullName() + "," + getPassword() + "," +
-                getPhoneNumber() + "," + getEmail() + "," + getGender();
+        return getId() + "," +        
+               getPassword() + "," +  
+               getFullName() + "," +  
+               getPhoneNumber() + "," +
+               getEmail() + "," +
+               getGender();
+    }
+    
+    @Override
+    public String toString() {
+        return "Admin{" +
+               "id='" + getId() + '\'' +
+               ", role='" + getRole() + '\'' +
+               ", fullName='" + getFullName() + '\'' +
+               ", phoneNumber='" + getPhoneNumber() + '\'' +
+               ", email='" + getEmail() + '\'' +
+               ", gender='" + getGender() + '\'' +
+               '}';
     }
 }
