@@ -7,7 +7,7 @@ public class DataLoader {
     private final StudentRepository studentRepo;
     private final ReceptionistRepository receptionistRepo;
     private final TutorRepository tutorRepo;
-    private final CourseRepository courseRepo;
+    private final ClassesRepository classRepo;
     private final EnrollmentRepository enrollmentRepo;
     private final PaymentRepository paymentRepo;
     private final RequestRepository requestRepo;
@@ -16,7 +16,7 @@ public class DataLoader {
     public DataLoader(StudentRepository studentRepo,
                       ReceptionistRepository receptionistRepo,
                       TutorRepository tutorRepo,
-                      CourseRepository courseRepo,
+                      ClassesRepository classRepo,
                       EnrollmentRepository enrollmentRepo,
                       PaymentRepository paymentRepo,
                       RequestRepository requestRepo,
@@ -24,7 +24,7 @@ public class DataLoader {
         this.studentRepo = studentRepo;
         this.receptionistRepo = receptionistRepo;
         this.tutorRepo = tutorRepo;
-        this.courseRepo = courseRepo;
+        this.classRepo = classRepo;
         this.enrollmentRepo = enrollmentRepo;
         this.paymentRepo = paymentRepo;
         this.requestRepo = requestRepo;
@@ -35,7 +35,7 @@ public class DataLoader {
         studentRepo.load();
         receptionistRepo.load();
         tutorRepo.load();
-        courseRepo.load();
+        classRepo.load();
         enrollmentRepo.load();
         paymentRepo.load();
         requestRepo.load();
