@@ -83,4 +83,9 @@ public class Classes {
                ", endTime='" + endTime + '\'' +
                '}';
     }
+    
+    public String toFileString() {
+        return classId + "," + subjectId + "," + tutorId + "," + day + "," +
+                startTime + "," + endTime;
+    }
 }
