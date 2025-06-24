@@ -1,42 +1,42 @@
 // src/main/java/com/atu/atc/model/Student.java
 package com.atu.atc.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.time.LocalDate;
-
 public class Student extends User {
-    private String fullName;
-    private String phoneNumber;
+    
+    private String student_id;
+    private String student_name;
+    private String phone_number;
     private String email;
     private String gender;
     private final String icPassport;
     private String address;
-    private final LocalDate monthOfEnroll;
-    private int level;
+    private final String month_of_enroll;
+    private String level;
 
-    // Constructor
-    public Student(String studentId, String password, String fullName, String phoneNumber,
+    public Student(String student_id, String student_name, String password, String phone_number,
                    String email, String gender, String icPassport, String address,
-                   LocalDate monthOfEnroll, int level) {
-        super(studentId, password, "Student", fullName, phoneNumber, email, gender); // Inherited from User
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
+                   String month_of_enroll, String level) {
+        super(student_id, password, "Student", student_name, phone_number, email, gender);
+        this.student_name = student_name;
+        this.phone_number = phone_number;
         this.email = email;
         this.gender = gender;
         this.icPassport = icPassport;
         this.address = address;
-        this.monthOfEnroll = monthOfEnroll;
+        this.month_of_enroll = month_of_enroll;
         this.level = level;
     }
-
-    // --- Getters ---
-    public String getFullName() {
-        return fullName;
+//getters
+    public String getStudent_id() {
+        return student_id;
+    }
+    
+    public String getStudent_name() {
+        return student_name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone_number() {
+        return phone_number;
     }
 
     public String getEmail() {
@@ -55,21 +55,20 @@ public class Student extends User {
         return address;
     }
 
-    public LocalDate getMonthOfEnroll() {
-        return monthOfEnroll;
+    public String getMonthOfEnroll() {
+        return month_of_enroll;
     }
 
-    public int getLevel() {
+    public String getLevel() {
         return level;
     }
-
-    // --- Setters (For editable fields) ---
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+//setters
+    public void setStudent_name(String fullName) {
+        this.student_name = fullName;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone_number(String phoneNumber) {
+        this.phone_number = phoneNumber;
     }
 
     public void setEmail(String email) {
@@ -84,10 +83,10 @@ public class Student extends User {
         this.address = address;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(String level) {
         this.level = level;
     }
-    
+// std functions    
     public void viewClassSchedule() {
         System.out.println("Viewing class schedule...");
     }
@@ -111,14 +110,9 @@ public class Student extends User {
     }
 
     public String toFileString() {
-        return getId() + "," +
-               fullName + "," +
-               getPassword() + "," + 
-               getRole() + "," +     
-               phoneNumber + "," +
-               email + "," +
-               gender + "," +
-               "," +
+        return student_id + "," + student_name + "," + getPassword() + "," + 
+               phone_number + "," + email + "," + gender + "," + 
+               icPassport + "," + address + "," + month_of_enroll + "," +
                level;
     }
 }
