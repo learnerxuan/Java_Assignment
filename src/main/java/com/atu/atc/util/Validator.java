@@ -12,11 +12,23 @@ import java.util.regex.Pattern;
  */
 public class Validator {
     
+    private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile(
+        "^[0-9\\s\\-()]{7,20}$"
+    );
+    
     // Email validation using regex
     public static boolean isValidEmail(String email){
         if (email == null || email.isEmpty()) return false;
         String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         return Pattern.matches(regex, email);
+    }
+    
+    // Phone number validation
+    public static boolean isValidPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            return false;
+        }
+        return PHONE_NUMBER_PATTERN.matcher(phoneNumber).matches();
     }
     
     // Checks if a string is a numeric value
