@@ -13,62 +13,54 @@ import java.util.List;
  *
  * @author farris
  */
-public class StudentRepository {
+
+public class StudentRepository extends UserRepository<Student> {
     private static final String FILE_PATH = "data/students.txt";
     private static final String HEADER = "student_id,student_name,password,phone_number,email,gender,IC/Passport,address,month_of_enroll,level";
-    private List<Student> students = new ArrayList<>();
 
+    @Override
     public void load() {
-        students.clear();
-        List<String> lines = FileUtils.readDataLines(FILE_PATH);
-        
+        users.clear();
+        List<String> lines = FileUtils.readDataLines(FILE_PATH); // Skips header
+
         for (String line : lines) {
-            String[] parts = line.split(",", -1);
+            String[] parts = line.split(",", -1); // Keep empty fields
             if (parts.length == 10) {
-                String student_id = parts[0].trim();
-                String student_name = parts[1].trim();
+                String id = parts[0].trim();
+                String name = parts[1].trim();
                 String password = parts[2].trim();
-                String phone_number = parts[3].trim();
+                String phone = parts[3].trim();
                 String email = parts[4].trim();
                 String gender = parts[5].trim();
-                String icPassport = parts[6].trim();
+                String ic = parts[6].trim();
                 String address = parts[7].trim();
-                String month_of_enroll = parts[8].trim();
+                String monthOfEnroll = parts[8].trim();
                 String level = parts[9].trim();
 
-                Student s = new Student(student_id, student_name, password, phone_number, email, gender, icPassport, address, month_of_enroll, level);
-                students.add(s);
+                Student student = new Student(id, name, password, phone, email, gender, ic, address, monthOfEnroll, level);
+                users.add(student);
             } else {
-                System.err.println("Invalid.");
+                System.err.println("Invalid student data format: " + line);
             }
         }
-    }         
+    }
 
+    @Override
     public void save() {
         List<String> lines = new ArrayList<>();
         lines.add(HEADER);
-        for (Student s : students) {
+        for (Student s : users) {
             lines.add(s.toFileString());
         }
         FileUtils.writeLines(FILE_PATH, lines);
     }
-    
-        public void add(Student student) {
-        students.add(student);
-        save();
-    }
-        
-    public List<Student> getAll() {
-        return students;
-    }    
-        
-    public List<Student> getByStudentId(String studentId) {
-        List<Student> result = new ArrayList<>();
-        for (Student s : students) {
-            if (s.getStudent_id().equals(studentId)) {
-                result.add(s);
+
+    public Student getByStudentId(String studentId) {
+        for (Student s : users) {
+            if (s.getId().equals(studentId)) {
+                return s;
             }
         }
-        return result;
+        return null;
     }
 }
