@@ -74,6 +74,7 @@ public class ClassesRepository {
         save();
     }
     
+    // Retrieve class ID
     public Optional<Classes> getById(String classId) { 
         
         for (Classes cls : classes) {
@@ -85,8 +86,23 @@ public class ClassesRepository {
         return Optional.empty(); 
     }
     
+    // Returns a list of all Classes objects currently in memory.
     public List<Classes> getAll() {
         return new ArrayList<>(classes); 
+    }
+    
+    // Get tutorId
+    public List<Classes> getByTutorId(String tutorId) {
+        
+        List<Classes> assignedClasses = new ArrayList<>();
+        
+        for (Classes cls : classes) {
+            if (cls.getTutorId() != null && !cls.getTutorId().trim().isEmpty() &&
+                cls.getTutorId().equalsIgnoreCase(tutorId)) {
+                assignedClasses.add(cls);
+            }
+        }
+        return assignedClasses;
     }
     
     public boolean update(Classes updatedClass) { 
