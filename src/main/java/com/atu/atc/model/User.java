@@ -3,7 +3,7 @@
 // It demonstrates Abstraction by defining common properties and behaviors for all users.
 // We cannot create an object directly from the User class.
 
-package com.atu.atc.model; // This must match your package structure
+package com.atu.atc.model;
 
 public abstract class User {
     // Attributes common to all users
@@ -27,7 +27,7 @@ public abstract class User {
         this.gender = gender;
     }
 
-    // --- Getters ---
+    // Getters
     public String getId() {
         return id;
     }
@@ -56,7 +56,7 @@ public abstract class User {
         return gender;
     }
 
-    // --- Setters ---
+    // Setters
     // Encapsulation: We provide methods to set attributes,
     // allowing us to add validation logic if needed in the future.
     public void setId(String id) {
