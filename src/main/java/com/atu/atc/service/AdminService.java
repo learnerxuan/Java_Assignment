@@ -15,18 +15,26 @@ import com.atu.atc.data.PaymentRepository;
 import com.atu.atc.data.RequestRepository;
 
 import com.atu.atc.model.Admin;
+import com.atu.atc.model.Student;
+import com.atu.atc.model.Classes;
 import com.atu.atc.model.Tutor;
 import com.atu.atc.model.Receptionist;
 import com.atu.atc.model.Payment;
 import com.atu.atc.model.Classes; 
 import com.atu.atc.model.User;
+import com.atu.atc.model.Enrollment;
 
 import com.atu.atc.util.IDGenerator;
 import com.atu.atc.util.Validator;
 import com.atu.atc.util.FileUtils;
-import java.util.Optional;
 
+import java.util.Optional;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 /**
  *
  * @author User
@@ -199,6 +207,121 @@ public class AdminService {
         return updated;
     }
     
+    public double viewMonthlyIncomeReport(int year, int intMonth, String filterSubjectId, String filterFormLevel){
+        // Input Validation
+        // Validate year
+        if (year < 2000 || year > LocalDate.now().getYear() + 1){
+            System.err.println("Invalid year !");
+            return 0.0;
+        }
+        // Validate Month
+        if (intMonth < 1 || intMonth > 12) {
+            System.err.println("Invalid Month entered: Month must be between 1 and 12.");
+            return 0.0;
+        }
+        // Validate form level if provided
+        if (filterFormLevel != null && !filterFormLevel.trim().isEmpty() && !validator.isFormValid(filterFormLevel)) {
+            System.err.println("Invalid form level: Form level must be between 1 and 5.");
+            return 0.0;
+        }
+        // Validate subject ID if provided
+        if (filterSubjectId != null && !filterSubjectId.trim().isEmpty()) {
+            if (subjectRepository.getSubjectById(filterSubjectId).isEmpty()) {
+                System.err.println("Subject with ID '" + filterSubjectId + "' not found. Report cannot be generated for this subject.");
+                return 0.0;
+            }
+        }
+        
+        Month monthEnum = Month.of(intMonth);
+        
+        List<Payment> allPayments = paymentRepository.getAll();
+        
+        if (allPayments.isEmpty()) {
+            System.out.println("No payments found in the system for report.");
+            return 0.0;
+        }
+
+        // Filter and Calculate
+        double totalIncome = allPayments.stream()
+            // Filter by Date and Status (only 'Completed' payments for the specified month/year)
+            .filter(payment -> payment.getDate() != null &&
+                               payment.getDate().getYear() == year &&
+                               payment.getDate().getMonthValue() == intMonth &&
+                               payment.getStatus().equalsIgnoreCase("Completed"))
+            .filter(payment -> {
+                // Filter by Student's Form Level and Subject
+                Optional<Student> studentOpt = Optional.ofNullable(studentRepository.getById(payment.getStudentId()));
+                if (studentOpt.isEmpty()) {
+                    System.err.println("Student with ID '" + payment.getStudentId() + "' for payment '" + payment.getPaymentId() + "' not found. Skipping payment from report.");
+                    return false; // Skip this payment if student is not found
+                }
+                
+                Student student = studentOpt.get();
+
+                // Apply form level filter if specified
+                boolean matchesFormLevel = (filterFormLevel == null || filterFormLevel.trim().isEmpty()) || student.getLevel().equalsIgnoreCase(filterFormLevel);
+                
+                if (!matchesFormLevel) {
+                    return false; 
+                }
+
+                // Apply subject filter if specified
+                boolean matchesSubject = true; 
+                
+                if (filterSubjectId != null && !filterSubjectId.trim().isEmpty()) {
+                    
+                    List<Enrollment> studentEnrollments = enrollmentRepository.getByStudentId(student.getId());
+                    
+                    // Check if any of the student's enrollments are for a class with the filtered subject.
+                    matchesSubject = studentEnrollments.stream()
+                        .anyMatch(enrollment -> {
+                            Optional<Classes> classOpt = classesRepository.getById(enrollment.getClassId());
+                            if (classOpt.isPresent()) {
+                                Classes enrolledClass = classOpt.get();
+                                return enrolledClass.getSubjectId().equalsIgnoreCase(filterSubjectId);
+                            }
+                            return false; // Class not found for enrollment
+                        });
+                }
+                
+                return matchesFormLevel && matchesSubject; // Payment must match both form and subject filters
+            })
+            .mapToDouble(Payment::getAmount) // Extract the 'amount' from each filtered Payment object
+            .sum(); // Sum all the extracted amounts
+
+        System.out.println("AdminService: Monthly income report for " + monthEnum + ", " + year + " (Subject: " + (filterSubjectId != null && !filterSubjectId.isEmpty() ? filterSubjectId : "All") +
+                           ", Level: " + (filterFormLevel != null && !filterFormLevel.isEmpty() ? filterFormLevel : "All") +
+                           "): $" + String.format("%.2f", totalIncome));
+        return totalIncome;
+    }
+    
+    public boolean assignTutorToClass(String classId, String tutorId){
+        
+        Optional<Classes> classOpt = classesRepository.getById(classId);
+        Optional<Tutor> tutorOpt = Optional.ofNullable(tutorRepository.getById(tutorId));
+        
+        if (classOpt.isEmpty()) {
+            System.err.println("AdminService Error: Class with ID '" + classId + "' not found. Assignment failed.");
+            return false;
+        }
+        if (tutorOpt.isEmpty()) {
+            System.err.println("AdminService Error: Tutor with ID '" + tutorId + "' not found. Assignment failed.");
+            return false;
+        }
+
+        Classes cls = classOpt.get();
+        
+        cls.setTutorId(tutorId);
+
+        boolean updated = classesRepository.update(cls);
+
+        if (updated) {
+            System.out.println("Successfully assigned tutor '" + tutorId + "' to class '" + classId + "'.");
+        } else {
+            System.err.println("Failed to update class '" + classId + "' with new tutor at repository level. Assignment failed.");
+        }
+        return updated;
+    } 
 }
 
 
