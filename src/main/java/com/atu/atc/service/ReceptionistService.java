@@ -92,7 +92,7 @@ public class ReceptionistService {
             }
 
             String subjectId = cls.getSubjectId();
-            var subject = subjectRepo.getById(subjectId).orElse(null);
+            var subject = subjectRepo.getSubjectById(subjectId).orElse(null);
 
             if (subject == null){
                 System.out.println("Subject " + subjectId + " not found");
@@ -100,7 +100,7 @@ public class ReceptionistService {
             }
 
             if (!subject.getLevel().equalsIgnoreCase(studentLevel)){
-                System.out.println("Level mismatch for class " + classId + ". Stident level: " + studentLevel + ", subject level: " + subject.getLevel());
+                System.out.println("Level mismatch for class " + classId + ". Student level: " + studentLevel + ", subject level: " + subject.getLevel());
                 continue;
 }
 
@@ -145,7 +145,7 @@ public class ReceptionistService {
 
         // Get subject from class
         String subjectId = cls.getSubjectId();
-        var subject = subjectRepo.getById(subjectId).orElse(null);
+        var subject = subjectRepo.getSubjectById(subjectId).orElse(null);
         if (subject == null) {
             System.out.println("Subject " + subjectId + " not found.");
             return;
