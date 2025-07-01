@@ -83,6 +83,9 @@ public class ReceptionistService {
 
         String studentLevel = student.getLevel();
 
+        // Count for successful enrollment to a class
+        int successEnrollCount = 0;
+
         for (String classId : classIds){
             Classes cls = classesRepo.getById(classId).orElse(null);
 
@@ -107,9 +110,10 @@ public class ReceptionistService {
             String enrollmentId = IDGenerator.generateUniqueId("CE");
             Enrollment enrollment = new Enrollment(enrollmentId, classId, studentId);
             enrollmentRepo.add(enrollment);
+            successEnrollCount++;
         }
 
-        System.out.println("Student " + studentId + " enrolled in " + classIds.size() + " class(es).");
+        System.out.println("Student " + studentId + " enrolled in " + successEnrollCount + " class(es).");
     }
 
     // Enroll student in new subject (check enrollment < 3)
