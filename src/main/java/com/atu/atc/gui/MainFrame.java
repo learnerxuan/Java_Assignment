@@ -1,4 +1,4 @@
-package com.atu.atc.gui.panels;
+package com.atu.atc.gui;
 
 import com.atu.atc.service.*;
 import com.atu.atc.model.User;
