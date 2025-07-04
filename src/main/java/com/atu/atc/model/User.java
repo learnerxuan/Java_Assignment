@@ -1,8 +1,3 @@
-// src/main/java/com/atu/atc/model/User.java
-// This is an abstract class, serving as a blueprint for all types of users in the system.
-// It demonstrates Abstraction by defining common properties and behaviors for all users.
-// We cannot create an object directly from the User class.
-
 package com.atu.atc.model;
 
 public abstract class User {
@@ -57,8 +52,6 @@ public abstract class User {
     }
 
     // Setters
-    // Encapsulation: We provide methods to set attributes,
-    // allowing us to add validation logic if needed in the future.
     public void setId(String id) {
         this.id = id;
     }
@@ -67,9 +60,6 @@ public abstract class User {
         this.password = password;
     }
 
-    // The role is typically set during creation and might not be directly changeable
-    // via a public setter if user roles are fixed. But for profile updates,
-    // we'll allow setting.
     public void setRole(String role) {
         this.role = role;
     }
@@ -90,17 +80,8 @@ public abstract class User {
         this.gender = gender;
     }
 
-    // --- Common User Behaviors (Methods) ---
-
-    // Abstract method for login.
-    // Each subclass (Admin, Receptionist, etc.) MUST provide its own implementation
-    // of how a user logs in. This enforces a common behavior and demonstrates Abstraction.
     public abstract boolean login(String enteredId, String enteredPassword);
 
-    // Common method for updating profile.
-    // For simplicity, this example just prints a message. In a real system,
-    // it would allow changing attributes like username, password, etc.
-    // This demonstrates Encapsulation by allowing controlled modification of object state.
     public void updateProfile(String newId, String newPassword, String newFullName,
                               String newPhoneNumber, String newEmail, String newGender) {
         this.id = newId;
@@ -121,6 +102,5 @@ public abstract class User {
         System.out.println("Email: " + email);
         System.out.println("Gender: " + gender);
         System.out.println("Role: " + role);
-        // Note: We don't display password for security reasons
     }
 }
