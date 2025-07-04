@@ -25,7 +25,7 @@ public class Student extends User {
     public String getAddress() {
         return address;
     }
-
+    
     public String getMonthOfEnroll() {
         return monthOfEnroll;
     }

@@ -16,8 +16,6 @@ import com.atu.atc.model.Enrollment;
 import com.atu.atc.model.Payment;
 import com.atu.atc.model.Classes;
 import com.atu.atc.model.Subject;
-import com.atu.atc.util.IDGenerator;
-import com.atu.atc.util.Validator;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 import java.util.List;
@@ -34,10 +32,10 @@ public class StudentService {
     private final PaymentRepository paymentRepo;
     private final ClassesRepository classesRepo;
     private final SubjectRepository subjectRepo;
-
+    
     public StudentService(StudentRepository studentRepo, ReceptionistRepository receptionistRepo,
-                               EnrollmentRepository enrollmentRepo, PaymentRepository paymentRepo,
-                               ClassesRepository classesRepo, SubjectRepository subjectRepo){
+                          EnrollmentRepository enrollmentRepo, PaymentRepository paymentRepo,
+                          ClassesRepository classesRepo, SubjectRepository subjectRepo){
         this.studentRepo = studentRepo;
         this.receptionistRepo = receptionistRepo;
         this.enrollmentRepo = enrollmentRepo;
@@ -47,16 +45,18 @@ public class StudentService {
     }
     
     // View Student Classes
-    public List<Classes> viewStudentClasses (String studentId) {
-        if (!Validator.isValidId(studentId)) {
-            System.out.println("Invalid Student ID Format");
-            return List.of(); // to return an empty list if there is an invalid format
-        }
+    public List<Classes> viewStudentClasses(String studentId) {
         Student student = studentRepo.getByStudentId(studentId);
         if (student == null) {
             System.out.println("The Student ID " + studentId + " is not found.");
             return List.of(); // to return an empty list the student id is not found
         }
+        
+        List<Enrollment> studentEnrollments = enrollmentRepo.getByStudentId(studentId);
+        if (studentEnrollments == null) {
+            return List.of();
+        }
+        
         return studentEnrollments.stream()
                 .map(enrollment -> classesRepo.getClassById(enrollment.getClassId()))
                 .filter(java.util.Objects::nonNull) // Filter out any null classes (if a class ID doesn't match an existing class)
@@ -66,25 +66,21 @@ public class StudentService {
     // View Student Payments
     
     public List<Payment> viewStudentPayments(String studentId) {
-        if (!Validator.isValidId(studentId)) {
-            System.out.println("Invalid Student ID Format");
-            return List.of(); // to return an empty list if there is an invalid format
-        }
         Student student = studentRepo.getByStudentId(studentId);
         if (student == null) {
             System.out.println("The Student ID " + studentId + " is not found.");
             return List.of(); // to return an empty list the student id is not found
         }
-        return paymentRepo.getPaymentsByStudentId(studentId);
+        List<Payment> payments = paymentRepo.getPaymentsByStudentId(studentId);
+        if (payments == null) {
+            return List.of();
+        }
+        return payments;
     }
     
     // Submit Requests
-
+    
     public boolean submitRequest(String studentId, String requestType, String requestDetails) {
-        if (!Validator.isValidId(studentId)) {
-            System.out.println("Invalid Student ID Format");
-            return false; // to return an empty list if there is an invalid format
-        }
         Student student = studentRepo.getByStudentId(studentId);
         if (student == null) {
             System.out.println("The Student ID " + studentId + " is not found.");
@@ -92,7 +88,7 @@ public class StudentService {
         }
         if (requestType == null || requestType.trim().isEmpty() || requestDetails == null || requestDetails.trim().isEmpty()) {
             System.out.println("Ensure that all required fields are filled to submit. Try Again.");
-            return False;
+            return false;
         }
         
         System.out.println("\nRequest has been submitted.");
@@ -100,20 +96,38 @@ public class StudentService {
         System.out.println("Request Type: " + requestType);
         System.out.println("Request Details: " + requestDetails);
         System.out.println("Submission Date : " + LocalDate.now());
+        
+        return true;
+    }
     
     // Update Student Profile
-
+    
     public boolean updateStudentProfile(String studentId, Student updatedStudent) {
-        if (!Validator.isValidId(studentId)) {
-            System.out.println("Invalid Student ID Format");
-            return false; // to return an empty list if there is an invalid format
-        }
-        Student student = studentRepo.getByStudentId(studentId);
-        if (student == null) {
-            System.out.println("The Student ID " + studentId + " is not found.");
+        if (updatedStudent == null) {
+            System.out.println("Object Cannot be Null");
             return false; // to return an empty list the student id is not found
         }
-        return
-    }
+        if (!studentId.equals(updatedStudent.getId())) {
+            System.out.println("Unsuccessful. Students IDs are mismatched. Please try again.");
+            return false;
+        }
+        Student existingStudent = studentRepo.getByStudentId(studentId);
+        if (existingStudent == null) {
+            System.out.println("Student ID " + studentId + " is not found.");
+            return false;
+        }
+        existingStudent.setAddress(updatedStudent.getAddress());
+        existingStudent.setPhoneNumber(updatedStudent.getPhoneNumber());
+        existingStudent.setLevel(updatedStudent.getLevel());
+        existingStudent.setEmail(updatedStudent.getEmail());
 
+        
+        boolean success = studentRepo.updateStudent(existingStudent);
+        if (success) {
+            System.out.println("Student Profile has been Updated.");
+        } else {
+            System.out.println("Student Profile update is unsuccessful.");
+        }
+        return success;
+    }
 }

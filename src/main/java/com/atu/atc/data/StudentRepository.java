@@ -63,4 +63,16 @@ public class StudentRepository extends UserRepository<Student> {
         }
         return null;
     }
+    public boolean updateStudent(Student updatedStudent) {
+        if (updatedStudent == null) {
+            return false;
+        }
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId().equals(updatedStudent.getId())) {
+                users.set(i, updatedStudent);
+                return true;
+            }
+        }
+        return false;
+    }
 }
