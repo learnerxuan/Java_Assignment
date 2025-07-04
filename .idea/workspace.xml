@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Minor improvement to ReceptionistService.java">
+    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="GUI package created">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +245,23 @@
       <option name="project" value="LOCAL" />
       <updated>1751341083229</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="GUI package created">
+      <option name="closed" value="true" />
+      <created>1751591595867</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1751591595867</updated>
+    </task>
+    <task id="LOCAL-00023" summary="GUI package created">
+      <option name="closed" value="true" />
+      <created>1751591682829</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1751591682829</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -276,6 +293,7 @@
     <MESSAGE value="Completed ReceptionistService.java" />
     <MESSAGE value="Minor changes to ReceptionistService.java" />
     <MESSAGE value="Minor improvement to ReceptionistService.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor improvement to ReceptionistService.java" />
+    <MESSAGE value="GUI package created" />
+    <option name="LAST_COMMIT_MESSAGE" value="GUI package created" />
   </component>
 </project>
