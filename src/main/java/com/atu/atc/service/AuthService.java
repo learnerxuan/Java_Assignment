@@ -75,7 +75,7 @@ public class AuthService {
         
         // If not authenticated yet, try Tutor
         if (authenticatedUser == null) {
-            Optional<Tutor> tutorOpt = tutorRepository.getById(userId);
+            Optional<Tutor> tutorOpt = Optional.ofNullable(tutorRepository.getById(userId));
             
             if (tutorOpt.isPresent()) {
                 if (tutorOpt.get().login(userId, password)) {
