@@ -69,9 +69,7 @@ public class Classes {
         this.endTime = endTime;
     }
     
-    // --- Optional: toString() method for easy debugging ---
     // This method provides a string representation of the Classes object,
-    // which is very helpful when printing Class objects for debugging purposes.
     @Override
     public String toString() {
         return "Classes{" +
