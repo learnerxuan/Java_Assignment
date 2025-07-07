@@ -34,10 +34,9 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 /**
  *
- * @author User
+ * @author Xuan
  */
 public class AdminService {
     private final AdminRepository adminRepository;
@@ -78,32 +77,35 @@ public class AdminService {
         this.validator = validator;
     }
     
-    public boolean registerTutor(String fullName, String password, String phoneNumber, String email, String gender, String level, String subject){
-        
-        if (!validator.isValidEmail(email)) {
-            System.err.println("AdminService Error: Invalid email format.");
-            return false;
+    public Optional<Tutor> registerTutor(String fullName, String password, String phoneNumber, String email, String gender, String subject, String level) {
+
+        // Input Validation 
+        if (!Validator.isValidEmail(email)) { 
+            System.err.println("AdminService Error: Invalid email format for new tutor.");
+            return Optional.empty();
         }
-        
-        if (!validator.isValidPhoneNumber(phoneNumber)){
-            System.err.println("AdminService Error: Invalid phone number format.");
-            return false;
+
+        if (!Validator.isValidPhoneNumber(phoneNumber)) { 
+            System.err.println("AdminService Error: Invalid phone number format for new tutor.");
+            return Optional.empty();
         }
-        
+
         String tutorId = idGenerator.generateUniqueId("T");
-        
-        if (tutorId == null){
-            System.err.println("AdminService Error: Failed to generate ID for tutor.");
-            return false;
+
+        if (tutorId == null) {
+            System.err.println("AdminService Error: Failed to generate ID for new tutor.");
+            return Optional.empty();
         }
-        
-        Tutor newTutor = new Tutor(tutorId, password, fullName, phoneNumber, email, gender, level, subject);
-        
+
+        // Create new Tutor object
+        Tutor newTutor = new Tutor(tutorId, password, fullName, phoneNumber, email, gender, subject, level);
+
+        // Add the new tutor to the repository
         tutorRepository.add(newTutor);
-        
-        System.out.println("AdminService: Successfully registered new tutor.");
-        
-        return true;
+
+        System.out.println("AdminService: Successfully registered new tutor with ID: " + tutorId);
+
+        return Optional.of(newTutor); 
     }
     
     public boolean deleteTutor(String tutorId) {
@@ -301,11 +303,11 @@ public class AdminService {
         Optional<Tutor> tutorOpt = Optional.ofNullable(tutorRepository.getById(tutorId));
         
         if (classOpt.isEmpty()) {
-            System.err.println("AdminService Error: Class with ID '" + classId + "' not found. Assignment failed.");
+            System.err.println("Class with ID '" + classId + "' not found.");
             return false;
         }
         if (tutorOpt.isEmpty()) {
-            System.err.println("AdminService Error: Tutor with ID '" + tutorId + "' not found. Assignment failed.");
+            System.err.println("Tutor with ID '" + tutorId + "' not found.");
             return false;
         }
 
