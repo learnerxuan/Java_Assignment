@@ -67,7 +67,8 @@ public class AdminDashboardPanel extends JPanel implements DashboardPanelInterfa
         add(buttonPanel, BorderLayout.CENTER);
         
         manageTutorsButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Manage Tutors functionality coming soon!");
+            navigator.navigateTo(MainFrame.REGISTER_TUTOR_PANEL, loggedInAdmin);
+            System.out.println("Admin: Navigating to Register Tutor Panel.");
         });
         
         manageReceptionistsButton.addActionListener(e -> {
@@ -75,7 +76,8 @@ public class AdminDashboardPanel extends JPanel implements DashboardPanelInterfa
         });
         
         viewReportButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "View Monthly Income Report functionality coming soon!");
+            navigator.navigateTo(MainFrame.VIEW_REPORT_PANEL, loggedInAdmin);
+            System.out.println("Admin: Navigating to View Monthly Income Report Panel.");
         });
         
         updateProfileButton.addActionListener(e -> {
