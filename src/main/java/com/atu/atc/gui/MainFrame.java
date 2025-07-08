@@ -1,7 +1,9 @@
 package com.atu.atc.gui;
 
 import com.atu.atc.service.*;
+import com.atu.atc.gui.panels.*;
 import com.atu.atc.model.User;
+import com.atu.atc.model.Admin;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,7 @@ public class MainFrame extends JFrame {
     public static final String RECEPTIONIST_DASHBOARD = "ReceptionistDashboard";
     public static final String TUTOR_DASHBOARD = "TutorDashboard";
     public static final String STUDENT_DASHBOARD = "StudentDashboard";
+    public static final String REGISTER_TUTOR_PANEL = "RegisterTutorPanel";
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -96,6 +99,14 @@ public class MainFrame extends JFrame {
                         } else {
                             System.err.println("Invalid user type for Student Dashboard.");
                             return;
+                        }
+                        break;
+                    case REGISTER_TUTOR_PANEL:
+                        if (user instanceof Admin adminUser) { 
+                            targetPanel = new RegisterTutorPanel(adminService, this, adminUser);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to RegisterTutorPanel with non-Admin user or null.");
+                            return; 
                         }
                         break;
                     case LOGIN_PANEL:
