@@ -20,6 +20,7 @@ public class MainFrame extends JFrame {
     public static final String STUDENT_DASHBOARD = "StudentDashboard";
     public static final String REGISTER_TUTOR_PANEL = "RegisterTutorPanel";
     public static final String VIEW_REPORT_PANEL = "ViewReportPanel";
+    public static final String MANAGE_RECEPTIONISTS_PANEL = "ManageReceptionistsPanel";
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -116,6 +117,14 @@ public class MainFrame extends JFrame {
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to ViewReportPanel with non-Admin user or null.");
                             return; 
+                        }
+                        break;
+                    case MainFrame.MANAGE_RECEPTIONISTS_PANEL:
+                        if (user instanceof com.atu.atc.model.Admin adminUser) {
+                            targetPanel = new ManageReceptionistsPanel(adminService, this, adminUser);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to ManageReceptionistsPanel with non-Admin user or null.");
+                            return; // Prevent navigation
                         }
                         break;
                     case LOGIN_PANEL:
