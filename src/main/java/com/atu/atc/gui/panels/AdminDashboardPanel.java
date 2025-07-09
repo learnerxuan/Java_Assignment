@@ -72,7 +72,8 @@ public class AdminDashboardPanel extends JPanel implements DashboardPanelInterfa
         });
         
         manageReceptionistsButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Manage Receptionists functionality coming soon!");
+            navigator.navigateTo(MainFrame.MANAGE_RECEPTIONISTS_PANEL, loggedInAdmin);
+            System.out.println("Admin: Navigating to Manage Receptionists Panel.");
         });
         
         viewReportButton.addActionListener(e -> {
