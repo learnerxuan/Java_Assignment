@@ -180,7 +180,7 @@ public class AdminService {
         return deleted;
     }
     
-    public List<Receptionist> getAllReceptionist(){
+    public List<Receptionist> getAllReceptionists(){
         List<Receptionist> receptionists = receptionistRepository.getAll();
         
         if (receptionists.isEmpty()){
