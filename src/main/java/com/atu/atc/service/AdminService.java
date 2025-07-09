@@ -180,6 +180,17 @@ public class AdminService {
         return deleted;
     }
     
+    public List<Receptionist> getAllReceptionist(){
+        List<Receptionist> receptionists = receptionistRepository.getAll();
+        
+        if (receptionists.isEmpty()){
+            System.out.println("AdminService: No receptionists found in the system.");
+        } else {
+            System.out.println("AdminService: Retrieved "+ receptionists.size() + " receptionists.");
+        }
+        return receptionists;
+    }
+    
     public boolean updateAdminProfile(Admin updatedAdmin) {
         
         if (Optional.ofNullable(adminRepository.getById(updatedAdmin.getId())).isEmpty()) {
