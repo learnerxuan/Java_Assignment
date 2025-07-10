@@ -21,6 +21,7 @@ public class MainFrame extends JFrame {
     public static final String REGISTER_TUTOR_PANEL = "RegisterTutorPanel";
     public static final String VIEW_REPORT_PANEL = "ViewReportPanel";
     public static final String MANAGE_RECEPTIONISTS_PANEL = "ManageReceptionistsPanel";
+    public static final String UPDATE_ADMIN_PROFILE_PANEL = "UpdateAdminProfilePanel";
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -125,6 +126,14 @@ public class MainFrame extends JFrame {
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to ManageReceptionistsPanel with non-Admin user or null.");
                             return; // Prevent navigation
+                        }
+                        break;
+                    case UPDATE_ADMIN_PROFILE_PANEL:
+                        if (user instanceof Admin adminUser) {
+                            targetPanel = new UpdateAdminProfilePanel(adminService, this, adminUser);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to UpdateAdminProfilePanel with non-Admin user or null.");
+                            return;
                         }
                         break;
                     case LOGIN_PANEL:
