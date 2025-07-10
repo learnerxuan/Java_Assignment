@@ -82,7 +82,8 @@ public class AdminDashboardPanel extends JPanel implements DashboardPanelInterfa
         });
         
         updateProfileButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Update Profile functionality coming soon!");
+            navigator.navigateTo(MainFrame.UPDATE_ADMIN_PROFILE_PANEL, loggedInAdmin);
+            System.out.println("Admin: Navigating to Update My Profile Panel.");
         });
         
         logoutButton.addActionListener(e -> {
