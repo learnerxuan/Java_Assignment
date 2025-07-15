@@ -67,8 +67,7 @@ public class ReceptionistDashboardPanel extends JPanel implements DashboardPanel
 
         // Button Actions
         registerBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Register Student Panel (Coming Soon)");
-            // Navigate to RegisterStudentPanel here
+            navigator.navigateTo(MainFrame.REGISTER_STUDENT_PANEL, receptionist);
         });
 
         manageEnrollBtn.addActionListener(e -> {

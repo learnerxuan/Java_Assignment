@@ -4,29 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Moved mainframe into the correct folder">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/RegisterStudentPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_7_2025_1_13_pm_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_7_2025_1_13_pm__Changes_.xml" beforeDir="false" />
+    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="RegisterStudentPanel.java">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ReceptionistDashboardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ReceptionistDashboardPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/data/StudentRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/model/Admin.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/model/Classes.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/model/Course.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/model/Receptionist.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/model/Student$Enrollment.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/model/Student.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/model/Tutor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/model/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/util/FileUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/util/IDGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/util/Validator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/tuition_centre_management_system/Tuition_Centre_Management_System.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/data/enrolments.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data/enrolments.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/data/id_counters.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data/id_counters.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/data/payments.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data/payments.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/data/receptionists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data/receptionists.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -301,7 +282,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751607330358</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="RegisterStudentPanel.java">
+      <option name="closed" value="true" />
+      <created>1752588944495</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1752588944495</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -337,6 +326,7 @@
     <MESSAGE value="MainFrame.java completed" />
     <MESSAGE value="." />
     <MESSAGE value="Moved mainframe into the correct folder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved mainframe into the correct folder" />
+    <MESSAGE value="RegisterStudentPanel.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="RegisterStudentPanel.java" />
   </component>
 </project>
