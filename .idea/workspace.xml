@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Moved mainframe into the correct folder">
+    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Completed RegisterStudentPanel.java">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/AcceptPaymentPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ManageEnrollmentPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ReceptionistDashboardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ReceptionistDashboardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/RegisterStudentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/RegisterStudentPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/service/ReceptionistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/service/ReceptionistService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +45,6 @@
 }</component>
   <component name="ProjectId" id="2yo4hxsYIz5efrUD9msB06bVDIi" />
   <component name="ProjectLevelVcsManager">
-    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -48,12 +53,13 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.TestReceptionistDashboard.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/henge/OneDrive - Asia Pacific University/Object Oriented Programming/OOP Assignment/Java_Assignment&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="TaskManager">
@@ -272,7 +278,31 @@
       <option name="project" value="LOCAL" />
       <updated>1751596513295</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Moved mainframe into the correct folder">
+      <option name="closed" value="true" />
+      <created>1751607330358</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1751607330358</updated>
+    </task>
+    <task id="LOCAL-00028" summary="RegisterStudentPanel.java">
+      <option name="closed" value="true" />
+      <created>1752588944495</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1752588944495</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Completed RegisterStudentPanel.java">
+      <option name="closed" value="true" />
+      <created>1752590126106</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1752590126106</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -308,6 +338,8 @@
     <MESSAGE value="MainFrame.java completed" />
     <MESSAGE value="." />
     <MESSAGE value="Moved mainframe into the correct folder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved mainframe into the correct folder" />
+    <MESSAGE value="RegisterStudentPanel.java" />
+    <MESSAGE value="Completed RegisterStudentPanel.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed RegisterStudentPanel.java" />
   </component>
 </project>

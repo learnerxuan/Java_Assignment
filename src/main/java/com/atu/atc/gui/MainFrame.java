@@ -22,6 +22,9 @@ public class MainFrame extends JFrame {
     public static final String VIEW_REPORT_PANEL = "ViewReportPanel";
     public static final String MANAGE_RECEPTIONISTS_PANEL = "ManageReceptionistsPanel";
     public static final String UPDATE_ADMIN_PROFILE_PANEL = "UpdateAdminProfilePanel";
+    public static final String UPDATE_TUTOR_PROFILE_PANEL = "UpdateTutorProfilePanel";
+    public static final String REGISTER_STUDENT_PANEL = "RegisterStudentPanel";
+    public static final String MANAGE_ENROLLMENT_PANEL = "ManageEnrollmentPanel";
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -133,6 +136,30 @@ public class MainFrame extends JFrame {
                             targetPanel = new UpdateAdminProfilePanel(adminService, this, adminUser);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to UpdateAdminProfilePanel with non-Admin user or null.");
+                            return;
+                        }
+                        break;
+                    case UPDATE_TUTOR_PROFILE_PANEL: 
+                        if (user instanceof  com.atu.atc.model.Tutor tutorUser) {
+                            targetPanel = new UpdateTutorProfilePanel(tutorService, this);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to UpdateTutorProfilePanel with non-Tutor user or null.");
+                            return;
+                        }
+                        break;
+                    case REGISTER_STUDENT_PANEL:
+                        if (user instanceof com.atu.atc.model.Receptionist receptionistUser) {
+                            targetPanel = new RegisterStudentPanel(receptionistService, receptionistUser, this);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to RegisterStudentPanel with non-Receptionist user or null.");
+                            return;
+                        }
+                        break;
+                    case MANAGE_ENROLLMENT_PANEL:
+                        if (user instanceof com.atu.atc.model.Receptionist receptionistUser) {
+                            targetPanel = new ManageEnrollmentPanel(receptionistService, receptionistUser, this);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to ManageEnrollmentPanel with non-Receptionist user or null.");
                             return;
                         }
                         break;
