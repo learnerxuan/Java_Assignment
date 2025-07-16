@@ -52,6 +52,7 @@ public class ReceptionistDashboardPanel extends JPanel implements DashboardPanel
         JButton registerBtn = new JButton("Register Student");
         JButton manageEnrollBtn = new JButton("Manage Enrollments");
         JButton paymentBtn = new JButton("Accept Payment");
+        JButton deleteBtn = new JButton("Delete Student");
         JButton profileBtn = new JButton("Update My Profile");
         JButton requestBtn = new JButton("Handle Student Requests");
         JButton logoutBtn = new JButton("Logout");
@@ -59,6 +60,7 @@ public class ReceptionistDashboardPanel extends JPanel implements DashboardPanel
         buttonPanel.add(registerBtn);
         buttonPanel.add(manageEnrollBtn);
         buttonPanel.add(paymentBtn);
+        buttonPanel.add(deleteBtn);
         buttonPanel.add(profileBtn);
         buttonPanel.add(requestBtn);
         buttonPanel.add(logoutBtn);
@@ -75,11 +77,15 @@ public class ReceptionistDashboardPanel extends JPanel implements DashboardPanel
         });
 
         paymentBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Accept Payment Panel (Coming Soon)");
+            navigator.navigateTo(MainFrame.ACCEPT_PAYMENT_PANEL, receptionist);
+        });
+
+        deleteBtn.addActionListener(e -> {
+            navigator.navigateTo(MainFrame.DELETE_STUDENT_PANEL, receptionist);
         });
 
         profileBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Update Profile Panel (Coming Soon)");
+            navigator.navigateTo(MainFrame.UPDATE_RECEPTIONIST_PROFILE_PANEL, receptionist);
         });
 
         requestBtn.addActionListener(e -> {
