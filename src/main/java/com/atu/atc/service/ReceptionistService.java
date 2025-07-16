@@ -6,17 +6,20 @@ import com.atu.atc.data.EnrollmentRepository;
 import com.atu.atc.data.PaymentRepository;
 import com.atu.atc.data.ClassesRepository;
 import com.atu.atc.data.SubjectRepository;
+import com.atu.atc.data.RequestRepository;
 import com.atu.atc.model.Student;
 import com.atu.atc.model.Receptionist;
 import com.atu.atc.model.Enrollment;
 import com.atu.atc.model.Payment;
 import com.atu.atc.model.Classes;
 import com.atu.atc.model.Subject;
+import com.atu.atc.model.Request;
 import com.atu.atc.util.IDGenerator;
 import com.atu.atc.util.Validator;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -29,16 +32,18 @@ public class ReceptionistService {
     private final PaymentRepository paymentRepo;
     private final ClassesRepository classesRepo;
     private final SubjectRepository subjectRepo;
+    private final RequestRepository requestRepo;
 
     public ReceptionistService(StudentRepository studentRepo, ReceptionistRepository receptionistRepo,
                                EnrollmentRepository enrollmentRepo, PaymentRepository paymentRepo,
-                               ClassesRepository classesRepo, SubjectRepository subjectRepo){
+                               ClassesRepository classesRepo, SubjectRepository subjectRepo, RequestRepository requestRepo){
         this.studentRepo = studentRepo;
         this.receptionistRepo = receptionistRepo;
         this.enrollmentRepo = enrollmentRepo;
         this.paymentRepo = paymentRepo;
         this.classesRepo = classesRepo;
         this.subjectRepo = subjectRepo;
+        this.requestRepo = requestRepo;
     }
 
     // Register a new student
@@ -238,5 +243,106 @@ public class ReceptionistService {
         receptionist.updateProfile(receptionist.getId(), newPassword, newFullName, newPhoneNumber, newEmail, newGender);
         receptionistRepo.update(receptionist);
         System.out.println("Receptionist profile updated.");
+    }
+
+    // Get all pending requests
+    public List<Request> getPendingRequests(){
+        return requestRepo.getAll().stream().filter(r -> r.getStatus().equalsIgnoreCase("Pending")).toList();
+    }
+
+    // Approve request and update enrollment
+    public String approveRequest(String requestId){
+        Optional<Request> optRequest = requestRepo.getRequestById(requestId);
+        if (optRequest.isEmpty()){
+            return "Request not found.";
+        }
+
+        Request request = optRequest.get();
+
+        if (!request.getStatus().equalsIgnoreCase("Pending")) {
+            return "Request is not pending.";
+        }
+
+        // Get student and level
+        Student student = studentRepo.getById(request.getStudent_id());
+        if (student == null) {
+            return "Student not found.";
+        }
+
+        String studentLevel = student.getLevel();
+        String currentSubjectId = request.getCurrent_subject_id();
+        String requestedSubjectId = request.getRequested_subject_id();
+
+        // Check if already enrolled
+        List<Enrollment> enrollments = enrollmentRepo.getByStudentId(student.getId());
+        for (Enrollment e : enrollments) {
+            String enrolledSubjectId = getSubjectIdFromClass(e.getClassId());
+            if (enrolledSubjectId != null && enrolledSubjectId.equals(requestedSubjectId)) {
+                return "Student is already enrolled in the requested subject.";
+            }
+        }
+
+        // Find a matching class
+        String newClassId = getClassIdForSubject(requestedSubjectId, studentLevel);
+        if (newClassId == null) {
+            return "No suitable class found for subject " + requestedSubjectId + " and level " + studentLevel;
+        }
+
+        boolean updated = false;
+        for (Enrollment e : enrollments) {
+            String enrolledSubjectId = getSubjectIdFromClass(e.getClassId());
+            if (enrolledSubjectId != null && enrolledSubjectId.equals(currentSubjectId)) {
+                e.setClassId(newClassId);
+                enrollmentRepo.update(e);
+                updated = true;
+                break;
+            }
+        }
+
+        if (updated) {
+            request.setStatus("Approved");
+            requestRepo.update(request);
+            return "Request approved and enrollment updated.";
+        } else {
+            return "Failed to find matching current subject to update enrollment.";
+        }
+    }
+
+    // Reject request
+    public String rejectRequest(String requestId){
+        Optional<Request> optRequest = requestRepo.getRequestById(requestId);
+        if(optRequest.isPresent()){
+            Request request = optRequest.get();
+            if (!request.getStatus().equalsIgnoreCase("Pending")) {
+                return "Request is not pending.";
+            }
+            request.setStatus("Rejected");
+            requestRepo.update(request);
+            return "Request rejected successfully.";
+        } else {
+            return "Request not found.";
+        }
+    }
+
+    // Delete a request
+    public String deleteRequest(String requestId){
+        boolean deleted = requestRepo.delete(requestId);
+        return deleted ? "Request deleted successfully." : "Failed to delete request.";
+    }
+
+    // Find the subjectId for a classId
+    private String getSubjectIdFromClass(String classId){
+        Optional<Classes> cls = classesRepo.getById(classId);
+        return cls.map(Classes::getSubjectId).orElse(null);
+    }
+
+    // Get classId by studentId and student level
+    private String getClassIdForSubject(String subjectId, String studentLevel){
+        return classesRepo.getAll().stream()
+                .filter(c -> c.getSubjectId().equals(subjectId))
+                .filter(c -> {
+                    Subject subject = subjectRepo.getSubjectById(c.getSubjectId()).orElse(null);
+                    return subject != null && subject.getLevel().equalsIgnoreCase(studentLevel);
+                }).map(Classes::getClassId).findFirst().orElse(null);
     }
 }
