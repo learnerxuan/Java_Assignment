@@ -12,7 +12,8 @@ public class DataLoader {
     private final PaymentRepository paymentRepo;
     private final RequestRepository requestRepo;
     private final AdminRepository adminRepo;
-
+    private final SubjectRepository subjectRepo;
+    
     public DataLoader(StudentRepository studentRepo,
                       ReceptionistRepository receptionistRepo,
                       TutorRepository tutorRepo,
@@ -20,7 +21,8 @@ public class DataLoader {
                       EnrollmentRepository enrollmentRepo,
                       PaymentRepository paymentRepo,
                       RequestRepository requestRepo,
-                      AdminRepository adminRepo) {
+                      AdminRepository adminRepo,
+                      SubjectRepository subjectRepo) {
         this.studentRepo = studentRepo;
         this.receptionistRepo = receptionistRepo;
         this.tutorRepo = tutorRepo;
@@ -29,6 +31,7 @@ public class DataLoader {
         this.paymentRepo = paymentRepo;
         this.requestRepo = requestRepo;
         this.adminRepo = adminRepo;
+        this.subjectRepo = subjectRepo;
     }
 
     public void loadAllData() {
@@ -40,6 +43,7 @@ public class DataLoader {
         paymentRepo.load();
         requestRepo.load();
         adminRepo.load();
+        subjectRepo.load();
         System.out.println("All data loaded.");
     }
 }

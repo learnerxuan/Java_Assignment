@@ -21,6 +21,8 @@ import com.atu.atc.data.SubjectRepository;
 import com.atu.atc.data.EnrollmentRepository;
 import com.atu.atc.data.PaymentRepository;
 import com.atu.atc.data.RequestRepository;
+import com.atu.atc.data.DataLoader;
+import com.atu.atc.data.DataSaver;
 
 import com.atu.atc.util.IDGenerator;
 import com.atu.atc.util.Validator;
@@ -48,9 +50,20 @@ public class AppLauncher {
             PaymentRepository paymentRepository = new PaymentRepository();
             RequestRepository requestRepository = new RequestRepository();
             
-            // Initialise Utitily Classess
+            // Initialise Utility Classes
             IDGenerator idGenerator = new IDGenerator();
             Validator validator = new Validator();
+            
+            // Initialise DataLoader and DataSaver, passing all repositories
+            DataLoader dataLoader = new DataLoader(studentRepository, receptionistRepository, tutorRepository,
+                    classesRepository, enrollmentRepository, paymentRepository,
+                    requestRepository, adminRepository, subjectRepository);
+            DataSaver dataSaver = new DataSaver(studentRepository, receptionistRepository, tutorRepository,
+                    classesRepository, enrollmentRepository, paymentRepository,
+                    requestRepository, adminRepository, subjectRepository);
+            
+            // Load all data at application startup
+            dataLoader.loadAllData();
             
             // Initialise Services
             AuthService authService = new AuthService(adminRepository, receptionistRepository, tutorRepository, studentRepository);
@@ -58,12 +71,11 @@ public class AppLauncher {
                                                          studentRepository, classesRepository, subjectRepository,
                                                          enrollmentRepository, paymentRepository, requestRepository,
                                                          idGenerator, validator);
-            ReceptionistService receptionistService = new ReceptionistService(receptionistRepository, studentRepository,classesRepository, 
+            ReceptionistService receptionistService = new ReceptionistService(receptionistRepository, studentRepository,classesRepository,
                                                          enrollmentRepository,paymentRepository, requestRepository,idGenerator, validator);
             TutorService tutorService = new TutorService(tutorRepository, classesRepository, studentRepository,
                                                          enrollmentRepository, requestRepository);
-            StudentService studentService = new StudentService(studentRepository, classesRepository, enrollmentRepository,
-                                                            paymentRepository, requestRepository);
+            StudentService studentService = new StudentService(studentRepository, subjectRepository, requestRepository);
             
             MainFrame mainFrame = new MainFrame(authService, adminService, receptionistService, tutorService, studentService);
             

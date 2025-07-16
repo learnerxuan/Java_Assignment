@@ -23,7 +23,7 @@ public class SubjectRepository {
         List<String> lines = FileUtils.readDataLines(FILE_PATH);
 
         for (String line : lines) {
-            String[] parts = line.split(",", -1);
+            String[] parts = line.split("\\|", -1);
             if (parts.length == 4) { 
                 try {
                     String subjectId = parts[0].trim();
@@ -38,9 +38,10 @@ public class SubjectRepository {
                     System.err.println("SubjectRepository: Error parsing line: " + line + " - " + e.getMessage());
                 }
             } else {
-                System.err.println("SubjetcRepository: Malformed line: " + line);
+                System.err.println("SubjectRepository: Malformed line (expected 4 parts, got " + parts.length + "): " + line);
             }
         }
+        System.out.println("SubjectRepository: Loaded " + subjects.size() + " subjects from " + FILE_PATH);
     }
     public void save() {
         List<String> linesToSave = new ArrayList<>();
@@ -52,9 +53,9 @@ public class SubjectRepository {
         
         boolean success = FileUtils.writeLines(FILE_PATH, linesToSave);
         if (!success) {
-            System.err.println("SubjectRepository: Failed to save class data to " + FILE_PATH);
+            System.err.println("SubjectRepository: Failed to save course data to " + FILE_PATH);
         } else {
-            System.out.println("SubjectRepository: Saved " + subjects.size() + " classes to " + FILE_PATH);
+            System.out.println("SubjectRepository: Saved " + subjects.size() + " courses to " + FILE_PATH);
         }
     }
     public void add(Subject subject) {
@@ -67,12 +68,12 @@ public class SubjectRepository {
             if (subjects.get(i).getSubjectId().equals(updatedSubject.getSubjectId())) {
                 subjects.set(i, updatedSubject); 
                 save(); 
-                System.out.println("SubjectRepository: Class updated in memory: " + updatedSubject.getSubjectId());
+                System.out.println("SubjectRepository: Course updated in memory: " + updatedSubject.getSubjectId());
                 return true;
             }
         }
         
-        System.err.println("SubjectRepository: Class with ID " + updatedSubject.getSubjectId() + " not found for update.");
+        System.err.println("SubjectRepository: Subject with ID " + updatedSubject.getSubjectId() + " not found for update.");
         return false;
     } 
     public boolean delete(String subjectId) { 

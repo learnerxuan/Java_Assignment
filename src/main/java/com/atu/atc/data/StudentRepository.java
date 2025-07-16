@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.atu.atc.data;
 
 import com.atu.atc.model.Student;
 import com.atu.atc.util.FileUtils;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -17,14 +14,15 @@ import java.util.List;
 public class StudentRepository extends UserRepository<Student> {
     private static final String FILE_PATH = "data/students.txt";
     private static final String HEADER = "student_id,student_name,password,phone_number,email,gender,IC/Passport,address,month_of_enroll,level";
-
+    
     @Override
     public void load() {
         users.clear();
         List<String> lines = FileUtils.readDataLines(FILE_PATH); // Skips header
-
+        
         for (String line : lines) {
-            String[] parts = line.split(",", -1); // Keep empty fields
+            String[] parts = line.split(",", -1);
+            // Keep empty fields
             if (parts.length == 10) {
                 String id = parts[0].trim();
                 String name = parts[1].trim();
@@ -36,7 +34,6 @@ public class StudentRepository extends UserRepository<Student> {
                 String address = parts[7].trim();
                 String monthOfEnroll = parts[8].trim();
                 String level = parts[9].trim();
-
                 Student student = new Student(id, name, password, phone, email, gender, ic, address, monthOfEnroll, level);
                 users.add(student);
             } else {
@@ -44,7 +41,7 @@ public class StudentRepository extends UserRepository<Student> {
             }
         }
     }
-
+    
     @Override
     public void save() {
         List<String> lines = new ArrayList<>();
@@ -54,15 +51,16 @@ public class StudentRepository extends UserRepository<Student> {
         }
         FileUtils.writeLines(FILE_PATH, lines);
     }
-
-    public Student getByStudentId(String studentId) {
+    
+    public Optional<Student> getByStudentId(String studentId) {
         for (Student s : users) {
             if (s.getId().equals(studentId)) {
-                return s;
+                return Optional.of(s);
             }
         }
-        return null;
+        return Optional.empty();
     }
+    
     public boolean updateStudent(Student updatedStudent) {
         if (updatedStudent == null) {
             return false;
