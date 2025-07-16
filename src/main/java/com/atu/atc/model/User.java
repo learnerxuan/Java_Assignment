@@ -103,4 +103,6 @@ public abstract class User {
         System.out.println("Gender: " + gender);
         System.out.println("Role: " + role);
     }
+    
+    public abstract String toFileString();
 }

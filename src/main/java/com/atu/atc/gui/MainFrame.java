@@ -1,9 +1,13 @@
 package com.atu.atc.gui;
 
+import com.atu.atc.data.RequestRepository;
 import com.atu.atc.service.*;
 import com.atu.atc.gui.panels.*;
 import com.atu.atc.model.User;
+import com.atu.atc.model.Student;
 import com.atu.atc.model.Admin;
+import com.atu.atc.model.Tutor;
+import com.atu.atc.model.Receptionist;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,6 +32,12 @@ public class MainFrame extends JFrame {
     public static final String ACCEPT_PAYMENT_PANEL = "AcceptPaymentPanel";
     public static final String DELETE_STUDENT_PANEL = "DeleteStudentPanel";
     public static final String UPDATE_RECEPTIONIST_PROFILE_PANEL = "UpdateReceptionistProfilePanel";
+    public static final String STUDENT_PROFILE_PANEL = "StudentProfilePanel";
+    public static final String VIEW_ENROLLED_SUBJECTS_PANEL = "ViewEnrolledSubjectsPanel";
+    public static final String SUBMIT_SUBJECT_CHANGE_REQUEST_PANEL = "SubmitSubjectChangeRequestPanel";
+    public static final String VIEW_PAYMENT_HISTORY_PANEL = "ViewPaymentHistoryPanel";
+    public static final String VIEW_REQUEST_STATUS_PANEL = "ViewRequestStatusPanel";
+    public static final String VIEW_SCHEDULE_PANEL = "ViewSchedulePanel";
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -37,17 +47,19 @@ public class MainFrame extends JFrame {
     private final ReceptionistService receptionistService;
     private final TutorService tutorService;
     private final StudentService studentService;
+    private final RequestRepository requestRepository;
 
     private final Map<String, JPanel> loadedPanels = new HashMap<>();
 
     public MainFrame(AuthService authService, AdminService adminService,
                       ReceptionistService receptionistService, TutorService tutorService,
-                      StudentService studentService) {
+                      StudentService studentService, RequestRepository requestRepository) {
         this.authService = authService;
         this.adminService = adminService;
         this.receptionistService = receptionistService;
         this.tutorService = tutorService;
         this.studentService = studentService;
+        this.requestRepository = requestRepository;
 
         setTitle("Tuition Centre Management System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -196,6 +208,7 @@ public class MainFrame extends JFrame {
                     default:
                         System.err.println("Unknown panel requested: " + panelName);
                         return;
+                    
                 }
                 mainPanel.add(targetPanel, panelName);
                 loadedPanels.put(panelName, targetPanel);

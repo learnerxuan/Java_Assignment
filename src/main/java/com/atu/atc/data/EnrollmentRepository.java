@@ -46,9 +46,10 @@ public class EnrollmentRepository {
     }
 
     // Add a new enrollment and save
-    public void add(Enrollment enrollment){
+    public boolean add(Enrollment enrollment){
         enrollments.add(enrollment);
         save();
+        return false;
     }
 
     // Get all enrollments

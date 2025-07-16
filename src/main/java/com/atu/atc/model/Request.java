@@ -1,62 +1,82 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.atu.atc.model;
 
-/**
- *
- * @author farris
- */
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Request {
-    private String request_id;
-    private String student_id;
-    private String current_subject_id;
-    private String requested_subject_id;
-    private String status;
+    private final String requestId;
+    private final String studentId;
+    private final String currentSubjectId;
+    private final String requestedSubjectId;
+    private String status; // e.g., "Pending", "Approved", "Rejected"
+    private final LocalDate requestDate;
     
-    public Request(String request_id, String student_id, String current_subject_id,
-                   String requested_subject_id, String status) {
-        this.request_id = request_id;
-        this.student_id = student_id;
-        this.current_subject_id = current_subject_id;
-        this.requested_subject_id = requested_subject_id;
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
+    
+    public Request(String requestId, String studentId, String currentSubjectId,
+                   String requestedSubjectId, String status, LocalDate requestDate) {
+        this.requestId = requestId;
+        this.studentId = studentId;
+        this.currentSubjectId = currentSubjectId;
+        this.requestedSubjectId = requestedSubjectId;
         this.status = status;
+        this.requestDate = requestDate;
     }
-// getters
-    public String getRequest_id(){
-        return request_id;
+    
+    // Getters [ADDITION/CONFIRMATION]
+    public String getRequestId() {
+        return requestId;
     }
-    public String getStudent_id(){
-        return student_id;
+    
+    public String getStudentId() {
+        return studentId;
     }
-    public String getCurrent_subject_id(){
-        return current_subject_id;
+    
+    public String getCurrentSubjectId() {
+        return currentSubjectId;
     }
-    public String getRequested_subject_id(){
-        return requested_subject_id;
+    
+    public String getRequestedSubjectId() {
+        return requestedSubjectId;
     }
-    public String getStatus(){
+    
+    public String getStatus() {
         return status;
     }
-//setterss
-    public void setRequest_id(String request_id){
-        this.request_id = request_id;
+    
+    public LocalDate getRequestDate() {
+        return requestDate;
     }
-    public void setStudent_id(String student_id){
-        this.student_id = student_id;
-    }
-    public void setCurrent_subject_id(String current_subject_id){
-        this.current_subject_id = current_subject_id;
-    }
-    public void setRequested_subject_id(String requested_subject_id){
-        this.requested_subject_id = requested_subject_id;
-    } 
-    public void setStatus(String status){
+    
+    // Setters (if needed, only for mutable properties like status)
+    public void setStatus(String status) {
         this.status = status;
     }
+    
+    // For file persistence
     public String toFileString() {
-        return request_id + "," + student_id + "," + current_subject_id + "," + 
-               requested_subject_id + "," + status;    
+        return String.join(";",
+                requestId,
+                studentId,
+                currentSubjectId,
+                requestedSubjectId,
+                status,
+                requestDate.format(DATE_FORMATTER)
+        );
+    }
+    
+    public static Request fromFileString(String fileString) {
+        String[] parts = fileString.split(";");
+        if (parts.length == 6) {
+            return new Request(
+                    parts[0], // requestId
+                    parts[1], // studentId
+                    parts[2], // currentSubjectId
+                    parts[3], // requestedSubjectId
+                    parts[4], // status
+                    LocalDate.parse(parts[5], DATE_FORMATTER) // requestDate
+            );
+        }
+        return null; // Or throw an exception
     }
 }

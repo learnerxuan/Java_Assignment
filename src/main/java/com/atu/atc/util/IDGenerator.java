@@ -76,6 +76,88 @@ public class IDGenerator {
         } 
     }
     
+    // Specific ID generation methods (calling generateUniqueId internally)
+    public String generateStudentId() {
+        return generateUniqueId("S");
+    }
+    
+    public String generateRequestId() {
+        return generateUniqueId("REQ");
+    }
+    
+    public String generateTutorId() {
+        return generateUniqueId("T");
+    }
+    
+    public String generateReceptionistId() {
+        return generateUniqueId("R");
+    }
+    
+    public String generateAdminId() {
+        return generateUniqueId("A");
+    }
+    
+    public String generateClassId() {
+        return generateUniqueId("C"); // Assuming 'C' for Class
+    }
+    
+    public String generateEnrollmentId() {
+        return generateUniqueId("E"); // Assuming 'E' for Enrollment
+    }
+    
+    public String generatePaymentId() {
+        return generateUniqueId("P"); // Assuming 'P' for Payment
+    }
+    
+    // [ADDITION] Methods to set starting counters for specific ID types (for DataLoader)
+    public void setLastStudentId(String lastId) {
+        setLastId("S", lastId);
+    }
+    
+    public void setLastRequestId(String lastId) {
+        setLastId("REQ", lastId);
+    }
+    
+    public void setLastTutorId(String lastId) {
+        setLastId("T", lastId);
+    }
+    
+    public void setLastReceptionistId(String lastId) {
+        setLastId("R", lastId);
+    }
+    
+    public void setLastAdminId(String lastId) {
+        setLastId("A", lastId);
+    }
+    
+    public void setLastClassId(String lastId) {
+        setLastId("C", lastId);
+    }
+    
+    public void setLastEnrollmentId(String lastId) {
+        setLastId("E", lastId);
+    }
+    
+    public void setLastPaymentId(String lastId) {
+        setLastId("P", lastId);
+    }
+    
+    // Generic helper to set the last ID from a loaded string
+    private void setLastId(String prefix, String lastId) {
+        if (lastId != null && lastId.startsWith(prefix) && lastId.length() > prefix.length()) {
+            try {
+                int idNum = Integer.parseInt(lastId.substring(prefix.length()));
+                // Only update if the loaded ID number is greater than current
+                if (idNum > lastIds.getOrDefault(prefix, 0)) {
+                    lastIds.put(prefix, idNum);
+                    System.out.println("IDGenerator: Set last ID for " + prefix + " to " + idNum);
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("IDGenerator: Invalid last ID format for " + prefix + ": " + lastId);
+            }
+        }
+    }
+    
         public static void main(String[] args) {
           System.out.println("--- Testing IDGenerator ---");
 

@@ -75,9 +75,12 @@ public class AppLauncher {
                                                          enrollmentRepository,paymentRepository, requestRepository,idGenerator, validator);
             TutorService tutorService = new TutorService(tutorRepository, classesRepository, studentRepository,
                                                          enrollmentRepository, requestRepository);
-            StudentService studentService = new StudentService(studentRepository, subjectRepository, requestRepository);
+            StudentService studentService = new StudentService(studentRepository, subjectRepository, requestRepository,
+                    enrollmentRepository, paymentRepository, classesRepository,
+                    idGenerator, validator);
             
-            MainFrame mainFrame = new MainFrame(authService, adminService, receptionistService, tutorService, studentService);
+            MainFrame mainFrame = new MainFrame(authService, adminService, receptionistService, tutorService,
+                    studentService, requestRepository);
             
             // Make the main application window visible
             mainFrame.setVisible(true);          
