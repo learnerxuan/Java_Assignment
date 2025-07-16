@@ -71,7 +71,7 @@ public class ReceptionistDashboardPanel extends JPanel implements DashboardPanel
         });
 
         manageEnrollBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Manage Enrollments Panel (Coming Soon)");
+            navigator.navigateTo(MainFrame.MANAGE_ENROLLMENT_PANEL, receptionist);
         });
 
         paymentBtn.addActionListener(e -> {

@@ -39,7 +39,7 @@ public class RegisterStudentPanel extends JPanel{
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
 
         JTextField nameField = new JTextField();
-        JTextField passwordField = new JTextField();
+        JPasswordField passwordField = new JPasswordField();
         JTextField phoneField = new JTextField();
         JTextField emailField = new JTextField();
         JTextField genderField = new JTextField();
@@ -97,7 +97,7 @@ public class RegisterStudentPanel extends JPanel{
         // Submit Action
         submitBtn.addActionListener((ActionEvent e) -> {
             String name = nameField.getText().trim();
-            String password = passwordField.getText().trim();
+            String password = new String(passwordField.getPassword()).trim();
             String phone = phoneField.getText().trim();
             String email = emailField.getText().trim();
             String gender = genderField.getText().trim();
@@ -164,7 +164,7 @@ public class RegisterStudentPanel extends JPanel{
 
         // Back action
         backBtn.addActionListener(e -> {
-            navigator.navigateTo("ReceptionistDashboard", receptionist);
+            navigator.navigateTo(MainFrame.RECEPTIONIST_DASHBOARD, receptionist);
         });
     }
 }

@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="RegisterStudentPanel.java">
+    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Completed RegisterStudentPanel.java">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/AcceptPaymentPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ManageEnrollmentPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ReceptionistDashboardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ReceptionistDashboardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/RegisterStudentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/RegisterStudentPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/service/ReceptionistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/service/ReceptionistService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -290,7 +294,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752588944495</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Completed RegisterStudentPanel.java">
+      <option name="closed" value="true" />
+      <created>1752590126106</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1752590126106</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -327,6 +339,7 @@
     <MESSAGE value="." />
     <MESSAGE value="Moved mainframe into the correct folder" />
     <MESSAGE value="RegisterStudentPanel.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="RegisterStudentPanel.java" />
+    <MESSAGE value="Completed RegisterStudentPanel.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed RegisterStudentPanel.java" />
   </component>
 </project>

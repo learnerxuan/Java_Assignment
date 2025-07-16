@@ -24,6 +24,7 @@ public class MainFrame extends JFrame {
     public static final String UPDATE_ADMIN_PROFILE_PANEL = "UpdateAdminProfilePanel";
     public static final String UPDATE_TUTOR_PROFILE_PANEL = "UpdateTutorProfilePanel";
     public static final String REGISTER_STUDENT_PANEL = "RegisterStudentPanel";
+    public static final String MANAGE_ENROLLMENT_PANEL = "ManageEnrollmentPanel";
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -151,6 +152,14 @@ public class MainFrame extends JFrame {
                             targetPanel = new RegisterStudentPanel(receptionistService, receptionistUser, this);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to RegisterStudentPanel with non-Receptionist user or null.");
+                            return;
+                        }
+                        break;
+                    case MANAGE_ENROLLMENT_PANEL:
+                        if (user instanceof com.atu.atc.model.Receptionist receptionistUser) {
+                            targetPanel = new ManageEnrollmentPanel(receptionistService, receptionistUser, this);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to ManageEnrollmentPanel with non-Receptionist user or null.");
                             return;
                         }
                         break;

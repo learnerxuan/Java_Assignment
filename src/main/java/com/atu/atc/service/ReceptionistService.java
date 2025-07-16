@@ -17,6 +17,7 @@ import com.atu.atc.util.Validator;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author henge
@@ -180,6 +181,10 @@ public class ReceptionistService {
             }
         }
         System.out.println("Subject not found in student's enrollment.");
+    }
+
+    public List<String> getEnrolledClassIds(String studentId){
+        return enrollmentRepo.getByStudentId(studentId).stream().map(e -> e.getClassId()).collect(Collectors.toList());
     }
 
     // Accept a payment from student
