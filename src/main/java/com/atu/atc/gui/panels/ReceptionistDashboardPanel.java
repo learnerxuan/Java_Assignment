@@ -85,7 +85,7 @@ public class ReceptionistDashboardPanel extends JPanel implements DashboardPanel
         });
 
         profileBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Update Profile Panel (Coming Soon)");
+            navigator.navigateTo(MainFrame.UPDATE_RECEPTIONIST_PROFILE_PANEL, receptionist);
         });
 
         requestBtn.addActionListener(e -> {

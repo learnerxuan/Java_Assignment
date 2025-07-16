@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Completed ManageEnrollmentPanel.java">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/DeleteStudentPanel.java" afterDir="false" />
+    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Completed DeleteStudentPanel.java">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/UpdateReceptionistProfilePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/AcceptPaymentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/AcceptPaymentPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ReceptionistDashboardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ReceptionistDashboardPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -308,7 +307,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752670422481</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Completed DeleteStudentPanel.java">
+      <option name="closed" value="true" />
+      <created>1752673068250</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1752673068250</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -347,6 +354,7 @@
     <MESSAGE value="RegisterStudentPanel.java" />
     <MESSAGE value="Completed RegisterStudentPanel.java" />
     <MESSAGE value="Completed ManageEnrollmentPanel.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed ManageEnrollmentPanel.java" />
+    <MESSAGE value="Completed DeleteStudentPanel.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed DeleteStudentPanel.java" />
   </component>
 </project>
