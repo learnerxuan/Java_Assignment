@@ -239,4 +239,6 @@ public class ReceptionistService {
         receptionistRepo.update(receptionist);
         System.out.println("Receptionist profile updated.");
     }
+
+    // View pending requests
 }
