@@ -39,7 +39,11 @@ public class UpdateReceptionistProfilePanel extends JPanel{
         JTextField phoneField = new JTextField(receptionist.getPhoneNumber());
         JTextField emailField = new JTextField(receptionist.getEmail());
         JTextField genderField = new JTextField(receptionist.getGender());
-        JTextField passwordField = new JTextField(receptionist.getPassword());
+        JPasswordField passwordField = new JPasswordField();
+        JPasswordField newPasswordField = new JPasswordField();
+
+        passwordField.setEchoChar('*');
+        newPasswordField.setEchoChar('*');
 
         formPanel.add(new JLabel("Full Name:"));
         formPanel.add(nameField);
@@ -53,8 +57,11 @@ public class UpdateReceptionistProfilePanel extends JPanel{
         formPanel.add(new JLabel("Gender:"));
         formPanel.add(genderField);
 
-        formPanel.add(new JLabel("Password:"));
+        formPanel.add(new JLabel("Current Password:"));
         formPanel.add(passwordField);
+
+        formPanel.add(new JLabel("New Password:"));
+        formPanel.add(newPasswordField);
 
         add(formPanel, BorderLayout.CENTER);
 
@@ -67,14 +74,17 @@ public class UpdateReceptionistProfilePanel extends JPanel{
         add(buttonPanel, BorderLayout.SOUTH);
 
         updateBtn.addActionListener(e -> {
+            String enteredPassword = new String(passwordField.getPassword());
+            String actualPassword = receptionist.getPassword();
+
             String name = nameField.getText().trim();
             String phone = phoneField.getText().trim();
             String email = emailField.getText().trim();
             String gender = genderField.getText().trim();
-            String password = passwordField.getText().trim();
+            String newPassword = new String(newPasswordField.getPassword());
 
-            if (name.isEmpty() || phone.isEmpty() || email.isEmpty() || gender.isEmpty() || password.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Please fill in al fields.");
+            if (name.isEmpty() || phone.isEmpty() || email.isEmpty() || gender.isEmpty() || enteredPassword.isEmpty() || newPassword.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Please fill in all fields.");
                 return;
             }
 
@@ -88,8 +98,24 @@ public class UpdateReceptionistProfilePanel extends JPanel{
                 return;
             }
 
-            receptionistService.updateProfile(receptionist, password, name, phone, email, gender);
+            if (!enteredPassword.equals(actualPassword)) {
+                JOptionPane.showMessageDialog(this, "Incorrect password. Please enter your current password to confirm changes.");
+                return;
+            }
+
+            receptionistService.updateProfile(receptionist, newPassword, name, phone, email, gender);
             JOptionPane.showMessageDialog(this, "Profile updated successfully.");
+
+            nameField.setText("");
+            phoneField.setText("");
+            emailField.setText("");
+            genderField.setText("");
+            passwordField.setText("");
+            newPasswordField.setText("");
+        });
+
+        backBtn.addActionListener(e -> {
+            navigator.navigateTo(MainFrame.RECEPTIONIST_DASHBOARD, receptionist);
         });
     }
 }
