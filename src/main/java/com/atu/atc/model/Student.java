@@ -6,10 +6,10 @@ public class Student extends User {
     private String monthOfEnroll;
     private String level; // Student's academic level (e.g., Year 1, Year 2, or Level 1-5)
     
-    public Student(String id, String password, String role, String fullName,
+    public Student(String id, String password, String fullName,
                    String phoneNumber, String email, String gender,
                    String icPassport, String address, String monthOfEnroll, String level) {
-        super(id, password, role, fullName, phoneNumber, email, gender);
+        super(id, password, "Student", fullName, phoneNumber, email, gender);
         this.icPassport = icPassport;
         this.address = address;
         this.monthOfEnroll = monthOfEnroll;
@@ -75,19 +75,18 @@ public class Student extends User {
     
     public static Student fromFileString(String fileString) {
         String[] parts = fileString.split(";");
-        if (parts.length == 11) {
+        if (parts.length == 10) {
             return new Student(
                     parts[0], // id
                     parts[1], // password
-                    parts[2], // role
-                    parts[3], // fullName
-                    parts[4], // phoneNumber
-                    parts[5], // email
-                    parts[6], // gender
-                    parts[7], // icPassport
-                    parts[8], // address
-                    parts[9], // monthOfEnroll
-                    parts[10] // level
+                    parts[2], // fullName
+                    parts[3], // phoneNumber
+                    parts[4], // email
+                    parts[5], // gender
+                    parts[6], // icPassport
+                    parts[7], // address
+                    parts[8], // monthOfEnroll
+                    parts[9] // level
             );
         }
         return null; // Or throw an exception for malformed string

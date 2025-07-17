@@ -269,14 +269,14 @@ public class ReceptionistService {
         }
 
         // Get student and level
-        Student student = studentRepo.getById(request.getStudent_id());
+        Student student = studentRepo.getById(request.getStudentId());
         if (student == null) {
             return "Student not found.";
         }
 
         String studentLevel = student.getLevel();
-        String currentSubjectId = request.getCurrent_subject_id();
-        String requestedSubjectId = request.getRequested_subject_id();
+        String currentSubjectId = request.getCurrentSubjectId();
+        String requestedSubjectId = request.getRequestedSubjectId();
 
         // Check if already enrolled
         List<Enrollment> enrollments = enrollmentRepo.getByStudentId(student.getId());
