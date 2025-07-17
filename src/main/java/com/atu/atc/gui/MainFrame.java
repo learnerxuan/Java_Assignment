@@ -38,6 +38,8 @@ public class MainFrame extends JFrame {
     public static final String VIEW_PAYMENT_HISTORY_PANEL = "ViewPaymentHistoryPanel";
     public static final String VIEW_REQUEST_STATUS_PANEL = "ViewRequestStatusPanel";
     public static final String VIEW_SCHEDULE_PANEL = "ViewSchedulePanel";
+    public static final String VIEW_ENROLLED_STUDENTS_PANEL = "ViewEnrolledStudentsPanel";
+    public static final String MANAGE_CLASSES_PANEL = "ManageClassesPanel";
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -199,6 +201,23 @@ public class MainFrame extends JFrame {
                             targetPanel = new UpdateReceptionistProfilePanel(receptionistService, receptionistUser, this);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to UpdateReceptionistProfilePanel with non-Receptionist user or null.");
+                            return;
+                        }
+                        break;
+                    case VIEW_ENROLLED_STUDENTS_PANEL:
+                        if (user instanceof com.atu.atc.model.Tutor tutorUser) {
+                                targetPanel = new ViewEnrolledStudentsPanel(tutorService, this, tutorUser);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to ViewEnrolledStudentsPanel with non-Tutor user or null.");
+                            return;
+                        }
+                        break;
+
+                    case MANAGE_CLASSES_PANEL:
+                        if (user instanceof com.atu.atc.model.Tutor tutorUser) {
+                            targetPanel = new ManageClassesPanel(tutorService, this, tutorUser);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to ManageClassesPanel with non-Tutor user or null.");
                             return;
                         }
                         break;
