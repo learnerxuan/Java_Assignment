@@ -201,6 +201,11 @@ public class ReceptionistService {
         return generateReceipt(payment);
     }
 
+    // Get all payments
+    public List<Payment> getAllPayments(){
+        return paymentRepo.getAll();
+    }
+
     // Generate receipt
     private String generateReceipt(Payment payment) {
         return "\n----- Receipt -----\n" +

@@ -7,6 +7,7 @@ package com.atu.atc.data;
 import com.atu.atc.model.Payment;
 import com.atu.atc.util.FileUtils;
 
+import java.sql.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class PaymentRepository {
     }
 
     public List<Payment> getAll() {
-        return payments;
+        return new ArrayList<>(payments);
     }
 
     public List<Payment> getByStudentId(String studentId) {

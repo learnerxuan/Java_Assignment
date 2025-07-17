@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Completed UpdateReceptionistProfilePanel.java">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ManageRequestsPanel.java" afterDir="false" />
+    <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Completed ManageRequestsPanel">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/data/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/data/PaymentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/AcceptPaymentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/AcceptPaymentPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/service/ReceptionistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/service/ReceptionistService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -337,7 +339,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752685018772</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Completed ManageRequestsPanel">
+      <option name="closed" value="true" />
+      <created>1752746988005</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1752746988005</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -352,7 +362,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="changed username to id" />
     <MESSAGE value="staff changed to receptionist in txt file.&#10;STF become R, counter also changed to R, added receptionist id to payments.txt" />
     <MESSAGE value="good" />
     <MESSAGE value="Renewed UserRepository.java" />
@@ -377,6 +386,7 @@
     <MESSAGE value="Completed DeleteStudentPanel.java" />
     <MESSAGE value="changes to some error" />
     <MESSAGE value="Completed UpdateReceptionistProfilePanel.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed UpdateReceptionistProfilePanel.java" />
+    <MESSAGE value="Completed ManageRequestsPanel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed ManageRequestsPanel" />
   </component>
 </project>

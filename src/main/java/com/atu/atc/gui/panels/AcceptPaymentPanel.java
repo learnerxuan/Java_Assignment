@@ -2,8 +2,10 @@ package com.atu.atc.gui.panels;
 
 import com.atu.atc.gui.MainFrame;
 import com.atu.atc.model.Receptionist;
+import com.atu.atc.model.Payment;
 import com.atu.atc.service.ReceptionistService;
 
+import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -54,11 +56,42 @@ public class AcceptPaymentPanel extends JPanel{
 
         JPanel btnPanel = new JPanel();
         JButton submitBtn = new JButton("Submit Payment");
+        JButton showTransactionsBtn = new JButton("Show Past Transactions");
         JButton backBtn = new JButton("Back");
+        btnPanel.add(showTransactionsBtn);
         btnPanel.add(submitBtn);
         btnPanel.add(backBtn);
 
         add(btnPanel, BorderLayout.SOUTH);
+
+        showTransactionsBtn.addActionListener(e -> {
+            List<Payment> payments = receptionistService.getAllPayments();
+
+            if (payments.isEmpty()){
+                JOptionPane.showMessageDialog(this, "No transactions found.");
+                return;
+            }
+
+            // Create table
+            String[] columns = {"Payment ID", "Student ID", "Amount", "Date", "Method", "Status", "Receptionist ID"};
+            Object[][] data = new Object[payments.size()][columns.length];
+
+            for (int i=0; i < payments.size(); i++){
+                Payment p = payments.get(i);
+                data[i][0] = p.getPaymentId();
+                data[i][1] = p.getStudentId();
+                data[i][2] = "RM " + String.format("%.2f", p.getAmount());
+                data[i][3] = p.getDate().toString();
+                data[i][4] = p.getPaymentMethod();
+                data[i][5] = p.getStatus();
+                data[i][6] = p.getReceptionistId();
+            }
+
+            JTable table = new JTable(data, columns);
+            JScrollPane scrollPane = new JScrollPane(table);
+
+            JOptionPane.showMessageDialog(this, scrollPane, "Past Transactions", JOptionPane.PLAIN_MESSAGE);
+        });
 
         submitBtn.addActionListener((ActionEvent e) -> {
             String studentId = studentIdField.getText().trim();
