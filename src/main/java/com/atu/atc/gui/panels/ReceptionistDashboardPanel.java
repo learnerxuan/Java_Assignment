@@ -89,7 +89,7 @@ public class ReceptionistDashboardPanel extends JPanel implements DashboardPanel
         });
 
         requestBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Student Request Panel (Coming Soon)");
+            navigator.navigateTo(MainFrame.UPDATE_RECEPTIONIST_PROFILE_PANEL, receptionist);
         });
 
         logoutBtn.addActionListener(e -> {
