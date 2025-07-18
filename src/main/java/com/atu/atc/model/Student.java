@@ -4,9 +4,9 @@ public class Student extends User {
     private String icPassport;
     private String address;
     private String monthOfEnroll;
-    private String level; // Student's academic level (e.g., Year 1, Year 2, or Level 1-5)
+    private String level;
     
-    public Student(String id, String password, String fullName,
+    public Student(String id, String fullName, String password,
                    String phoneNumber, String email, String gender,
                    String icPassport, String address, String monthOfEnroll, String level) {
         super(id, password, "Student", fullName, phoneNumber, email, gender);
@@ -16,7 +16,7 @@ public class Student extends User {
         this.level = level;
     }
     
-    // Getters specific to Student
+    // Getters
     public String getIcPassport() {
         return icPassport;
     }
@@ -33,7 +33,7 @@ public class Student extends User {
         return level;
     }
     
-    // Setters specific to Student [ADDITION]
+    // Setters
     public void setIcPassport(String icPassport) {
         this.icPassport = icPassport;
     }
@@ -50,45 +50,43 @@ public class Student extends User {
         this.level = level;
     }
     
-    
     @Override
     public boolean login(String enteredId, String enteredPassword) {
-        return false;
+        return getId().equals(enteredId) && getPassword().equals(enteredPassword);
     }
     
     @Override
     public String toFileString() {
-        return String.join(";",
-                getId(),
-                getPassword(),
-                getRole(),
-                getFullName(),
-                getPhoneNumber(),
-                getEmail(),
-                getGender(),
-                icPassport,
-                address,
-                monthOfEnroll,
-                level
+        return String.join(",",
+                getId(),             // student_id
+                getFullName(),       // student_name
+                getPassword(),       // password
+                getPhoneNumber(),    // phone_number
+                getEmail(),          // email
+                getGender(),         // gender
+                icPassport,          // IC/Passport
+                address,             // address
+                monthOfEnroll,       // month_of_enroll
+                level                // level
         );
     }
     
     public static Student fromFileString(String fileString) {
-        String[] parts = fileString.split(";");
+        String[] parts = fileString.split(",", -1);
         if (parts.length == 10) {
             return new Student(
-                    parts[0], // id
-                    parts[1], // password
-                    parts[2], // fullName
-                    parts[3], // phoneNumber
+                    parts[0], // student_id
+                    parts[1], // student_name
+                    parts[2], // password
+                    parts[3], // phone_number
                     parts[4], // email
                     parts[5], // gender
-                    parts[6], // icPassport
+                    parts[6], // IC/Passport
                     parts[7], // address
-                    parts[8], // monthOfEnroll
-                    parts[9] // level
+                    parts[8], // month_of_enroll
+                    parts[9]  // level
             );
         }
-        return null; // Or throw an exception for malformed string
+        return null;
     }
 }

@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Request {
-    private final String requestId;
-    private final String studentId;
-    private final String currentSubjectId;
-    private final String requestedSubjectId;
+    private String requestId;
+    private String studentId;
+    private String currentSubjectId;
+    private String requestedSubjectId;
     private String status; // e.g., "Pending", "Approved", "Rejected"
-    private final LocalDate requestDate;
+    private LocalDate requestDate;
     
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
     
@@ -23,7 +23,7 @@ public class Request {
         this.requestDate = requestDate;
     }
     
-    // Getters [ADDITION/CONFIRMATION]
+    // Getters
     public String getRequestId() {
         return requestId;
     }
@@ -48,12 +48,32 @@ public class Request {
         return requestDate;
     }
     
-    // Setters (if needed, only for mutable properties like status)
+    // Setters (for mutable fields only)
     public void setStatus(String status) {
         this.status = status;
     }
     
-    // For file persistence
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+    
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+    
+    public void setCurrentSubjectId(String currentSubjectId) {
+        this.currentSubjectId = currentSubjectId;
+    }
+    
+    public void setRequestedSubjectId(String requestedSubjectId) {
+        this.requestedSubjectId = requestedSubjectId;
+    }
+    
+    public void setRequestDate(LocalDate requestDate) {
+        this.requestDate = requestDate;
+    }
+    
+    // Persistence methods
     public String toFileString() {
         return String.join(";",
                 requestId,
@@ -77,6 +97,6 @@ public class Request {
                     LocalDate.parse(parts[5], DATE_FORMATTER) // requestDate
             );
         }
-        return null; // Or throw an exception
+        return null;
     }
 }

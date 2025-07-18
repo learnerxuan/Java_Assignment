@@ -2,34 +2,27 @@ package com.atu.atc.data;
 
 import com.atu.atc.model.Request;
 import com.atu.atc.util.FileUtils;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Optional;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-/**
- *
- * @author farris
- */
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+
 public class RequestRepository {
-    private static final String FILE_PATH = "data/requests.txt";
-    private static final String HEADER = "request_id, student_id, current_subject_id, requested_subject_id, status";
+    private static final String filePath = "data/requests.txt";
     private List<Request> requests = new ArrayList<>();
-    public void load() {
+    
+    public RequestRepository() {
+        load();
+    }
+    
+    private void load() {
         requests.clear();
-        List<String> lines = FileUtils.readDataLines(FILE_PATH);
+        List<String> lines = FileUtils.readDataLines(filePath);
         for (String line : lines) {
-            String[] parts = line.split(",", -1);
-            if (parts.length == 5) {
-                String request_id = parts[0].trim();
-                String student_id = parts[1].trim();
-                String current_subject_id = parts[2].trim();
-                String requested_subject_id = parts[3].trim();
-                String status = parts[4].trim();
-                LocalDate date = LocalDate.parse(parts[5]);
-                Request r = new Request(request_id, student_id, current_subject_id, requested_subject_id, status, date);
+            if (line.trim().isEmpty() || line.startsWith("request_id")) continue;
+            Request r = Request.fromFileString(line);
+            if (r != null) {
                 requests.add(r);
             } else {
                 System.err.println("RequestRepository: Invalid data format for line: " + line);
@@ -37,13 +30,33 @@ public class RequestRepository {
         }
     }
     
-    public void save() {
+    private void save() {
         List<String> lines = new ArrayList<>();
-        lines.add(HEADER);
+        lines.add("request_id;student_id;current_subject_id;requested_subject_id;status;request_date");
         for (Request r : requests) {
             lines.add(r.toFileString());
         }
-        FileUtils.writeLines(FILE_PATH, lines);
+        FileUtils.writeLines(filePath, lines);
+    }
+    
+    public List<Request> getAll() {
+        return new ArrayList<>(requests);
+    }
+    
+    public Optional<Request> getRequestById(String requestId) {
+        return requests.stream()
+                .filter(r -> r.getRequestId().equals(requestId))
+                .findFirst();
+    }
+    
+    public List<Request> getByStudentId(String studentId) {
+        List<Request> result = new ArrayList<>();
+        for (Request r : requests) {
+            if (r.getStudentId().equals(studentId)) {
+                result.add(r);
+            }
+        }
+        return result;
     }
     
     public void add(Request request) {
@@ -65,7 +78,7 @@ public class RequestRepository {
                 return true;
             }
         }
-        System.err.println("RequestRepository: Request with ID " + updatedRequest.getRequestId() + " not found for update.");
+        System.err.println("RequestRepository: Request with ID " + updatedRequest.getRequestId() + " not found.");
         return false;
     }
     
@@ -84,28 +97,9 @@ public class RequestRepository {
             save();
             System.out.println("RequestRepository: Request deleted: " + requestId);
             return true;
+        } else {
+            System.err.println("RequestRepository: Request with ID " + requestId + " not found.");
+            return false;
         }
-        System.err.println("RequestRepository: Request with ID " + requestId + " not found for deletion.");
-        return false;
-    }
-    
-    public List<Request> getAll() {
-        return new ArrayList<>(requests);
-    }
-
-    public Optional<Request> getRequestById(String requestId) {
-        return requests.stream()
-                .filter(r -> r.getRequestId().equals(requestId))
-                .findFirst();
-    }
-    
-    public List<Request> getByStudentId(String studentId) {
-        List<Request> result = new ArrayList<>();
-        for (Request r : requests) {
-            if (r.getStudentId().equals(studentId)) {
-                result.add(r);
-            }
-        }
-        return result;
     }
 }

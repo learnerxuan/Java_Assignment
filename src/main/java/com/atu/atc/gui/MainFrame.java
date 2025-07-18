@@ -35,15 +35,16 @@ public class MainFrame extends JFrame {
     public static final String DELETE_STUDENT_PANEL = "DeleteStudentPanel";
     public static final String UPDATE_RECEPTIONIST_PROFILE_PANEL = "UpdateReceptionistProfilePanel";
     public static final String MANAGE_REQUESTS_PANEL = "ManageRequestsPanel";
-    public static final String STUDENT_PROFILE_PANEL = "StudentProfilePanel";
-
-    public static final String VIEW_ENROLLED_SUBJECTS_PANEL = "ViewEnrolledSubjectsPanel";
-    public static final String SUBMIT_SUBJECT_CHANGE_REQUEST_PANEL = "SubmitSubjectChangeRequestPanel";
-    public static final String VIEW_PAYMENT_HISTORY_PANEL = "ViewPaymentHistoryPanel";
-    public static final String VIEW_REQUEST_STATUS_PANEL = "ViewRequestStatusPanel";
+    // Student
     public static final String VIEW_SCHEDULE_PANEL = "ViewSchedulePanel";
     public static final String VIEW_ENROLLED_STUDENTS_PANEL = "ViewEnrolledStudentsPanel";
     public static final String MANAGE_CLASSES_PANEL = "ManageClassesPanel";
+    public static final String SUBJECT_CHANGE_REQUEST_PANEL = "subjectChangeRequestPanel";
+    public static final String DELETE_PENDING_REQUEST_PANEL = "deletePendingRequestPanel";
+    public static final String VIEW_PAYMENT_STATUS_PANEL = "viewPaymentStatusPanel";
+    public static final String UPDATE_STUDENT_PROFILE_PANEL = "updateStudentProfilePanel";
+    public static final String VIEW_REQUEST_STATUS_PANEL = "ViewRequestStatusPanel";
+
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -128,6 +129,7 @@ public class MainFrame extends JFrame {
                             return;
                         }
                         break;
+                        
                     case REGISTER_TUTOR_PANEL:
                         if (user instanceof Admin adminUser) { 
                             targetPanel = new RegisterTutorPanel(adminService, this, adminUser);

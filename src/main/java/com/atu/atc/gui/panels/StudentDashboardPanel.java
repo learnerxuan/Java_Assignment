@@ -1,82 +1,114 @@
 package com.atu.atc.gui.panels;
 
 import com.atu.atc.gui.MainFrame;
+import com.atu.atc.model.User;
 import com.atu.atc.model.Student;
+import com.atu.atc.service.StudentService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class StudentDashboardPanel extends JPanel {
-    private final MainFrame navigatorFrame;
-    private Student currentStudent;
+public class StudentDashboardPanel extends JPanel implements DashboardPanelInterface {
     
+    // UI Components
     private JLabel welcomeLabel;
+    private JButton viewScheduleButton;
+    private JButton requestSubjectChangeButton;
+    private JButton deletePendingRequestButton;
+    private JButton viewPaymentStatusButton;
+    private JButton updateProfileButton;
+    private JButton logoutButton;
+    private JButton viewRequestStatusButton;
     
-    public StudentDashboardPanel(MainFrame navigatorFrame) {
-        this.navigatorFrame = navigatorFrame;
+    
+    // Dependencies
+    private final StudentService studentService;
+    private final MainFrame.PanelNavigator navigator;
+    
+    // State
+    private Student loggedInStudent;
+    
+    public StudentDashboardPanel(StudentService studentService, Student loggedInStudent, MainFrame.PanelNavigator navigator) {
+        this.studentService = studentService;
+        this.loggedInStudent = loggedInStudent;
+        this.navigator = navigator;
+        
         setLayout(new BorderLayout());
-        initComponents();
-    }
-    
-    private void initComponents() {
-        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        welcomeLabel = new JLabel("Welcome, Student!");
+        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        
+        // Welcome Label
+        welcomeLabel = new JLabel();
         welcomeLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        headerPanel.add(welcomeLabel);
-        add(headerPanel, BorderLayout.NORTH);
+        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(welcomeLabel, BorderLayout.NORTH);
         
-        JPanel centerPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        // Button Panel
+        JPanel buttonPanel = new JPanel(new GridLayout(6, 1, 10, 10));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
         
-        // Dashboard Buttons
-        JButton btnViewProfile = new JButton("View/Update Profile");
-        JButton btnViewSchedule = new JButton("View Class Schedule");
-        JButton btnViewPaymentHistory = new JButton("View Payment History");
-        JButton btnViewRequestStatus = new JButton("View Subject Change Request Status");
-        JButton btnSubmitSubjectChange = new JButton("Submit Subject Change Request");
-        JButton btnLogout = new JButton("Logout");
+        viewScheduleButton = new JButton("View Class Schedule");
+        requestSubjectChangeButton = new JButton("Request Subject Change");
+        deletePendingRequestButton = new JButton("Delete Pending Subject Change Request");
+        viewPaymentStatusButton = new JButton("View Payment Status");
+        updateProfileButton = new JButton("Update My Profile");
+        logoutButton = new JButton("Logout");
+        viewRequestStatusButton = new JButton("View Request Status");
         
-        // Add action listeners
-        btnViewProfile.addActionListener(e -> navigatorFrame.navigateTo(MainFrame.STUDENT_PROFILE_PANEL, currentStudent));
-        btnViewSchedule.addActionListener(e -> navigatorFrame.navigateTo(MainFrame.VIEW_SCHEDULE_PANEL, currentStudent));
-        btnViewPaymentHistory.addActionListener(e -> navigatorFrame.navigateTo(MainFrame.VIEW_PAYMENT_HISTORY_PANEL, currentStudent));
-        btnViewRequestStatus.addActionListener(e -> navigatorFrame.navigateTo(MainFrame.VIEW_REQUEST_STATUS_PANEL, currentStudent));
-        btnSubmitSubjectChange.addActionListener(e -> navigatorFrame.navigateTo(MainFrame.SUBMIT_SUBJECT_CHANGE_REQUEST_PANEL, currentStudent));
-        btnLogout.addActionListener(e -> navigatorFrame.navigateTo(MainFrame.LOGIN_PANEL, null)); // Logout, no user needed for login panel
+        buttonPanel.add(viewScheduleButton);
+        buttonPanel.add(requestSubjectChangeButton);
+        buttonPanel.add(deletePendingRequestButton);
+        buttonPanel.add(viewPaymentStatusButton);
+        buttonPanel.add(updateProfileButton);
+        buttonPanel.add(logoutButton);
+        buttonPanel.add(viewRequestStatusButton);
         
-        // Layout buttons
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        centerPanel.add(btnViewProfile, gbc);
+        add(buttonPanel, BorderLayout.CENTER);
         
-        gbc.gridy = 1;
-        centerPanel.add(btnViewSchedule, gbc);
+        // Button Actions
+        viewScheduleButton.addActionListener(e -> {
+            navigator.navigateTo(MainFrame.VIEW_SCHEDULE_PANEL, loggedInStudent);
+            System.out.println("Student: Navigating to View Schedule Panel.");
+        });
         
-        gbc.gridy = 2;
-        centerPanel.add(btnViewPaymentHistory, gbc);
+        requestSubjectChangeButton.addActionListener(e -> {
+            navigator.navigateTo(MainFrame.SUBJECT_CHANGE_REQUEST_PANEL, loggedInStudent);
+            System.out.println("Student: Navigating to Subject Change Request Panel.");
+        });
         
-        gbc.gridy = 3;
-        centerPanel.add(btnViewRequestStatus, gbc);
+        deletePendingRequestButton.addActionListener(e -> {
+            navigator.navigateTo(MainFrame.DELETE_PENDING_REQUEST_PANEL, loggedInStudent);
+            System.out.println("Student: Navigating to Delete Pending Subject Change Request Panel.");
+        });
         
-        gbc.gridy = 4;
-        centerPanel.add(btnSubmitSubjectChange, gbc);
+        viewPaymentStatusButton.addActionListener(e -> {
+            navigator.navigateTo(MainFrame.VIEW_PAYMENT_STATUS_PANEL, loggedInStudent);
+            System.out.println("Student: Navigating to View Payment Status Panel.");
+        });
         
-        gbc.gridy = 5;
-        centerPanel.add(btnLogout, gbc);
+        updateProfileButton.addActionListener(e -> {
+            navigator.navigateTo(MainFrame.UPDATE_STUDENT_PROFILE_PANEL, loggedInStudent);
+            System.out.println("Student: Navigating to Update Profile Panel.");
+        });
         
-        add(centerPanel, BorderLayout.CENTER);
+        viewRequestStatusButton.addActionListener(e -> {
+            navigator.navigateTo(MainFrame.VIEW_REQUEST_STATUS_PANEL, loggedInStudent);
+            System.out.println("Student: Navigating to View Request Status Panel.");
+        });
+        
+        logoutButton.addActionListener(e -> {
+            navigator.logout();
+        });
+        
+        updateUserContext(loggedInStudent);
     }
     
-    public void setStudent(Student student) {
-        this.currentStudent = student;
-        if (currentStudent != null) {
-            welcomeLabel.setText("Welcome, " + currentStudent.getFullName() + " (ID: " + currentStudent.getId() + ")!");
+    @Override
+    public void updateUserContext(User user) {
+        if (user instanceof Student) {
+            this.loggedInStudent = (Student) user;
+            welcomeLabel.setText("Welcome, " + loggedInStudent.getFullName() + "!");
         } else {
-            welcomeLabel.setText("Welcome, Student!"); // Fallback
+            welcomeLabel.setText("Welcome, Student!");
         }
     }
 }

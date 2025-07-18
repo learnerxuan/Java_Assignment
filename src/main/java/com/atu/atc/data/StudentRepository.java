@@ -12,17 +12,23 @@ import java.util.Optional;
  */
 
 public class StudentRepository extends UserRepository<Student> {
-    private static final String FILE_PATH = "data/students.txt";
+    private static final String filePath = "data/students.txt";
     private static final String HEADER = "student_id,student_name,password,phone_number,email,gender,IC/Passport,address,month_of_enroll,level";
     
     @Override
     public void load() {
         users.clear();
-        List<String> lines = FileUtils.readDataLines(FILE_PATH); // Skips header
+        List<String> lines = FileUtils.readDataLines(filePath);
         
+        // Skip header line if present
+        boolean isFirstLine = true;
         for (String line : lines) {
+            if (isFirstLine) {
+                isFirstLine = false;
+                continue;
+            }
+            
             String[] parts = line.split(",", -1);
-            // Keep empty fields
             if (parts.length == 10) {
                 String id = parts[0].trim();
                 String name = parts[1].trim();
@@ -41,6 +47,7 @@ public class StudentRepository extends UserRepository<Student> {
             }
         }
     }
+
     
     @Override
     public void save() {
@@ -49,7 +56,7 @@ public class StudentRepository extends UserRepository<Student> {
         for (Student s : users) {
             lines.add(s.toFileString());
         }
-        FileUtils.writeLines(FILE_PATH, lines);
+        FileUtils.writeLines(filePath, lines);
     }
     
     public Optional<Student> getByStudentId(String studentId) {
