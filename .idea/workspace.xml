@@ -6,6 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Modified AcceptPaymentPanel">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/DeletePendingRequestPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/DeletePendingRequestPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/SubjectChangeRequestPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/SubjectChangeRequestPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/UpdateStudentProfilePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/UpdateStudentProfilePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ViewPaymentStatusPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ViewPaymentStatusPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ViewRequestStatusPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ViewRequestStatusPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ViewSchedulePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ViewSchedulePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/model/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/service/StudentService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
