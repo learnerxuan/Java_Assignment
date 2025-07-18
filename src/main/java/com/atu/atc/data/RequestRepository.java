@@ -16,7 +16,7 @@ public class RequestRepository {
         load();
     }
     
-    private void load() {
+    public void load() {
         requests.clear();
         List<String> lines = FileUtils.readDataLines(filePath);
         for (String line : lines) {
@@ -30,7 +30,7 @@ public class RequestRepository {
         }
     }
     
-    private void save() {
+    public void save() {
         List<String> lines = new ArrayList<>();
         lines.add("request_id;student_id;current_subject_id;requested_subject_id;status;request_date");
         for (Request r : requests) {
