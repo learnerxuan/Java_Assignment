@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.atu.atc.gui.panels;
 
 import com.atu.atc.gui.MainFrame;
@@ -11,10 +7,6 @@ import com.atu.atc.service.TutorService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TutorDashboardPanel extends JPanel implements DashboardPanelInterface {
 
@@ -37,11 +29,13 @@ public class TutorDashboardPanel extends JPanel implements DashboardPanelInterfa
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
+        // Welcome Label
         welcomeLabel = new JLabel();
         welcomeLabel.setFont(new Font("Serif", Font.BOLD, 24));
         welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(welcomeLabel, BorderLayout.NORTH);
 
+        // Button Panel
         JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 10, 10));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
 
@@ -56,24 +50,15 @@ public class TutorDashboardPanel extends JPanel implements DashboardPanelInterfa
         buttonPanel.add(logoutButton);
 
         add(buttonPanel, BorderLayout.CENTER);
-
+        
         manageClassesButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Class Management features are coming soon!", "Feature Not Available", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("Tutor: Navigating to Manage Classes Panel (placeholder).");
+            navigator.navigateTo(MainFrame.MANAGE_CLASSES_PANEL, loggedInTutor);
+            System.out.println("Tutor: Navigating to Manage Classes Panel.");
         });
 
         viewEnrolledStudentsButton.addActionListener(e -> {
-            List<String> studentsInfo = tutorService.viewStudentsEnrolledInMySubjects(loggedInTutor.getId());
-            if (studentsInfo.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No students currently enrolled in your classes.", "Enrolled Students", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JTextArea textArea = new JTextArea(String.join("\n", studentsInfo));
-                textArea.setEditable(false);
-                JScrollPane scrollPane = new JScrollPane(textArea);
-                scrollPane.setPreferredSize(new Dimension(400, 300));
-                JOptionPane.showMessageDialog(this, scrollPane, "Enrolled Students for " + loggedInTutor.getFullName(), JOptionPane.PLAIN_MESSAGE);
-            }
-            System.out.println("Tutor: Viewing Enrolled Students (logic in service).");
+            navigator.navigateTo(MainFrame.VIEW_ENROLLED_STUDENTS_PANEL, loggedInTutor);
+            System.out.println("Tutor: Navigating to View Enrolled Students Panel.");
         });
 
         updateProfileButton.addActionListener(e -> {

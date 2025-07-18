@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 public class ManageClassesPanel extends JPanel {
 
     private final TutorService tutorService;
-    private final SubjectRepository subjectRepository;
-    private final ClassesRepository classesRepository;
+    private final SubjectRepository subjectRepository = new SubjectRepository();
+    private final ClassesRepository classesRepository = new ClassesRepository();
     private final MainFrame.PanelNavigator navigator;
     private Tutor loggedInTutor;
 
@@ -30,11 +30,10 @@ public class ManageClassesPanel extends JPanel {
     private final JComboBox<String> subjectComboBox = new JComboBox<>();
     private final JTextArea classArea = new JTextArea(10, 40);
 
-    public ManageClassesPanel(TutorService tutorService, SubjectRepository subjectRepository, ClassesRepository classesRepository, MainFrame.PanelNavigator navigator) {
+    public ManageClassesPanel(TutorService tutorService, MainFrame.PanelNavigator navigator, Tutor tutorUser) {
         this.tutorService = tutorService;
-        this.subjectRepository = subjectRepository;
-        this.classesRepository = classesRepository;
         this.navigator = navigator;
+        this.loggedInTutor = tutorUser;
         initUI();
     }
 
@@ -126,12 +125,19 @@ public class ManageClassesPanel extends JPanel {
 
             String schedule = day + " " + startTime + "-" + endTime;
             Classes newClass = new Classes("", subjectOpt.get().getSubjectId(), loggedInTutor.getId(), day, startTime, endTime);
-            boolean added = tutorService.addClassInformation(newClass);
+            boolean added = tutorService.addClassInformation(
+                newClass.getSubjectId(),
+                "N/A",    // Level (not available from UI)
+                0.0,      // Charges (not available from UI)
+                newClass.getDay() + " " + newClass.getStartTime() + "-" + newClass.getEndTime(),
+                newClass.getTutorId()
+            );
             JOptionPane.showMessageDialog(this, added ? "Class added." : "Failed to add class.");
         });
 
         updateBtn.addActionListener(e -> {
             if (loggedInTutor == null) return;
+
             String classId = classIdField.getText().trim();
             String subjectName = (String) subjectComboBox.getSelectedItem();
             String day = dayField.getText().trim();
@@ -152,9 +158,16 @@ public class ManageClassesPanel extends JPanel {
                 return;
             }
 
-            String schedule = day + " " + startTime + "-" + endTime;
-            Classes updated = new Classes(classId, subjectOpt.get().getSubjectId(), loggedInTutor.getId(), day, startTime, endTime);
-            boolean success = tutorService.updateClassInformation(updated);
+            // ✅ This matches the TutorService method (which requires 6 arguments)
+            boolean success = tutorService.updateClassInformation(
+                classId,
+                subjectOpt.get().getSubjectId(),
+                "N/A", // level not stored in Classes
+                0.0,   // charges not stored in Classes
+                day + " " + startTime + "-" + endTime,
+                loggedInTutor.getId()
+            );
+
             JOptionPane.showMessageDialog(this, success ? "Class updated." : "Update failed.");
         });
 

@@ -22,22 +22,28 @@ public class MainFrame extends JFrame {
     public static final String RECEPTIONIST_DASHBOARD = "ReceptionistDashboard";
     public static final String TUTOR_DASHBOARD = "TutorDashboard";
     public static final String STUDENT_DASHBOARD = "StudentDashboard";
+    // Admin
     public static final String REGISTER_TUTOR_PANEL = "RegisterTutorPanel";
     public static final String VIEW_REPORT_PANEL = "ViewReportPanel";
     public static final String MANAGE_RECEPTIONISTS_PANEL = "ManageReceptionistsPanel";
     public static final String UPDATE_ADMIN_PROFILE_PANEL = "UpdateAdminProfilePanel";
     public static final String UPDATE_TUTOR_PROFILE_PANEL = "UpdateTutorProfilePanel";
+    // Receptionist
     public static final String REGISTER_STUDENT_PANEL = "RegisterStudentPanel";
     public static final String MANAGE_ENROLLMENT_PANEL = "ManageEnrollmentPanel";
     public static final String ACCEPT_PAYMENT_PANEL = "AcceptPaymentPanel";
     public static final String DELETE_STUDENT_PANEL = "DeleteStudentPanel";
     public static final String UPDATE_RECEPTIONIST_PROFILE_PANEL = "UpdateReceptionistProfilePanel";
+    public static final String MANAGE_REQUESTS_PANEL = "ManageRequestsPanel";
     public static final String STUDENT_PROFILE_PANEL = "StudentProfilePanel";
+
     public static final String VIEW_ENROLLED_SUBJECTS_PANEL = "ViewEnrolledSubjectsPanel";
     public static final String SUBMIT_SUBJECT_CHANGE_REQUEST_PANEL = "SubmitSubjectChangeRequestPanel";
     public static final String VIEW_PAYMENT_HISTORY_PANEL = "ViewPaymentHistoryPanel";
     public static final String VIEW_REQUEST_STATUS_PANEL = "ViewRequestStatusPanel";
     public static final String VIEW_SCHEDULE_PANEL = "ViewSchedulePanel";
+    public static final String VIEW_ENROLLED_STUDENTS_PANEL = "ViewEnrolledStudentsPanel";
+    public static final String MANAGE_CLASSES_PANEL = "ManageClassesPanel";
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -162,6 +168,7 @@ public class MainFrame extends JFrame {
                             return;
                         }
                         break;
+                    // Receptionist
                     case REGISTER_STUDENT_PANEL:
                         if (user instanceof com.atu.atc.model.Receptionist receptionistUser) {
                             targetPanel = new RegisterStudentPanel(receptionistService, receptionistUser, this);
@@ -199,6 +206,32 @@ public class MainFrame extends JFrame {
                             targetPanel = new UpdateReceptionistProfilePanel(receptionistService, receptionistUser, this);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to UpdateReceptionistProfilePanel with non-Receptionist user or null.");
+                            return;
+                        }
+                        break;
+                    case MANAGE_REQUESTS_PANEL:
+                        if (user instanceof com.atu.atc.model.Receptionist receptionistUser) {
+                            targetPanel = new ManageRequestsPanel(receptionistService, receptionistUser, this);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to ManageRequestsPanel with non-Receptionist user or null.");
+                            return;
+                        }
+                        break;
+                    //
+                    case VIEW_ENROLLED_STUDENTS_PANEL:
+                        if (user instanceof com.atu.atc.model.Tutor tutorUser) {
+                                targetPanel = new ViewEnrolledStudentsPanel(tutorService, this, tutorUser);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to ViewEnrolledStudentsPanel with non-Tutor user or null.");
+                            return;
+                        }
+                        break;
+
+                    case MANAGE_CLASSES_PANEL:
+                        if (user instanceof com.atu.atc.model.Tutor tutorUser) {
+                            targetPanel = new ManageClassesPanel(tutorService, this, tutorUser);
+                        } else {
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to ManageClassesPanel with non-Tutor user or null.");
                             return;
                         }
                         break;
