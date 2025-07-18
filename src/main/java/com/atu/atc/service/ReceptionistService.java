@@ -66,7 +66,7 @@ public class ReceptionistService {
         String studentId = IDGenerator.generateUniqueId("S");
         String monthOfEnroll = LocalDate.now().toString().substring(0, 7);
 
-        Student student = new Student(studentId, name, password, phone, email, gender, icPassport, address, monthOfEnroll, level, level);
+        Student student = new Student(studentId, name, password, phone, email, gender, icPassport, address, monthOfEnroll, level);
         studentRepo.add(student);
         System.out.println("Student registered: " + studentId);
 

@@ -158,8 +158,8 @@ public class IDGenerator {
         }
     }
     
-        public static void main(String[] args) {
-          System.out.println("--- Testing IDGenerator ---");
+//        public static void main(String[] args) {
+//          System.out.println("--- Testing IDGenerator ---");
 
         // First run: Should start from 1 for each new prefix
 //        System.out.println("Generating IDs for the first time (or continuing from last saved):");
@@ -174,5 +174,5 @@ public class IDGenerator {
         // If you run this file multiple times, you should see the counters increment.
         // For example, if the first run generated U001, U002, U003,
         // the second run (after restarting the app) should generate U004, U005, etc.
-    }
+//    }
 }

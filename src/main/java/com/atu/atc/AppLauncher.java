@@ -67,14 +67,18 @@ public class AppLauncher {
             
             // Initialise Services
             AuthService authService = new AuthService(adminRepository, receptionistRepository, tutorRepository, studentRepository);
+
             AdminService adminService = new AdminService(adminRepository, receptionistRepository, tutorRepository,
                                                          studentRepository, classesRepository, subjectRepository,
                                                          enrollmentRepository, paymentRepository, requestRepository,
                                                          idGenerator, validator);
-            ReceptionistService receptionistService = new ReceptionistService(receptionistRepository, studentRepository,classesRepository,
-                                                         enrollmentRepository,paymentRepository, requestRepository,idGenerator, validator);
+
+            ReceptionistService receptionistService = new ReceptionistService(studentRepository, receptionistRepository,enrollmentRepository,
+                                                            paymentRepository,classesRepository, subjectRepository,requestRepository);
+
             TutorService tutorService = new TutorService(tutorRepository, classesRepository, studentRepository,
                                                          enrollmentRepository, requestRepository);
+
             StudentService studentService = new StudentService(studentRepository, subjectRepository, requestRepository,
                     enrollmentRepository, paymentRepository, classesRepository,
                     idGenerator, validator);
