@@ -88,12 +88,9 @@ public class UpdateStudentProfilePanel extends JPanel {
             student.setAddress(address);
             student.setPassword(newPassword);
             
-            if (studentService.update(student)) {
-                studentRepository.save();
-                JOptionPane.showMessageDialog(this, "Profile updated successfully.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to update profile.");
-            }
+            studentService.update(student);
+            studentRepository.save();
+            JOptionPane.showMessageDialog(this, "Profile updated successfully.");
         });
         
         backBtn.addActionListener(e -> {

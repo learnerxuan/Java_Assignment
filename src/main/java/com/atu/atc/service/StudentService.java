@@ -17,15 +17,17 @@ public class StudentService {
     private final ClassesRepository classesRepository;
     private final SubjectRepository subjectRepository;
     private final TutorRepository tutorRepository;
+    private final StudentRepository studentRepository;
     
     public StudentService(EnrollmentRepository enrollmentRepository,
                           ClassesRepository classesRepository,
                           SubjectRepository subjectRepository,
-                          TutorRepository tutorRepository) {
+                          TutorRepository tutorRepository, StudentRepository studentRepository) {
         this.enrollmentRepository = enrollmentRepository;
         this.classesRepository = classesRepository;
         this.subjectRepository = subjectRepository;
         this.tutorRepository = tutorRepository;
+        this.studentRepository = studentRepository;
     }
     
     public void add(Student student) {
@@ -80,6 +82,7 @@ public class StudentService {
                 .map(s -> s.getId().equals(updatedStudent.getId()) ? updatedStudent : s)
                 .collect(Collectors.toList());
         saveAll(students);
+        studentRepository.update(students);
     }
     
     public void saveAll(List<Student> students) {
