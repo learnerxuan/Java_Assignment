@@ -1,93 +1,59 @@
 package com.atu.atc.gui.panels;
 
-import com.atu.atc.gui.MainFrame;
+import com.atu.atc.data.RequestRepository;
+import com.atu.atc.data.SubjectRepository;
+import com.atu.atc.model.Request;
 import com.atu.atc.model.Student;
-import com.atu.atc.service.StudentService;
+import com.atu.atc.model.Subject;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
+import java.util.Optional;
 
 public class ViewRequestStatusPanel extends JPanel {
-    
-    private JTable requestTable;
+    private JTable table;
     private DefaultTableModel tableModel;
-    private JButton refreshButton;
-    private JButton backButton;
-    private JLabel infoLabel;
     
-    private final StudentService studentService;
-    private final MainFrame.PanelNavigator navigator;
-    private final Student loggedInStudent;
+    private RequestRepository requestRepository;
+    private SubjectRepository subjectRepository;
+    private Student currentStudent;
     
-    public ViewRequestStatusPanel(StudentService studentService, Student loggedInStudent, MainFrame.PanelNavigator navigator) {
-        this.studentService = studentService;
-        this.navigator = navigator;
-        this.loggedInStudent = loggedInStudent;
+    public ViewRequestStatusPanel(RequestRepository requestRepository, SubjectRepository subjectRepository, Student currentStudent) {
+        this.requestRepository = requestRepository;
+        this.subjectRepository = subjectRepository;
+        this.currentStudent = currentStudent;
         
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
         
-        JLabel titleLabel = new JLabel("View Request Status", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
-        add(titleLabel, BorderLayout.NORTH);
+        tableModel = new DefaultTableModel(new Object[]{"Request ID", "Current Subject", "Requested Subject", "Status"}, 0);
+        table = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(table);
         
-        String[] columns = {"Request ID", "Current Subject", "Requested Subject", "Status", "Date Submitted"};
-        tableModel = new DefaultTableModel(columns, 0);
-        requestTable = new JTable(tableModel);
-        requestTable.setEnabled(false);
-        add(new JScrollPane(requestTable), BorderLayout.CENTER);
-        
-        infoLabel = new JLabel("Below are your submitted subject change requests.", SwingConstants.CENTER);
-        infoLabel.setFont(new Font("Arial", Font.ITALIC, 16));
-        add(infoLabel, BorderLayout.SOUTH);
-        
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        refreshButton = new JButton("Refresh");
-        backButton = new JButton("Back to Dashboard");
-        
-        buttonPanel.add(refreshButton);
-        buttonPanel.add(backButton);
-        add(buttonPanel, BorderLayout.SOUTH);
-        
-        refreshButton.addActionListener(e -> loadRequestData());
-        backButton.addActionListener(e -> navigator.navigateTo(MainFrame.STUDENT_DASHBOARD, loggedInStudent));
-        
-        loadRequestData();
+        add(scrollPane, BorderLayout.CENTER);
+        loadAllRequests();
     }
     
-    private void loadRequestData() {
-        tableModel.setRowCount(0); // Clear existing rows
+    private void loadAllRequests() {
+        tableModel.setRowCount(0);
         
-        try {
-            List<String> requestLines = studentService.getSubjectChangeRequests(loggedInStudent.getId());
-            
-            if (requestLines.isEmpty()) {
-                infoLabel.setText("You have no subject change requests.");
-                return;
+        List<Request> requests = requestRepository.getAll();
+        for (Request request : requests) {
+            if (request.getStudentId().equals(currentStudent.getId())) {
+                Optional<Subject> currentSubjectOpt = subjectRepository.getSubjectById(request.getCurrentSubjectId());
+                Optional<Subject> requestedSubjectOpt = subjectRepository.getSubjectById(request.getRequestedSubjectId());
+                
+                String currentSubjectName = currentSubjectOpt.map(Subject::getName).orElse("Unknown");
+                String requestedSubjectName = requestedSubjectOpt.map(Subject::getName).orElse("Unknown");
+                
+                tableModel.addRow(new Object[]{
+                        request.getRequestId(),
+                        request.getCurrentSubjectId() + " - " + currentSubjectName,
+                        request.getRequestedSubjectId() + " - " + requestedSubjectName,
+                        request.getStatus()
+                });
             }
-            
-            for (String line : requestLines) {
-                String[] parts = line.split(",", -1); // Allow empty fields
-                if (parts.length >= 5) {
-                    tableModel.addRow(new Object[]{
-                            parts[0].trim(), // Request ID
-                            parts[1].trim(), // Current Subject
-                            parts[2].trim(), // Requested Subject
-                            parts[3].trim(), // Status
-                            parts[4].trim()  // Date Submitted
-                    });
-                } else {
-                    System.err.println("Invalid request record: " + line);
-                }
-            }
-            
-            infoLabel.setText("Showing " + requestLines.size() + " request(s).");
-            
-        } catch (Exception ex) {
-            infoLabel.setText("Error loading data: " + ex.getMessage());
-            ex.printStackTrace();
         }
     }
 }

@@ -12,6 +12,22 @@ import java.util.stream.Collectors;
 public class StudentService {
     private final String filePath = "data/students.txt";
     
+    // Repositories for access by panels like ViewSchedulePanel
+    private final EnrollmentRepository enrollmentRepository;
+    private final ClassesRepository classesRepository;
+    private final SubjectRepository subjectRepository;
+    private final TutorRepository tutorRepository;
+    
+    public StudentService(EnrollmentRepository enrollmentRepository,
+                          ClassesRepository classesRepository,
+                          SubjectRepository subjectRepository,
+                          TutorRepository tutorRepository) {
+        this.enrollmentRepository = enrollmentRepository;
+        this.classesRepository = classesRepository;
+        this.subjectRepository = subjectRepository;
+        this.tutorRepository = tutorRepository;
+    }
+    
     public void add(Student student) {
         List<Student> students = getAll();
         students.add(student);
@@ -37,6 +53,21 @@ public class StudentService {
                 .orElse(null);
     }
     
+    public List<Request> getRequestsByStudentId(String studentId) {
+        String requestFilePath = "data/requests.txt";
+        List<String> lines = FileUtils.readDataLines(requestFilePath);
+        List<Request> requests = new ArrayList<>();
+        
+        for (String line : lines) {
+            Request request = Request.fromFileString(line);
+            if (request != null && request.getStudentId().equals(studentId)) {
+                requests.add(request);
+            }
+        }
+        
+        return requests;
+    }
+    
     public boolean delete(String studentId) {
         List<Student> students = getAll();
         boolean removed = students.removeIf(s -> s.getId().equals(studentId));
@@ -60,5 +91,23 @@ public class StudentService {
     
     public Optional<Student> findById(String id) {
         return getAll().stream().filter(s -> s.getId().equals(id)).findFirst();
+    }
+    
+    // 👇 Add getters for repositories so the panel can access them
+    
+    public EnrollmentRepository getEnrollmentRepository() {
+        return enrollmentRepository;
+    }
+    
+    public ClassesRepository getClassesRepository() {
+        return classesRepository;
+    }
+    
+    public SubjectRepository getSubjectRepository() {
+        return subjectRepository;
+    }
+    
+    public TutorRepository getTutorRepository() {
+        return tutorRepository;
     }
 }

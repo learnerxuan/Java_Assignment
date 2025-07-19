@@ -8,8 +8,7 @@ public class Request {
     private String studentId;
     private String currentSubjectId;
     private String requestedSubjectId;
-    private String status; // e.g., "Pending", "Approved", "Rejected"
-    private LocalDate requestDate;
+    private String status;
     
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
     
@@ -20,7 +19,6 @@ public class Request {
         this.currentSubjectId = currentSubjectId;
         this.requestedSubjectId = requestedSubjectId;
         this.status = status;
-        this.requestDate = requestDate;
     }
     
     // Getters
@@ -44,10 +42,6 @@ public class Request {
         return status;
     }
     
-    public LocalDate getRequestDate() {
-        return requestDate;
-    }
-    
     // Setters (for mutable fields only)
     public void setStatus(String status) {
         this.status = status;
@@ -69,10 +63,7 @@ public class Request {
         this.requestedSubjectId = requestedSubjectId;
     }
     
-    public void setRequestDate(LocalDate requestDate) {
-        this.requestDate = requestDate;
-    }
-    
+
     // Persistence methods
     public String toFileString() {
         return String.join(";",
@@ -80,8 +71,7 @@ public class Request {
                 studentId,
                 currentSubjectId,
                 requestedSubjectId,
-                status,
-                requestDate.format(DATE_FORMATTER)
+                status
         );
     }
     
