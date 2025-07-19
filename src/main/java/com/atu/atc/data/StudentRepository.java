@@ -14,12 +14,12 @@ import java.util.Optional;
 public class StudentRepository extends UserRepository<Student> {
     private static final String filePath = "data/students.txt";
     private static final String HEADER = "student_id,student_name,password,phone_number,email,gender,IC/Passport,address,month_of_enroll,level";
-    
+
     @Override
     public void load() {
         users.clear();
         List<String> lines = FileUtils.readDataLines(filePath);
-        
+
         // Skip header line if present
         boolean isFirstLine = true;
         for (String line : lines) {
@@ -27,7 +27,7 @@ public class StudentRepository extends UserRepository<Student> {
                 isFirstLine = false;
                 continue;
             }
-            
+
             String[] parts = line.split(",", -1);
             if (parts.length == 10) {
                 String id = parts[0].trim();
@@ -48,7 +48,7 @@ public class StudentRepository extends UserRepository<Student> {
         }
     }
 
-    
+
     @Override
     public void save() {
         List<String> lines = new ArrayList<>();
@@ -57,27 +57,5 @@ public class StudentRepository extends UserRepository<Student> {
             lines.add(s.toFileString());
         }
         FileUtils.writeLines(filePath, lines);
-    }
-    
-    public Optional<Student> getByStudentId(String studentId) {
-        for (Student s : users) {
-            if (s.getId().equals(studentId)) {
-                return Optional.of(s);
-            }
-        }
-        return Optional.empty();
-    }
-    
-    public boolean updateStudent(Student updatedStudent) {
-        if (updatedStudent == null) {
-            return false;
-        }
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId().equals(updatedStudent.getId())) {
-                users.set(i, updatedStudent);
-                return true;
-            }
-        }
-        return false;
     }
 }

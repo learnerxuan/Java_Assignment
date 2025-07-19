@@ -9,12 +9,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UpdateStudentProfilePanel extends JPanel {
-    private final StudentRepository studentRepository;
+    private final StudentService studentService;
     private final Student student;
     private final MainFrame.PanelNavigator navigator;
     
-    public UpdateStudentProfilePanel(StudentService studentRepository, Student student, MainFrame.PanelNavigator navigator) {
-        this.studentRepository = studentRepository;
+    public UpdateStudentProfilePanel(StudentService studentService, Student student, MainFrame.PanelNavigator navigator) {
+        this.studentService = studentService;
         this.student = student;
         this.navigator = navigator;
         
@@ -88,12 +88,9 @@ public class UpdateStudentProfilePanel extends JPanel {
             student.setAddress(address);
             student.setPassword(newPassword);
             
-            if (studentRepository.updateStudent(student)) {
-                studentRepository.save();
-                JOptionPane.showMessageDialog(this, "Profile updated successfully.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to update profile.");
-            }
+            studentService.update(student);
+            studentRepository.save();
+            JOptionPane.showMessageDialog(this, "Profile updated successfully.");
         });
         
         backBtn.addActionListener(e -> {

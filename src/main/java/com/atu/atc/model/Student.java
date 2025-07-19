@@ -89,4 +89,10 @@ public class Student extends User {
         }
         return null;
     }
+
+    @Override
+    public void updateProfile(String newId, String newPassword, String newFullName, String newPhoneNumber, String newEmail, String newGender) {
+        super.updateProfile(newId, newPassword, newFullName, newPhoneNumber, newEmail, newGender);
+        System.out.println("Student " + getId() + ": Profile updated locally (persistence handled by service layer).");
+    }
 }
