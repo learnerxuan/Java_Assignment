@@ -242,7 +242,7 @@ public class MainFrame extends JFrame {
                         break;
                     case VIEW_SCHEDULE_PANEL:
                         if (user instanceof Student studentUser) {
-                            targetPanel = new ViewSchedulePanel(studentService, studentUser, this);
+                            targetPanel = new ViewSchedulePanel(studentService, this, studentUser);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to ViewSchedulePanel with non-Student user or null.");
                             return;
@@ -251,7 +251,7 @@ public class MainFrame extends JFrame {
                     
                     case SUBJECT_CHANGE_REQUEST_PANEL:
                         if (user instanceof Student studentUser) {
-                            targetPanel = new SubjectChangeRequestPanel(studentService, studentUser, this);
+                            targetPanel = new SubjectChangeRequestPanel(studentService,this, studentUser);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to SubjectChangeRequestPanel with non-Student user or null.");
                             return;
@@ -260,7 +260,7 @@ public class MainFrame extends JFrame {
                     
                     case DELETE_PENDING_REQUEST_PANEL:
                         if (user instanceof Student studentUser) {
-                            targetPanel = new DeletePendingRequestPanel(studentService, studentUser, this);
+                            targetPanel = new DeletePendingRequestPanel(studentService, this , studentUser);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to DeletePendingRequestPanel with non-Student user or null.");
                             return;
@@ -269,7 +269,7 @@ public class MainFrame extends JFrame {
                     
                     case VIEW_PAYMENT_STATUS_PANEL:
                         if (user instanceof Student studentUser) {
-                            targetPanel = new ViewPaymentStatusPanel(studentService, studentUser, this);
+                            targetPanel = new ViewPaymentStatusPanel(studentService, this, studentUser);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to ViewPaymentStatusPanel with non-Student user or null.");
                             return;
@@ -278,7 +278,7 @@ public class MainFrame extends JFrame {
                     
                     case UPDATE_STUDENT_PROFILE_PANEL:
                         if (user instanceof Student studentUser) {
-                            targetPanel = new UpdateStudentProfilePanel(studentService, studentUser, this);
+                            targetPanel = new UpdateStudentProfilePanel(studentService, this, studentUser);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to UpdateStudentProfilePanel with non-Student user or null.");
                             return;
@@ -287,7 +287,7 @@ public class MainFrame extends JFrame {
                     
                     case VIEW_REQUEST_STATUS_PANEL:
                         if (user instanceof Student studentUser) {
-                            targetPanel = new ViewRequestStatusPanel(studentService, studentUser, this);
+                            targetPanel = new ViewRequestStatusPanel(studentService, this, studentUser);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to ViewRequestStatusPanel with non-Student user or null.");
                             return;

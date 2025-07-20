@@ -1,100 +1,75 @@
 package com.atu.atc.gui.panels;
 
-import com.atu.atc.gui.MainFrame;
 import com.atu.atc.model.Student;
-import com.atu.atc.data.StudentRepository;
 import com.atu.atc.service.StudentService;
+import com.atu.atc.gui.MainFrame.PanelNavigator;
+import com.atu.atc.gui.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class UpdateStudentProfilePanel extends JPanel {
-    private final StudentService studentService;
-    private final Student student;
-    private final MainFrame.PanelNavigator navigator;
+    private JTextField phoneField;
+    private JTextField emailField;
+    private JTextField addressField;
+    private JPasswordField passwordField;
+    private JButton saveButton;
+    private JButton backButton;
+    private Student currentStudent;
+    private PanelNavigator navigator;
+    private StudentService studentService;
     
-    public UpdateStudentProfilePanel(StudentService studentService, Student student, MainFrame.PanelNavigator navigator) {
+    public UpdateStudentProfilePanel(StudentService studentService, PanelNavigator navigator, Student student) {
         this.studentService = studentService;
-        this.student = student;
+        this.currentStudent = student;
         this.navigator = navigator;
         
-        initUI();
-    }
-    
-    private void initUI() {
         setLayout(new BorderLayout());
         
-        JLabel titleLabel = new JLabel("Update My Profile");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Update Profile", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         add(titleLabel, BorderLayout.NORTH);
         
         JPanel formPanel = new JPanel(new GridLayout(5, 2, 10, 10));
-        formPanel.setBorder(BorderFactory.createEmptyBorder(30, 100, 30, 100));
         
-        JTextField phoneField = new JTextField(student.getPhoneNumber());
-        JTextField emailField = new JTextField(student.getEmail());
-        JTextField addressField = new JTextField(student.getAddress());
-        JPasswordField passwordField = new JPasswordField(student.getPassword());
-        JPasswordField newPasswordField = new JPasswordField();
-        
-        passwordField.setEchoChar('*');
-        newPasswordField.setEchoChar('*');
-        
-        formPanel.add(new JLabel("Phone Number:"));
+        formPanel.add(new JLabel("Phone:"));
+        phoneField = new JTextField(currentStudent.getPhoneNumber());
         formPanel.add(phoneField);
         
         formPanel.add(new JLabel("Email:"));
+        emailField = new JTextField(currentStudent.getEmail());
         formPanel.add(emailField);
         
         formPanel.add(new JLabel("Address:"));
+        addressField = new JTextField(currentStudent.getAddress());
         formPanel.add(addressField);
         
-        formPanel.add(new JLabel("Current Password:"));
+        formPanel.add(new JLabel("Password:"));
+        passwordField = new JPasswordField(currentStudent.getPassword());
         formPanel.add(passwordField);
         
-        formPanel.add(new JLabel("New Password:"));
-        formPanel.add(newPasswordField);
+        saveButton = new JButton("Save");
+        backButton = new JButton("Back");
+        
+        formPanel.add(backButton);
+        formPanel.add(saveButton);
         
         add(formPanel, BorderLayout.CENTER);
         
-        JPanel buttonPanel = new JPanel();
-        JButton updateBtn = new JButton("Update");
-        JButton backBtn = new JButton("Back");
-        
-        buttonPanel.add(updateBtn);
-        buttonPanel.add(backBtn);
-        add(buttonPanel, BorderLayout.SOUTH);
-        
-        updateBtn.addActionListener(e -> {
-            String phone = phoneField.getText().trim();
-            String email = emailField.getText().trim();
-            String address = addressField.getText().trim();
-            String currentPassword = new String(passwordField.getPassword()).trim();
-            String newPassword = new String(newPasswordField.getPassword()).trim();
+        saveButton.addActionListener((ActionEvent e) -> {
+            String newPhone = phoneField.getText().trim();
+            String newEmail = emailField.getText().trim();
+            String newAddress = addressField.getText().trim();
+            String newPassword = new String(passwordField.getPassword()).trim();
             
-            if (phone.isEmpty() || email.isEmpty() || address.isEmpty() || currentPassword.isEmpty() || newPassword.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please fill in all fields.");
-                return;
-            }
+            studentService.updateProfile(currentStudent, newPassword, newPhone, newEmail, newAddress);
             
-            if (!student.getPassword().equals(currentPassword)) {
-                JOptionPane.showMessageDialog(this, "Incorrect password. Please enter your current password to confirm changes.");
-                return;
-            }
-            
-            student.setPhoneNumber(phone);
-            student.setEmail(email);
-            student.setAddress(address);
-            student.setPassword(newPassword);
-            
-            studentService.update(student);
-            studentRepository.save();
-            JOptionPane.showMessageDialog(this, "Profile updated successfully.");
+            JOptionPane.showMessageDialog(this, "Profile updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
         });
         
-        backBtn.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.STUDENT_DASHBOARD, student);
+        backButton.addActionListener((ActionEvent e) -> {
+            navigator.navigateTo(MainFrame.STUDENT_DASHBOARD, currentStudent);
         });
     }
 }

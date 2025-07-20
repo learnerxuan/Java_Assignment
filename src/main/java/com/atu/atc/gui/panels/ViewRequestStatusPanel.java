@@ -1,10 +1,11 @@
 package com.atu.atc.gui.panels;
 
-import com.atu.atc.data.RequestRepository;
-import com.atu.atc.data.SubjectRepository;
+import com.atu.atc.gui.MainFrame;
+import com.atu.atc.gui.MainFrame.PanelNavigator;
 import com.atu.atc.model.Request;
 import com.atu.atc.model.Student;
 import com.atu.atc.model.Subject;
+import com.atu.atc.service.StudentService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,47 +14,55 @@ import java.util.List;
 import java.util.Optional;
 
 public class ViewRequestStatusPanel extends JPanel {
-    private JTable table;
+    private final StudentService studentService;
+    private final PanelNavigator navigator;
+    private final Student currentStudent;
+    
+    private JTable requestTable;
     private DefaultTableModel tableModel;
     
-    private RequestRepository requestRepository;
-    private SubjectRepository subjectRepository;
-    private Student currentStudent;
-    
-    public ViewRequestStatusPanel(RequestRepository requestRepository, SubjectRepository subjectRepository, Student currentStudent) {
-        this.requestRepository = requestRepository;
-        this.subjectRepository = subjectRepository;
+    public ViewRequestStatusPanel(StudentService studentService, PanelNavigator navigator, Student currentStudent) {
+        this.studentService = studentService;
+        this.navigator = navigator;
         this.currentStudent = currentStudent;
         
         setLayout(new BorderLayout());
         
-        tableModel = new DefaultTableModel(new Object[]{"Request ID", "Current Subject", "Requested Subject", "Status"}, 0);
-        table = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(table);
+        JLabel titleLabel = new JLabel("Your Request Status", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        add(titleLabel, BorderLayout.NORTH);
         
+        tableModel = new DefaultTableModel(new Object[]{"Request ID", "Current Subject", "Requested Subject", "Status"}, 0);
+        requestTable = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(requestTable);
         add(scrollPane, BorderLayout.CENTER);
-        loadAllRequests();
+        
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> navigator.navigateTo(MainFrame.STUDENT_DASHBOARD, currentStudent));
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(backButton);
+        add(bottomPanel, BorderLayout.SOUTH);
+        
+        loadRequestData();
     }
     
-    private void loadAllRequests() {
+    private void loadRequestData() {
         tableModel.setRowCount(0);
+        List<Request> requests = studentService.getRequestsByStudentId(currentStudent.getId());
         
-        List<Request> requests = requestRepository.getAll();
-        for (Request request : requests) {
-            if (request.getStudentId().equals(currentStudent.getId())) {
-                Optional<Subject> currentSubjectOpt = subjectRepository.getSubjectById(request.getCurrentSubjectId());
-                Optional<Subject> requestedSubjectOpt = subjectRepository.getSubjectById(request.getRequestedSubjectId());
-                
-                String currentSubjectName = currentSubjectOpt.map(Subject::getName).orElse("Unknown");
-                String requestedSubjectName = requestedSubjectOpt.map(Subject::getName).orElse("Unknown");
-                
-                tableModel.addRow(new Object[]{
-                        request.getRequestId(),
-                        request.getCurrentSubjectId() + " - " + currentSubjectName,
-                        request.getRequestedSubjectId() + " - " + requestedSubjectName,
-                        request.getStatus()
-                });
-            }
+        for (Request req : requests) {
+            Optional<Subject> currentSubject = studentService.getSubjectRepository().getSubjectById(req.getCurrentSubjectId());
+            Optional<Subject> requestedSubject = studentService.getSubjectRepository().getSubjectById(req.getRequestedSubjectId());
+            
+            String currentName = currentSubject.map(Subject::getName).orElse("Unknown");
+            String requestedName = requestedSubject.map(Subject::getName).orElse("Unknown");
+            
+            tableModel.addRow(new Object[]{
+                    req.getRequestId(),
+                    req.getCurrentSubjectId() + " - " + currentName,
+                    req.getRequestedSubjectId() + " - " + requestedName,
+                    req.getStatus()
+            });
         }
     }
 }

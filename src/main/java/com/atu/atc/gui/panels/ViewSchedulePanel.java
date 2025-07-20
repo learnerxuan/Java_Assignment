@@ -2,7 +2,6 @@ package com.atu.atc.gui.panels;
 
 import com.atu.atc.gui.MainFrame;
 import com.atu.atc.model.Classes;
-import com.atu.atc.model.Enrollment;
 import com.atu.atc.model.Student;
 import com.atu.atc.model.Subject;
 import com.atu.atc.model.Tutor;
@@ -13,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ViewSchedulePanel extends JPanel {
@@ -22,12 +20,12 @@ public class ViewSchedulePanel extends JPanel {
     
     private final StudentService studentService;
     private final Student currentStudent;
-    private final MainFrame mainFrame;
+    private final MainFrame.PanelNavigator navigator;
     
-    public ViewSchedulePanel(StudentService studentService, Student currentStudent, MainFrame mainFrame) {
+    public ViewSchedulePanel(StudentService studentService, MainFrame.PanelNavigator navigator, Student currentStudent) {
         this.studentService = studentService;
+        this.navigator = navigator;
         this.currentStudent = currentStudent;
-        this.mainFrame = mainFrame;
         
         setLayout(new BorderLayout());
         
@@ -41,37 +39,31 @@ public class ViewSchedulePanel extends JPanel {
     }
     
     private void loadSchedule() {
-        List<Enrollment> allEnrollments = studentService.getEnrollmentRepository().getAll();
-        List<Enrollment> myEnrollments = allEnrollments.stream()
-                .filter(e -> e.getStudentId().equals(currentStudent.getId()))
-                .collect(Collectors.toList());
+        List<Classes> myClasses = studentService.getSchedule(currentStudent.getId());
         
-        Map<String, Subject> subjects = studentService.getSubjectRepository().getAllSubjects().stream()
+        Map<String, Subject> subjectMap = studentService.getSubjectRepository().getAllSubjects().stream()
                 .collect(Collectors.toMap(Subject::getSubjectId, s -> s));
         
-        Map<String, Tutor> tutors = studentService.getTutorRepository().getAll().stream()
+        Map<String, Tutor> tutorMap = studentService.getTutorRepository().getAll().stream()
                 .collect(Collectors.toMap(Tutor::getId, t -> t));
         
         tableModel.setRowCount(0);
         
-        for (Enrollment enrollment : myEnrollments) {
-            Optional<Classes> clsOptional = studentService.getClassesRepository().getById(enrollment.getClassId());
-            clsOptional.ifPresent(cls -> {
-                Subject subject = subjects.get(cls.getSubjectId());
-                Tutor tutor = tutors.get(cls.getTutorId());
-                
-                String tutorName = (tutor != null) ? tutor.getFullName() : "Unknown";
-                String subjectName = (subject != null) ? subject.getName() : "Unknown";
-                
-                tableModel.addRow(new Object[]{
-                        cls.getClassId(),
-                        cls.getSubjectId(),
-                        subjectName,
-                        cls.getDay(),
-                        cls.getStartTime(),
-                        cls.getEndTime(),
-                        tutorName
-                });
+        for (Classes cls : myClasses) {
+            Subject subject = subjectMap.get(cls.getSubjectId());
+            Tutor tutor = tutorMap.get(cls.getTutorId());
+            
+            String subjectName = (subject != null) ? subject.getName() : "Unknown";
+            String tutorName = (tutor != null) ? tutor.getFullName() : "Unknown";
+            
+            tableModel.addRow(new Object[]{
+                    cls.getClassId(),
+                    cls.getSubjectId(),
+                    subjectName,
+                    cls.getDay(),
+                    cls.getStartTime(),
+                    cls.getEndTime(),
+                    tutorName
             });
         }
     }

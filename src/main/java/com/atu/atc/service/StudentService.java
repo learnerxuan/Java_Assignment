@@ -1,116 +1,131 @@
 package com.atu.atc.service;
 
-import com.atu.atc.model.*;
 import com.atu.atc.data.*;
+import com.atu.atc.model.*;
 import com.atu.atc.util.FileUtils;
+import com.atu.atc.util.Validator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StudentService {
-    private final String filePath = "data/students.txt";
+    private final StudentRepository studentRepo;
+    private final EnrollmentRepository enrollmentRepo;
+    private final ClassesRepository classesRepo;
+    private final RequestRepository requestRepo;
+    private final PaymentRepository paymentRepo;
+    private final SubjectRepository subjectRepo;
+    private final TutorRepository tutorRepo;
     
-    // Repositories for access by panels like ViewSchedulePanel
-    private final EnrollmentRepository enrollmentRepository;
-    private final ClassesRepository classesRepository;
-    private final SubjectRepository subjectRepository;
-    private final TutorRepository tutorRepository;
-    private final StudentRepository studentRepository;
-    
-    public StudentService(EnrollmentRepository enrollmentRepository,
-                          ClassesRepository classesRepository,
-                          SubjectRepository subjectRepository,
-                          TutorRepository tutorRepository, StudentRepository studentRepository) {
-        this.enrollmentRepository = enrollmentRepository;
-        this.classesRepository = classesRepository;
-        this.subjectRepository = subjectRepository;
-        this.tutorRepository = tutorRepository;
-        this.studentRepository = studentRepository;
+    public StudentService(StudentRepository studentRepo,
+                          EnrollmentRepository enrollmentRepo,
+                          ClassesRepository classesRepo,
+                          RequestRepository requestRepo,
+                          PaymentRepository paymentRepo,
+                          SubjectRepository subjectRepo,
+                          TutorRepository tutorRepo) {
+        this.studentRepo = studentRepo;
+        this.enrollmentRepo = enrollmentRepo;
+        this.classesRepo = classesRepo;
+        this.requestRepo = requestRepo;
+        this.paymentRepo = paymentRepo;
+        this.subjectRepo = subjectRepo;
+        this.tutorRepo = tutorRepo;
     }
     
-    public void add(Student student) {
-        List<Student> students = getAll();
-        students.add(student);
-        saveAll(students);
+    // View class schedule based on student ID.
+    public List<Classes> getSchedule(String studentId) {
+        List<String> enrolledClassIds = enrollmentRepo.getByStudentId(studentId).stream()
+                .map(Enrollment::getClassId)
+                .collect(Collectors.toList());
+        
+        return enrolledClassIds.stream()
+                .map(cid -> classesRepo.getById(cid).orElse(null))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
     
-    public List<Student> getAll() {
-        List<String> lines = FileUtils.readDataLines(filePath);
-        List<Student> students = new ArrayList<>();
-        for (String line : lines) {
-            Student student = Student.fromFileString(line);
-            if (student != null) {
-                students.add(student);
-            }
+    // Send a subject change request to receptionist.
+    public void submitSubjectChangeRequest(String studentId, String currentSubjectId, String requestedSubjectId) {
+        List<Request> existingRequests = requestRepo.getByStudentId(studentId);
+        String requestId = "RQ" + String.format("%03d", existingRequests.size() + 1);
+        Request newRequest = new Request(
+                requestId,
+                studentId,
+                currentSubjectId,
+                requestedSubjectId,
+                "Pending",
+                LocalDate.now()
+        );
+        requestRepo.add(newRequest);
+    }
+    
+    // Delete a pending subject change request.
+    public boolean deletePendingRequest(String requestId) {
+        Optional<Request> request = requestRepo.getRequestById(requestId);
+        if (request.isPresent() && request.get().getStatus().equalsIgnoreCase("Pending")) {
+            return requestRepo.delete(requestId);
         }
-        return students;
+        return false;
     }
     
-    public Student getById(String studentId) {
-        return getAll().stream()
-                .filter(s -> s.getId().equals(studentId))
-                .findFirst()
-                .orElse(null);
-    }
-    
+    // View all requests sent by the student.
     public List<Request> getRequestsByStudentId(String studentId) {
-        String requestFilePath = "data/requests.txt";
-        List<String> lines = FileUtils.readDataLines(requestFilePath);
-        List<Request> requests = new ArrayList<>();
-        
-        for (String line : lines) {
-            Request request = Request.fromFileString(line);
-            if (request != null && request.getStudentId().equals(studentId)) {
-                requests.add(request);
-            }
+        return requestRepo.getAll().stream()
+                .filter(r -> r.getStudentId().equals(studentId))
+                .collect(Collectors.toList());
+    }
+    
+    // View payment records of student.
+    public List<Payment> getPayments(String studentId) {
+        return paymentRepo.getAll().stream()
+                .filter(p -> p.getStudentId().equals(studentId))
+                .collect(Collectors.toList());
+    }
+    
+    // Calculate total unpaid balance.
+    public double getTotalBalance(String studentId) {
+        return getPayments(studentId).stream()
+                .filter(p -> !p.getStatus().equalsIgnoreCase("Paid"))
+                .mapToDouble(Payment::getAmount)
+                .sum();
+    }
+    
+    // Update profile details of student.
+    public void updateProfile(Student student, String newPassword, String newPhone, String newEmail, String newAddress) {
+        if (!Validator.isValidEmail(newEmail)) {
+            System.err.println("Invalid email format.");
+            return;
         }
         
-        return requests;
-    }
-    
-    public boolean delete(String studentId) {
-        List<Student> students = getAll();
-        boolean removed = students.removeIf(s -> s.getId().equals(studentId));
-        saveAll(students);
-        return removed;
-    }
-    
-    public void update(Student updatedStudent) {
-        List<Student> students = getAll().stream()
-                .map(s -> s.getId().equals(updatedStudent.getId()) ? updatedStudent : s)
-                .collect(Collectors.toList());
-        saveAll(students);
-        studentRepository.update(students);
-    }
-    
-    public void saveAll(List<Student> students) {
-        List<String> lines = students.stream()
-                .map(Student::toFileString)
-                .collect(Collectors.toList());
-        FileUtils.writeLines(filePath, lines);
-    }
-    
-    public Optional<Student> findById(String id) {
-        return getAll().stream().filter(s -> s.getId().equals(id)).findFirst();
-    }
-    
-    // 👇 Add getters for repositories so the panel can access them
-    
-    public EnrollmentRepository getEnrollmentRepository() {
-        return enrollmentRepository;
+        if (!Validator.isValidPhoneNumber(newPhone)) {
+            System.err.println("Invalid phone number.");
+            return;
+        }
+        
+        student.setPassword(newPassword);
+        student.setPhoneNumber(newPhone);
+        student.setEmail(newEmail);
+        student.setAddress(newAddress);
+        
+        studentRepo.update(student);
+        System.out.println("Student profile updated.");
     }
     
     public ClassesRepository getClassesRepository() {
-        return classesRepository;
+        return classesRepo;
+    }
+    
+    public EnrollmentRepository getEnrollmentRepository() {
+        return enrollmentRepo;
     }
     
     public SubjectRepository getSubjectRepository() {
-        return subjectRepository;
+        return subjectRepo;
     }
     
     public TutorRepository getTutorRepository() {
-        return tutorRepository;
+        return tutorRepo;
     }
 }

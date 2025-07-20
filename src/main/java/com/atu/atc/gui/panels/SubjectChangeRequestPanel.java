@@ -1,14 +1,13 @@
 package com.atu.atc.gui.panels;
 
 import com.atu.atc.model.*;
-import com.atu.atc.data.*;
 import com.atu.atc.service.StudentService;
+import com.atu.atc.gui.MainFrame.PanelNavigator;
 import com.atu.atc.gui.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,18 +18,13 @@ public class SubjectChangeRequestPanel extends JPanel {
     private JButton submitButton;
     private JButton backButton;
     private Student currentStudent;
-    private MainFrame mainFrame;
+    private PanelNavigator navigator;
     private StudentService studentService;
     
-    private EnrollmentRepository enrollmentRepository = new EnrollmentRepository();
-    private ClassesRepository classesRepository = new ClassesRepository();
-    private SubjectRepository subjectRepository = new SubjectRepository();
-    private RequestRepository requestRepository = new RequestRepository();
-    
-    public SubjectChangeRequestPanel(StudentService studentService, Student student, MainFrame mainFrame) {
+    public SubjectChangeRequestPanel(StudentService studentService, PanelNavigator navigator, Student student) {
         this.studentService = studentService;
         this.currentStudent = student;
-        this.mainFrame = mainFrame;
+        this.navigator = navigator;
         
         setLayout(new BorderLayout());
         
@@ -61,23 +55,23 @@ public class SubjectChangeRequestPanel extends JPanel {
         submitButton.addActionListener((ActionEvent e) -> submitSubjectChangeRequest());
         
         backButton.addActionListener((ActionEvent e) -> {
-            mainFrame.getNavigator().navigateTo(MainFrame.STUDENT_DASHBOARD, currentStudent);
+            navigator.navigateTo(MainFrame.STUDENT_DASHBOARD, currentStudent);
         });
     }
     
     private void loadSubjectChoices() {
-        List<Enrollment> myEnrollments = enrollmentRepository.getAll().stream()
+        List<Enrollment> myEnrollments = studentService.getEnrollmentRepository().getAll().stream()
                 .filter(e -> e.getStudentId().equals(currentStudent.getId()))
                 .collect(Collectors.toList());
         
         Set<String> mySubjectIds = myEnrollments.stream()
-                .map(e -> classesRepository.getById(e.getClassId())
+                .map(e -> studentService.getClassesRepository().getById(e.getClassId())
                         .map(Classes::getSubjectId)
                         .orElse(null))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
         
-        Map<String, Subject> allSubjects = subjectRepository.getAllSubjects().stream()
+        Map<String, Subject> allSubjects = studentService.getSubjectRepository().getAllSubjects().stream()
                 .collect(Collectors.toMap(Subject::getSubjectId, s -> s));
         
         currentSubjectCombo.removeAllItems();
@@ -98,20 +92,21 @@ public class SubjectChangeRequestPanel extends JPanel {
     }
     
     private void submitSubjectChangeRequest() {
-        if (currentSubjectCombo.getSelectedItem() == null || requestedSubjectCombo.getSelectedItem() == null) {
+        String current = (String) currentSubjectCombo.getSelectedItem();
+        String requested = (String) requestedSubjectCombo.getSelectedItem();
+        
+        if (current == null || requested == null) {
             JOptionPane.showMessageDialog(this, "Please select both current and requested courses.", "Incomplete", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        String current = ((String) currentSubjectCombo.getSelectedItem()).split(" - ")[0];
-        String requested = ((String) requestedSubjectCombo.getSelectedItem()).split(" - ")[0];
+        String currentId = current.split(" - ")[0];
+        String requestedId = requested.split(" - ")[0];
         
-        String requestId = "RQ" + String.format("%03d", requestRepository.getAll().size() + 1);
-        Request request = new Request(requestId, currentStudent.getId(), current, requested, "Pending", LocalDate.now());
-        requestRepository.add(request);
-        requestRepository.save();
+        studentService.submitSubjectChangeRequest(currentStudent.getId(), currentId, requestedId);
         
         JOptionPane.showMessageDialog(this, "Subject change request submitted.", "Success", JOptionPane.INFORMATION_MESSAGE);
         loadSubjectChoices();
     }
+
 }

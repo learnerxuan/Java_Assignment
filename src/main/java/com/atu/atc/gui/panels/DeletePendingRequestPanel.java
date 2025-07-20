@@ -1,87 +1,94 @@
 package com.atu.atc.gui.panels;
 
-import com.atu.atc.data.RequestRepository;
-import com.atu.atc.data.SubjectRepository;
 import com.atu.atc.model.Request;
 import com.atu.atc.model.Student;
-import com.atu.atc.model.Subject;
+import com.atu.atc.service.StudentService;
+import com.atu.atc.gui.MainFrame;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 public class DeletePendingRequestPanel extends JPanel {
-    private JTable table;
+    
+    private final StudentService studentService;
+    private final MainFrame.PanelNavigator navigator;
+    private final Student student;
+    
+    private JTable requestTable;
     private DefaultTableModel tableModel;
-    private JButton deleteButton;
     
-    private RequestRepository requestRepository;
-    private SubjectRepository subjectRepository;
-    private Student currentStudent;
-    
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
-    
-    public DeletePendingRequestPanel(RequestRepository requestRepository, SubjectRepository subjectRepository, Student currentStudent) {
-        this.requestRepository = requestRepository;
-        this.subjectRepository = subjectRepository;
-        this.currentStudent = currentStudent;
+    public DeletePendingRequestPanel(StudentService studentService, MainFrame.PanelNavigator navigator, Student student) {
+        this.studentService = studentService;
+        this.navigator = navigator;
+        this.student = student;
         
         setLayout(new BorderLayout());
         
-        tableModel = new DefaultTableModel(new Object[]{"Request ID", "Current Subject", "Requested Subject", "Status", "Request Date"}, 0);
-        table = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(table);
+        JLabel titleLabel = new JLabel("Delete Pending Requests");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        add(titleLabel, BorderLayout.NORTH);
         
-        deleteButton = new JButton("Delete Selected Request");
+        String[] columnNames = {"Request ID", "Current Subject", "Requested Subject", "Status", "Date"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+        requestTable = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(requestTable);
+        add(scrollPane, BorderLayout.CENTER);
+        
+        JButton deleteButton = new JButton("Delete Selected Request");
         deleteButton.addActionListener(e -> deleteSelectedRequest());
         
-        add(scrollPane, BorderLayout.CENTER);
-        add(deleteButton, BorderLayout.SOUTH);
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> navigator.navigateTo(MainFrame.STUDENT_DASHBOARD, student));
         
-        loadPendingRequests();
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(deleteButton);
+        buttonPanel.add(backButton);
+        add(buttonPanel, BorderLayout.SOUTH);
+        
+        loadRequests();
     }
     
-    private void loadPendingRequests() {
+    private void loadRequests() {
         tableModel.setRowCount(0);
-        
-        List<Request> requests = requestRepository.getAll();
-        for (Request request : requests) {
-            if (request.getStudentId().equals(currentStudent.getId()) && "Pending".equalsIgnoreCase(request.getStatus())) {
-                Optional<Subject> currentSubjectOpt = subjectRepository.getSubjectById(request.getCurrentSubjectId());
-                Optional<Subject> requestedSubjectOpt = subjectRepository.getSubjectById(request.getRequestedSubjectId());
-                
-                String currentSubjectName = currentSubjectOpt.map(Subject::getName).orElse("Unknown");
-                String requestedSubjectName = requestedSubjectOpt.map(Subject::getName).orElse("Unknown");
-                
+        List<Request> requests = studentService.getRequestsByStudentId(student.getId());
+        for (Request r : requests) {
+            if ("Pending".equalsIgnoreCase(r.getStatus())) {
                 tableModel.addRow(new Object[]{
-                        request.getRequestId(),
-                        request.getCurrentSubjectId() + " - " + currentSubjectName,
-                        request.getRequestedSubjectId() + " - " + requestedSubjectName,
-                        request.getStatus()
+                        r.getRequestId(),
+                        r.getCurrentSubjectId(),
+                        r.getRequestedSubjectId(),
+                        r.getStatus(),
+                        r.getRequestDate()
                 });
             }
         }
     }
     
     private void deleteSelectedRequest() {
-        int selectedRow = table.getSelectedRow();
+        int selectedRow = requestTable.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a request to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a request to delete.", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        String requestId = (String) tableModel.getValueAt(selectedRow, 0);
-        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this request?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+        String requestId = Objects.toString(tableModel.getValueAt(selectedRow, 0), "");
+        
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to delete this request?",
+                "Confirm Deletion",
+                JOptionPane.YES_NO_OPTION);
+        
         if (confirm == JOptionPane.YES_OPTION) {
-            boolean deleted = requestRepository.delete(requestId);
-            if (deleted) {
+            boolean success = studentService.deletePendingRequest(requestId);
+            if (success) {
                 JOptionPane.showMessageDialog(this, "Request deleted successfully.");
-                loadPendingRequests();
+                loadRequests();
             } else {
-                JOptionPane.showMessageDialog(this, "Failed to delete request.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Failed to delete the request.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

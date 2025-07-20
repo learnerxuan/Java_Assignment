@@ -79,9 +79,8 @@ public class AppLauncher {
             TutorService tutorService = new TutorService(tutorRepository,subjectRepository,studentRepository,enrollmentRepository
                                         );
 
-            StudentService studentService = new StudentService(studentRepository, subjectRepository, requestRepository,
-                    enrollmentRepository, paymentRepository, classesRepository,
-                    idGenerator, validator);
+            StudentService studentService = new StudentService(studentRepository, enrollmentRepository, classesRepository,
+                                            requestRepository, paymentRepository, subjectRepository, tutorRepository);
             
             MainFrame mainFrame = new MainFrame(authService, adminService, receptionistService, tutorService,
                     studentService, requestRepository);
