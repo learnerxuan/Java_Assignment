@@ -256,11 +256,11 @@ public class AdminService {
 
         // Filter and Calculate
         double totalIncome = allPayments.stream()
-            // Filter by Date and Status (only 'Completed' payments for the specified month/year)
+            // Filter by Date and Status (only 'Paid' payments for the specified month/year)
             .filter(payment -> payment.getDate() != null &&
                                payment.getDate().getYear() == year &&
                                payment.getDate().getMonthValue() == intMonth &&
-                               payment.getStatus().equalsIgnoreCase("Completed"))
+                               payment.getStatus().equalsIgnoreCase("Paid"))
             .filter(payment -> {
                 // Filter by Student's Form Level and Subject
                 Optional<Student> studentOpt = Optional.ofNullable(studentRepository.getById(payment.getStudentId()));
