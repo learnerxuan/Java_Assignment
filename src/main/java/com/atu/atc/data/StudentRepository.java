@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public class StudentRepository extends UserRepository<Student> {
-    private static final String filePath = "data/students.txt";
+    private static final String filePath = "src/main/resources/data/students.txt";
     private static final String HEADER = "student_id,student_name,password,phone_number,email,gender,IC/Passport,address,month_of_enroll,level";
 
     @Override
