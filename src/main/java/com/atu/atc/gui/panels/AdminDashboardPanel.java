@@ -186,8 +186,8 @@ public class AdminDashboardPanel extends JPanel implements DashboardPanelInterfa
 
     private void setupEventListeners() {
         manageTutorsButton.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.REGISTER_TUTOR_PANEL, loggedInAdmin);
-            System.out.println("Navigating to Register Tutor Panel.");
+            navigator.navigateTo(MainFrame.MANAGE_TUTORS_PANEL, loggedInAdmin); 
+            System.out.println("Admin: Navigating to Manage Tutors Panel.");
         });
 
         manageReceptionistsButton.addActionListener(e -> {
