@@ -17,7 +17,7 @@ import java.util.List;
 
 public class AdminRepository extends UserRepository<Admin>{
     
-    private static final String FILE_PATH = "data/admins.txt";
+    private static final String FILE_PATH = "src/main/resources/data/admins.txt";
     
     private static final String HEADER = "admin_id,admin_name,password,phone_number,email,gender";
     
