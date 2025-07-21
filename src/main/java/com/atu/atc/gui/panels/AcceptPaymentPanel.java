@@ -124,5 +124,10 @@ public class AcceptPaymentPanel extends JPanel{
                 JOptionPane.showMessageDialog(this, "Invalid amount. Please enter a number.");
             }
         });
+
+        // Back action
+        backBtn.addActionListener(e -> {
+            navigator.navigateTo(MainFrame.RECEPTIONIST_DASHBOARD, receptionist);
+        });
     }
 }

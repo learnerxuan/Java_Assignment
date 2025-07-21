@@ -1,4 +1,4 @@
-request_id,student_id,current_subject_id,requested_subject_id,status,request_date
+request_id;student_id;current_subject_id;requested_subject_id;status;request_date
 RQ001,S001,SB001,SB002,Pending,2025-07-15
 RQ002,S002,SB002,SB003,Pending,2025-07-14
 RQ003,S003,SB003,SB004,Pending,2025-07-13

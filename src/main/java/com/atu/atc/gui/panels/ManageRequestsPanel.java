@@ -36,7 +36,7 @@ public class ManageRequestsPanel extends JPanel{
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         add(titleLabel, BorderLayout.NORTH);
 
-        tableModel = new DefaultTableModel(new String[]{"Request ID", "Student ID", "Current Subject", "Status", "Date"}, 0);
+        tableModel = new DefaultTableModel(new String[]{"Request ID", "Student ID", "Current Subject", "Requested Subject", "Status", "Date"}, 0);
         requestTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(requestTable);
         add(scrollPane, BorderLayout.CENTER);
