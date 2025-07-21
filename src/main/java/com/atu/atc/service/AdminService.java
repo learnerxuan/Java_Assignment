@@ -308,6 +308,19 @@ public class AdminService {
         return totalIncome;
     }
     
+    public List<Tutor> getAllTutors() {
+        
+        List<Tutor> tutors = tutorRepository.getAll();
+        
+        if (tutors.isEmpty()) {
+            System.out.println("AdminService: No tutors found in the system.");
+        } else {
+            System.out.println("AdminService: Retrieved " + tutors.size() + " tutors.");
+        }
+        
+        return tutors;
+    }
+    
     public boolean assignTutorToClass(String classId, String tutorId){
         
         Optional<Classes> classOpt = classesRepository.getById(classId);
