@@ -1,5 +1,5 @@
-id,password,fullName,phoneNumber,email,gender
-A001,admin123,John Smith,123-456-7890,john.smith@example.com,Male
+admin_id,admin_name,password,phone_number,email,gender
+A001,admin123,haha,123-456-7890,john.smith@example.com,Male
 A002,secure456,Jane Doe,234-567-8901,jane.doe@example.com,Female
 A003,password789,Michael Johnson,345-678-9012,michael.johnson@example.com,Male
 A004,admin2023,Emily Davis,456-789-0123,emily.davis@example.com,Female
