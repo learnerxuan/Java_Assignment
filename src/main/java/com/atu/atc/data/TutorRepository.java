@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TutorRepository extends UserRepository<Tutor> {
-    private static final String FILE_PATH = "data/tutor.txt";
+    private static final String FILE_PATH = "src/main/resources/data/tutors.txt";
     private static final String HEADER ="userId,password,fullName,phoneNumber,email,gender,subject,level";
     @Override
     public void load(){
