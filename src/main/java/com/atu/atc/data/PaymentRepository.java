@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentRepository {
-    private static final String FILE_PATH = "data/payments.txt";
+    private static final String FILE_PATH = "src/main/resources/data/payments.txt";
     private static final String HEADER = "payment_id,student_id,amount,date,payment_method,status,receptionist_id";
     private List<Payment> payments = new ArrayList<>();
 
