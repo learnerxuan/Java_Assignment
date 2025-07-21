@@ -25,14 +25,14 @@ public class Admin extends User {
 
     @Override
     public void updateProfile(String newId, String newPassword, String newFullName,String newPhoneNumber, String newEmail, String newGender) {
-        super.updateProfile(newId, newPassword, newFullName, newPhoneNumber, newEmail, newGender); 
+        super.updateProfile(newId, newFullName, newPassword, newPhoneNumber, newEmail, newGender); 
         System.out.println("Admin " + getId() + ": Profile updated locally (persistence not yet implemented).");
     }
     
     public String toFileString(){
         return getId() + "," +        
-               getPassword() + "," +  
                getFullName() + "," +  
+               getPassword() + "," +  
                getPhoneNumber() + "," +
                getEmail() + "," +
                getGender();
