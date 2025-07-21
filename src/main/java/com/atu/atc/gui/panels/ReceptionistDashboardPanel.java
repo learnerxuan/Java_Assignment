@@ -89,7 +89,7 @@ public class ReceptionistDashboardPanel extends JPanel implements DashboardPanel
         });
 
         requestBtn.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.UPDATE_RECEPTIONIST_PROFILE_PANEL, receptionist);
+            navigator.navigateTo(MainFrame.MANAGE_REQUESTS_PANEL, receptionist);
         });
 
         logoutBtn.addActionListener(e -> {
