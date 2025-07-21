@@ -142,7 +142,7 @@ public class LoginPanel extends JPanel {
                 loginButton.setBackground(new Color(50, 85, 200)); // Slightly darker blue on hover
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginButton.setBackground(new Color(65, 105, 225)); // Original color on exit
+                loginButton.setBackground(new Color(65, 105, 225)); 
             }
         });
 
