@@ -15,7 +15,7 @@ import java.util.Optional;
 public class SubjectRepository {
     private static final String FILE_PATH = "src/main/resources/data/subjects.txt";
     // Define the header matching the Subject.toFileString() format
-    private static final String HEADER = "subject_Id|subject_Name|tutor_Id|level"; // Using | as delimiter as per Subject.toFileString()
+    private static final String HEADER = "subject_Id,subject_Name,tutor_Id,level";
     private List<Subject> subjects = new ArrayList<>();
     
     public void load() {
@@ -23,6 +23,7 @@ public class SubjectRepository {
         List<String> lines = FileUtils.readDataLines(FILE_PATH);
 
         for (String line : lines) {
+
             String[] parts = line.split(",", -1);
             if (parts.length == 4) { 
                 try {
@@ -32,7 +33,7 @@ public class SubjectRepository {
                     String level = parts[3].trim();
 
                     Subject subject = new Subject(subjectId, subjectName, tutorId, level);
-                        subjects.add(subject);
+                    subjects.add(subject);
                 } catch (Exception e) {
                     // Catch error
                     System.err.println("SubjectRepository: Error parsing line: " + line + " - " + e.getMessage());
