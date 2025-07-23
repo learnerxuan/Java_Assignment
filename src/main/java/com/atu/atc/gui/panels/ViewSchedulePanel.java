@@ -29,11 +29,21 @@ public class ViewSchedulePanel extends JPanel {
         
         setLayout(new BorderLayout());
         
+        JLabel titleLabel = new JLabel("Class Schedule", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        add(titleLabel, BorderLayout.NORTH);
+        
         tableModel = new DefaultTableModel(new String[]{
                 "Class ID", "Subject ID", "Subject Name", "Day", "Start Time", "End Time", "Tutor Name"
         }, 0);
         table = new JTable(tableModel);
         add(new JScrollPane(table), BorderLayout.CENTER);
+        
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> navigator.navigateTo(MainFrame.STUDENT_DASHBOARD, currentStudent));
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(backButton);
+        add(bottomPanel, BorderLayout.SOUTH);
         
         loadSchedule();
     }
@@ -54,7 +64,7 @@ public class ViewSchedulePanel extends JPanel {
             Tutor tutor = tutorMap.get(cls.getTutorId());
             
             String subjectName = (subject != null) ? subject.getName() : "Unknown";
-            String tutorName = (tutor != null) ? tutor.getFullName() : "Unknown";
+            String tutorName = (tutor != null && tutor.getFullName() != null) ? tutor.getFullName() : "Unknown";
             
             tableModel.addRow(new Object[]{
                     cls.getClassId(),
