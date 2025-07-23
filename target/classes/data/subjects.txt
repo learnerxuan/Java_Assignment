@@ -9,3 +9,6 @@ SB007,Chemistry,T007 T009,5
 SB008,Geography,T008 T003,2
 SB009,Computer Science,T009 T004,3
 SB010,Additional Mathematics,T010 T006,5
+SB011,Literature,T003 T009,3
+SB012,Economics,T004 T006,4
+SB013,Art,T007 T002,2
