@@ -58,17 +58,10 @@ public class Tutor extends User {
         this.level = level;
     }
 
-    public String toFileString() {
-        // Corrected getId() to getUserId()
-        return getId() + "," +
-                getFullName() + "," +
-                getPassword() + "," +
-                getPhoneNumber() + "," +
-                getEmail() + "," +
-                getGender() + "," +
-                level + "," +
-                subject;
-    }
+    @Override
+public String toFileString() {
+    return String.join(",", getId(), getFullName(), getPassword(), getPhoneNumber(), getEmail(), getGender(), getLevel(), getSubject());
+}
     
     @Override
     public String toString() {
@@ -80,8 +73,8 @@ public class Tutor extends User {
                ", phoneNumber='" + getPhoneNumber() + '\'' +
                ", email='" + getEmail() + '\'' +
                ", gender='" + getGender() + '\'' +
-               ", subject='" + subject + '\'' +
-               ", level='" + level + '\'' +
+               ", level='" + level + '\'' +", subject='" + subject + '\'' 
+               +
                '}';
     }
 
