@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TutorRepository extends UserRepository<Tutor> {
     private static final String FILE_PATH = "src/main/resources/data/tutors.txt";
-    private static final String HEADER ="userId,password,fullName,phoneNumber,email,gender,subject,level";
+    private static final String HEADER ="userId,fullName,password,phoneNumber,email,gender,level,subject";
     @Override
 public void load() {
     users.clear();
@@ -32,7 +32,7 @@ public void load() {
                 String level = parts[6].trim();
                 String subject = parts[7].trim();
 
-                Tutor tutor = new Tutor(userId, password, fullName, phoneNumber, email, gender, subject, level);
+                Tutor tutor = new Tutor(userId, fullName, password, phoneNumber, email, gender, level, subject);
                 users.add(tutor);
             } catch (Exception e) {
                 System.err.println("TutorRepository: Error parsing line for Tutor: " + line + " - " + e.getMessage());

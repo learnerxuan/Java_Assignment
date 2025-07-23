@@ -9,4 +9,3 @@ T007,Mia Hall,teachSafe,777-888-9999,mia.hall@example.com,Female,5,Physics
 T008,Lucas Allen,teachKey,888-999-0000,lucas.allen@example.com,Male,2,Chemistry
 T009,Amelia Scott,teachStrong,999-000-1111,amelia.scott@example.com,Female,4,English
 T010,Mason King,teachSecure,000-111-2222,mason.king@example.com,Male,1,Geography
-
