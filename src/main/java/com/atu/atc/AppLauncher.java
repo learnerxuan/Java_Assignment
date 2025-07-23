@@ -77,8 +77,7 @@ public class AppLauncher {
                                                             paymentRepository,classesRepository, subjectRepository,requestRepository,
                                                             tutorRepository);
 
-            TutorService tutorService = new TutorService(tutorRepository,subjectRepository,studentRepository,enrollmentRepository
-                                        );
+            TutorService tutorService = new TutorService(tutorRepository,subjectRepository,studentRepository,enrollmentRepository, classesRepository, idGenerator);
 
             StudentService studentService = new StudentService(studentRepository, enrollmentRepository, classesRepository,
                                             requestRepository, paymentRepository, subjectRepository, tutorRepository);
