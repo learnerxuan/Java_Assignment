@@ -74,7 +74,8 @@ public class AppLauncher {
                                                          idGenerator, validator);
 
             ReceptionistService receptionistService = new ReceptionistService(studentRepository, receptionistRepository,enrollmentRepository,
-                                                            paymentRepository,classesRepository, subjectRepository,requestRepository);
+                                                            paymentRepository,classesRepository, subjectRepository,requestRepository,
+                                                            tutorRepository);
 
             TutorService tutorService = new TutorService(tutorRepository,subjectRepository,studentRepository,enrollmentRepository
                                         );

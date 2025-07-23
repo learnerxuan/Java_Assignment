@@ -25,10 +25,11 @@ public class ManageEnrollmentPanel extends JPanel {
     private final MainFrame.PanelNavigator navigator;
 
     private final JTextField studentIdField = new JTextField(10);
-    private final JTextField classIdField = new JTextField(10);
-    private final JTextArea enrollmentArea = new JTextArea(10, 40);
+    private final JPanel enrollmentListPanel = new JPanel(new GridLayout(0, 1, 5, 5));
+    private final JComboBox<String> availableClassesDropdown = new JComboBox<>();
+    private String currentStudentId = null;
 
-    public ManageEnrollmentPanel(ReceptionistService receptionistService, Receptionist receptionist, MainFrame.PanelNavigator navigator){
+    public ManageEnrollmentPanel(ReceptionistService receptionistService, Receptionist receptionist, MainFrame.PanelNavigator navigator) {
         this.receptionist = receptionist;
         this.receptionistService = receptionistService;
         this.navigator = navigator;
@@ -36,81 +37,117 @@ public class ManageEnrollmentPanel extends JPanel {
         initUI();
     }
 
-    private void initUI(){
+    private void initUI() {
         setLayout(new BorderLayout());
 
-        JLabel titleLabel = new JLabel("Manage Student Enrollments");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(titleLabel, BorderLayout.NORTH);
+        // Top search bar
+        JPanel searchPanel = new JPanel(new FlowLayout());
+        searchPanel.add(new JLabel("Student ID:"));
+        searchPanel.add(studentIdField);
+        JButton searchBtn = new JButton("Search");
+        searchPanel.add(searchBtn);
+        add(searchPanel, BorderLayout.NORTH);
 
-        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 150, 20, 150));
-
-        inputPanel.add(new JLabel("Student ID:"));
-        inputPanel.add(studentIdField);
-        inputPanel.add(new JLabel("Class ID"));
-        inputPanel.add(classIdField);
-
-        JButton viewBtn = new JButton("View Enrollments");
-        JButton addBtn = new JButton("Add Subject");
-        JButton withdrawBtn = new JButton("Withdraw Subject");
-        JButton backBtn = new JButton("Back");
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(viewBtn);
-        buttonPanel.add(addBtn);
-        buttonPanel.add(withdrawBtn);
-        buttonPanel.add(backBtn);
-
+        // Center panel showing enrollment list
         JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.add(inputPanel, BorderLayout.NORTH);
-        centerPanel.add(buttonPanel, BorderLayout.CENTER);
-
-        enrollmentArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(enrollmentArea);
-        centerPanel.add(scrollPane, BorderLayout.SOUTH);
-
+        JScrollPane scrollPane = new JScrollPane(enrollmentListPanel);
+        centerPanel.add(new JLabel("Enrolled Classes:"), BorderLayout.NORTH);
+        centerPanel.add(scrollPane, BorderLayout.CENTER);
         add(centerPanel, BorderLayout.CENTER);
 
-        // Action Listeners
-        viewBtn.addActionListener(e -> {
-            String studentId = studentIdField.getText().trim();
-            if (studentId.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Please enter a Student ID");
-                return;
-            }
-            List<String> classes = receptionistService.getEnrolledClassIds(studentId);
-            if (classes.isEmpty()){
-                enrollmentArea.setText("No classes found for student " + studentId);
-            } else{
-                String content = classes.stream().collect(Collectors.joining("\n"));
-                enrollmentArea.setText("Enrolled classes for " + studentId + ":\n" + content);
-            }
-        });
+        // Bottom: available classes + add + back
+        JPanel bottomPanel = new JPanel(new FlowLayout());
+        bottomPanel.add(new JLabel("Available Classes:"));
+        bottomPanel.add(availableClassesDropdown);
+        JButton addBtn = new JButton("Add Subject");
+        JButton backBtn = new JButton("Back");
+        bottomPanel.add(addBtn);
+        bottomPanel.add(backBtn);
+        add(bottomPanel, BorderLayout.SOUTH);
 
-        addBtn.addActionListener(e -> {
-            String studentId = studentIdField.getText().trim();
-            String classId = classIdField.getText().trim();
-            if(studentId.isEmpty() || classId.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Please enter both Student ID and Class ID.");
-                return;
-            }
-            receptionistService.addSubjectEnrollment(studentId, classId);
-        });
+        // Actions
+        searchBtn.addActionListener(e -> handleSearch());
+        addBtn.addActionListener(e -> handleAdd());
+        backBtn.addActionListener(e -> navigator.navigateTo(MainFrame.RECEPTIONIST_DASHBOARD, receptionist));
+    }
 
-        withdrawBtn.addActionListener(e -> {
-            String studentId = studentIdField.getText().trim();
-            String classId = classIdField.getText().trim();
-            if(studentId.isEmpty() || classId.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Please enter both Student ID and Class ID");
-                return;
-            }
-            receptionistService.withdrawSubject(studentId, classId);
-        });
+    private void handleSearch() {
+        enrollmentListPanel.removeAll();
+        availableClassesDropdown.removeAllItems();
 
-        backBtn.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.RECEPTIONIST_DASHBOARD, receptionist);
-        });
+        String studentId = studentIdField.getText().trim();
+        if (studentId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a Student ID.");
+            return;
+        }
+
+        List<Enrollment> enrollments = receptionistService.getEnrollmentsByStudentId(studentId);
+        if (enrollments.isEmpty()) {
+            enrollmentListPanel.add(new JLabel("No enrollments found for student " + studentId));
+        } else {
+            currentStudentId = studentId;
+            for (Enrollment e : enrollments) {
+                Optional<Classes> optClass = receptionistService.getClassById(e.getClassId());
+                if (optClass.isEmpty()) continue;
+
+                Classes cls = optClass.get();
+                Optional<Subject> optSubj = receptionistService.getSubjectById(cls.getSubjectId());
+                Optional<Tutor> optTutor = receptionistService.getTutorById(cls.getTutorId());
+
+                String subjectName = optSubj.map(Subject::getName).orElse("Unknown Subject");
+                String tutorName = optTutor.map(Tutor::getFullName).orElse("Unknown Tutor");
+
+                JPanel rowPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                rowPanel.add(new JLabel(String.format("Class ID: %s | Subject: %s | Tutor: %s | Day: %s | Time: %s - %s",
+                        cls.getClassId(), subjectName, tutorName, cls.getDay(), cls.getStartTime(), cls.getEndTime())));
+
+                JButton withdrawBtn = new JButton("Withdraw");
+                withdrawBtn.addActionListener(ev -> {
+                    receptionistService.withdrawSubject(studentId, cls.getClassId());
+                    handleSearch();
+                });
+                rowPanel.add(withdrawBtn);
+                enrollmentListPanel.add(rowPanel);
+            }
+        }
+
+        // Show available classes based on student level
+        List<Classes> available = receptionistService.getAvailableClassesMatchingStudentLevel(studentId);
+        for (Classes c : available) {
+            Subject subj = receptionistService.getSubjectById(c.getSubjectId()).orElse(null);
+            Tutor tut = receptionistService.getTutorById(c.getTutorId()).orElse(null);
+            if (subj != null && tut != null) {
+                availableClassesDropdown.addItem(
+                        c.getClassId() + " - " + subj.getName() + " by " + tut.getFullName() + " on " + c.getDay() + " at " + c.getStartTime()
+                );
+            }
+        }
+
+        revalidate();
+        repaint();
+    }
+
+    private void handleAdd() {
+        if (currentStudentId == null) {
+            JOptionPane.showMessageDialog(this, "Search a student first.");
+            return;
+        }
+
+        List<Enrollment> currentEnrollments = receptionistService.getEnrollmentsByStudentId(currentStudentId);
+        if (currentEnrollments.size() >= 3) {
+            JOptionPane.showMessageDialog(this, "Student already enrolled in 3 subjects.");
+            return;
+        }
+
+        String selected = (String) availableClassesDropdown.getSelectedItem();
+        if (selected == null || selected.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select a class to add.");
+            return;
+        }
+
+        String classId = selected.split(" - ")[0];
+        receptionistService.addSubjectEnrollment(currentStudentId, classId);
+        JOptionPane.showMessageDialog(this, "Class added successfully.");
+        handleSearch(); // Refresh
     }
 }
