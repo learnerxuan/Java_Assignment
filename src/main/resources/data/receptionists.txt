@@ -1,5 +1,5 @@
 receptionist_id,receptionist_name,password,phone_number,email,gender
-R001,Alice Johnson,Password1234,012-3456789,alicejohnson@gmail.com,Female
+R001,Alice Johnson,newpass,012-9837280,alice123@gmail.com,Female
 R002,Bob Smith,staff456,222-333-4444,bob.smith@example.com,Male
 R003,Carol Williams,staff789,333-444-5555,carol.williams@example.com,Female
 R004,David Brown,staff2023,444-555-6666,david.brown@example.com,Male

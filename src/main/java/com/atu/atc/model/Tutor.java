@@ -14,14 +14,26 @@ public class Tutor extends User {
 
     @Override
     public boolean login(String enteredId, String enteredPassword) {
-        if (getId().equals(enteredId) && getPassword().equals(enteredPassword)) {
-            System.out.println("Tutor " + getId() + " logged in successfully.");
-            return true;
-        } else {
-            System.out.println("Tutor login failed. Invalid ID or password.");
-            return false;
-        }
+    if (enteredId == null || enteredPassword == null) {
+        System.out.println("Tutor login failed: ID or Password is null.");
+        return false;
     }
+
+    String trimmedId = enteredId.trim();
+    String trimmedPassword = enteredPassword.trim();
+
+    boolean idMatch = getId().trim().equalsIgnoreCase(trimmedId);
+    boolean pwMatch = getPassword().trim().equals(trimmedPassword);
+
+    if (idMatch && pwMatch) {
+        System.out.println("Tutor " + getId() + " logged in successfully.");
+        return true;
+    } else {
+        System.out.println("Tutor login failed. ID match: " + idMatch + ", PW match: " + pwMatch);
+        return false;
+    }
+}
+
 
     @Override
     public void updateProfile(String newId, String newFullName, String newPassword,  String newPhoneNumber, String newEmail, String newGender) {
