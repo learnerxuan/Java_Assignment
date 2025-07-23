@@ -10,8 +10,8 @@ import com.atu.atc.service.StudentService;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ViewSchedulePanel extends JPanel {
@@ -34,7 +34,7 @@ public class ViewSchedulePanel extends JPanel {
         add(titleLabel, BorderLayout.NORTH);
         
         tableModel = new DefaultTableModel(new String[]{
-                "Class ID", "Subject ID", "Subject Name", "Day", "Start Time", "End Time", "Tutor Name"
+                "Day", "Subject Name", "Start Time", "End Time", "Tutor Name"
         }, 0);
         table = new JTable(tableModel);
         add(new JScrollPane(table), BorderLayout.CENTER);
@@ -57,6 +57,12 @@ public class ViewSchedulePanel extends JPanel {
         Map<String, Tutor> tutorMap = studentService.getTutorRepository().getAll().stream()
                 .collect(Collectors.toMap(Tutor::getId, t -> t));
         
+        // sort by day
+        List<String> dayOrder = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+        myClasses.sort(Comparator
+                .comparingInt((Classes cls) -> dayOrder.indexOf(cls.getDay()))
+                .thenComparing(Classes::getStartTime));
+        
         tableModel.setRowCount(0);
         
         for (Classes cls : myClasses) {
@@ -67,10 +73,8 @@ public class ViewSchedulePanel extends JPanel {
             String tutorName = (tutor != null && tutor.getFullName() != null) ? tutor.getFullName() : "Unknown";
             
             tableModel.addRow(new Object[]{
-                    cls.getClassId(),
-                    cls.getSubjectId(),
-                    subjectName,
                     cls.getDay(),
+                    subjectName,
                     cls.getStartTime(),
                     cls.getEndTime(),
                     tutorName
