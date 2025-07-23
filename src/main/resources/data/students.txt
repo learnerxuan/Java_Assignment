@@ -6,4 +6,3 @@ S005,Olivia Davis,oliviaPass,555-666-7777,olivia.davis@example.com,Female,950505
 S006,Ethan Wilson,ethan101,666-777-8888,ethan.wilson@example.com,Male,940808678901,67 Garden Dr,2024-04-28,1
 S007,Sophia Taylor,sophiaSafe,777-888-9999,sophia.taylor@example.com,Female,930909789012,10 Jasmine Ct,2024-06-12,4
 S008,James Anderson,jamesKey,888-999-0000,james.anderson@example.com,Male,920707890123,34 Pine Rd,2024-05-18,3
-S010,Farris,noah,0123456789,farrisplane@gmail.com,Male,061213762834,Jalan USJ 69, Selangor,2025-07,5

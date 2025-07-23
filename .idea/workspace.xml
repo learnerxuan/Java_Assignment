@@ -75,30 +75,6 @@
       <option name="presentableId" value="Default" />
       <updated>1750487715846</updated>
     </task>
-    <task id="LOCAL-00003" summary="changed username to id">
-      <option name="closed" value="true" />
-      <created>1750494210364</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1750494210364</updated>
-    </task>
-    <task id="LOCAL-00004" summary="staff changed to receptionist in txt file.&#10;STF become R, counter also changed to R, added receptionist id to payments.txt">
-      <option name="closed" value="true" />
-      <created>1750495775490</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1750495775490</updated>
-    </task>
-    <task id="LOCAL-00005" summary="good">
-      <option name="closed" value="true" />
-      <created>1750499219260</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1750499219260</updated>
-    </task>
     <task id="LOCAL-00006" summary="good">
       <option name="closed" value="true" />
       <created>1750582377647</created>
@@ -467,7 +443,31 @@
       <option name="project" value="LOCAL" />
       <updated>1753260886221</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Fixed course_enrollments.txt data matching">
+      <option name="closed" value="true" />
+      <created>1753263533871</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1753263533871</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Update">
+      <option name="closed" value="true" />
+      <created>1753263695653</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1753263695653</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Update">
+      <option name="closed" value="true" />
+      <created>1753263807787</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1753263807787</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -482,7 +482,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ReceptionistRepository finsihed" />
     <MESSAGE value="updated receptionist class" />
     <MESSAGE value="finished EnrollmentRepository" />
     <MESSAGE value="finished PaymentRepository" />
@@ -506,6 +505,7 @@
     <MESSAGE value="Completed ManageRequestsPanel" />
     <MESSAGE value="Modified AcceptPaymentPanel" />
     <MESSAGE value="Resolved problem of access modifier for load and save in RequestRepository" />
+    <MESSAGE value="Fixed course_enrollments.txt data matching" />
     <MESSAGE value="Update" />
     <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
