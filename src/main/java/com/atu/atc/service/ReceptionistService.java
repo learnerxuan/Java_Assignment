@@ -128,6 +128,10 @@ public class ReceptionistService {
         System.out.println("Student " + studentId + " enrolled in " + successEnrollCount + " class(es).");
     }
 
+    public List<Classes> getAllClasses(){
+        return classesRepo.getAll();
+    }
+
     // Enroll student in new subject (check enrollment < 3)
     public void addSubjectEnrollment(String studentId, String newClassId){
         List<Enrollment> current = enrollmentRepo.getByStudentId(studentId);
