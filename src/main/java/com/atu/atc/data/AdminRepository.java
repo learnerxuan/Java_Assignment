@@ -17,7 +17,7 @@ import java.util.List;
 
 public class AdminRepository extends UserRepository<Admin>{
     
-    private static final String FILE_PATH = "data/admins.txt";
+    private static final String FILE_PATH = "src/main/resources/data/admins.txt";
     
     private static final String HEADER = "admin_id,admin_name,password,phone_number,email,gender";
     
@@ -36,8 +36,8 @@ public class AdminRepository extends UserRepository<Admin>{
             if (parts.length == 6){
                 try {
                     String id = parts[0].trim();
-                    String password = parts[1].trim();
-                    String fullName = parts[2].trim();
+                    String fullName = parts[1].trim();
+                    String password = parts[2].trim();
                     String phoneNumber = parts[3].trim();
                     String email = parts[4].trim();
                     String gender = parts[5].trim();

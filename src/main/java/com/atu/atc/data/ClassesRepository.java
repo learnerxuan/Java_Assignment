@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 public class ClassesRepository {
     
-    private static final String FILE_PATH = "data/classes.txt";
+    private static final String FILE_PATH = "src/main/resources/data/classes.txt";
     
     private static final String HEADER = "class_id,subject_id,tutor_id,day,start_time,end_time";
     

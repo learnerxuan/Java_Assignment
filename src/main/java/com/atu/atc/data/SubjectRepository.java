@@ -13,7 +13,7 @@ import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.Optional;
 public class SubjectRepository {
-    private static final String FILE_PATH = "data/subjects.txt";
+    private static final String FILE_PATH = "src/main/resources/data/subjects.txt";
     // Define the header matching the Subject.toFileString() format
     private static final String HEADER = "subject_Id|subject_Name|tutor_Id|level"; // Using | as delimiter as per Subject.toFileString()
     private List<Subject> subjects = new ArrayList<>();

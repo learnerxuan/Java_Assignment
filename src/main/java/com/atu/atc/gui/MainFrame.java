@@ -23,7 +23,7 @@ public class MainFrame extends JFrame {
     public static final String TUTOR_DASHBOARD = "TutorDashboard";
     public static final String STUDENT_DASHBOARD = "StudentDashboard";
     // Admin
-    public static final String REGISTER_TUTOR_PANEL = "RegisterTutorPanel";
+    public static final String MANAGE_TUTORS_PANEL = "ManageTutorsPanel";
     public static final String VIEW_REPORT_PANEL = "ViewReportPanel";
     public static final String MANAGE_RECEPTIONISTS_PANEL = "ManageReceptionistsPanel";
     public static final String UPDATE_ADMIN_PROFILE_PANEL = "UpdateAdminProfilePanel";
@@ -130,12 +130,12 @@ public class MainFrame extends JFrame {
                         }
                         break;
                         
-                    case REGISTER_TUTOR_PANEL:
-                        if (user instanceof Admin adminUser) { 
-                            targetPanel = new RegisterTutorPanel(adminService, this, adminUser);
+                    case MANAGE_TUTORS_PANEL: 
+                        if (user instanceof Admin adminUser) {
+                            targetPanel = new ManageTutorsPanel(adminService, this, adminUser); 
                         } else {
-                            System.err.println("MainFrame Navigator Error: Attempted to navigate to RegisterTutorPanel with non-Admin user or null.");
-                            return; 
+                            System.err.println("MainFrame Navigator Error: Attempted to navigate to ManageTutorsPanel with non-Admin user or null.");
+                            return;
                         }
                         break;
                     case VIEW_REPORT_PANEL:

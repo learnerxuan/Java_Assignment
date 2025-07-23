@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnrollmentRepository {
-    private static final String FILE_PATH = "data/enrollments.txt";
+    private static final String FILE_PATH = "src/main/resources/data/enrollments.txt";
     private static final String HEADER = "course_enrollment_id,class_id,student_id";
     private List<Enrollment> enrollments = new ArrayList<>();
 

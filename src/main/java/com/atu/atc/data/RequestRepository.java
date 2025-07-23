@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class RequestRepository {
-    private static final String filePath = "data/requests.txt";
+    private static final String filePath = "src/main/resources/data/requests.txt";
     private List<Request> requests = new ArrayList<>();
     
     public RequestRepository() {

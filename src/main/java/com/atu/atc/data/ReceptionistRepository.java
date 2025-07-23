@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReceptionistRepository extends UserRepository<Receptionist> {
-    private static final String FILE_PATH = "data/receptionist.txt";
+    private static final String FILE_PATH = "src/main/resources/data/receptionists.txt";
     private static final String HEADER = "receptionist_id,receptionist_name,password,phone_number,email,gender";
 
     @Override

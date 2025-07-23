@@ -256,11 +256,11 @@ public class AdminService {
 
         // Filter and Calculate
         double totalIncome = allPayments.stream()
-            // Filter by Date and Status (only 'Completed' payments for the specified month/year)
+            // Filter by Date and Status (only 'Paid' payments for the specified month/year)
             .filter(payment -> payment.getDate() != null &&
                                payment.getDate().getYear() == year &&
                                payment.getDate().getMonthValue() == intMonth &&
-                               payment.getStatus().equalsIgnoreCase("Completed"))
+                               payment.getStatus().equalsIgnoreCase("Paid"))
             .filter(payment -> {
                 // Filter by Student's Form Level and Subject
                 Optional<Student> studentOpt = Optional.ofNullable(studentRepository.getById(payment.getStudentId()));
@@ -306,6 +306,19 @@ public class AdminService {
                            ", Level: " + (filterFormLevel != null && !filterFormLevel.isEmpty() ? filterFormLevel : "All") +
                            "): $" + String.format("%.2f", totalIncome));
         return totalIncome;
+    }
+    
+    public List<Tutor> getAllTutors() {
+        
+        List<Tutor> tutors = tutorRepository.getAll();
+        
+        if (tutors.isEmpty()) {
+            System.out.println("AdminService: No tutors found in the system.");
+        } else {
+            System.out.println("AdminService: Retrieved " + tutors.size() + " tutors.");
+        }
+        
+        return tutors;
     }
     
     public boolean assignTutorToClass(String classId, String tutorId){
