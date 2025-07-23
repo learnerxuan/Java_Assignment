@@ -6,11 +6,7 @@ package com.atu.atc.gui.panels;
 
 import com.atu.atc.gui.MainFrame;
 import com.atu.atc.service.AuthService;
-import com.atu.atc.model.User;
-import com.atu.atc.model.Admin; 
-import com.atu.atc.model.Receptionist; 
-import com.atu.atc.model.Tutor;
-import com.atu.atc.model.Student; 
+import com.atu.atc.service.AuthResult;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -21,18 +17,18 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 
 /**
- * 
- * @author Xuan 
+ *
+ * @author Xuan
  */
 public class LoginPanel extends JPanel {
 
-    // UI Components 
+    // UI Components
     private JTextField userIdField;
     private JPasswordField passwordField;
     private JButton loginButton;
-    private JLabel messageLabel; // For displaying login status messages
+    private JLabel messageLabel;
 
-    // Dependencies 
+    // Dependencies
     private final AuthService authService;
     private final MainFrame.PanelNavigator navigator;
 
@@ -40,7 +36,7 @@ public class LoginPanel extends JPanel {
         this.authService = authService;
         this.navigator = navigator;
 
-        // Panel Styling 
+        // Panel Styling
         setBackground(new Color(240, 248, 255)); // Alice Blue
         setLayout(new GridBagLayout()); // Use GridBagLayout for centering the login form
 
@@ -52,20 +48,20 @@ public class LoginPanel extends JPanel {
                 new EmptyBorder(30, 40, 30, 40) // Inner padding
         ));
         loginCardPanel.setPreferredSize(new Dimension(450, 400));
-        loginCardPanel.setMaximumSize(new Dimension(450, 400)); 
-        loginCardPanel.setMinimumSize(new Dimension(400, 350)); 
+        loginCardPanel.setMaximumSize(new Dimension(450, 400));
+        loginCardPanel.setMinimumSize(new Dimension(400, 350));
 
         // GridBagConstraints for layout within loginCardPanel
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 5, 10, 5); 
+        gbc.insets = new Insets(10, 5, 10, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL; // Components fill horizontal space
 
         int row = 0;
 
-        // Title Label 
+        // Title Label
         JLabel titleLabel = new JLabel("Welcome to ATC System", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 28)); // Larger, bolder font
-        titleLabel.setForeground(new Color(25, 25, 112)); // Midnight Blue 
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        titleLabel.setForeground(new Color(25, 25, 112));
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.gridwidth = 2; // Span across two columns
@@ -73,29 +69,29 @@ public class LoginPanel extends JPanel {
         loginCardPanel.add(titleLabel, gbc);
         row++;
 
-        // User ID Input 
-        JLabel userIdLabel = new JLabel("User ID:");
+        // User ID Input (Changed back to "User ID:")
+        JLabel userIdLabel = new JLabel("User ID:"); // <-- CHANGED TEXT BACK TO "User ID:"
         userIdLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         userIdLabel.setForeground(new Color(70, 130, 180)); // Steel Blue
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.gridwidth = 1; // Reset to 1 column
         gbc.anchor = GridBagConstraints.WEST; // Align label to the left
-        loginCardPanel.add(userIdLabel, gbc);
+        loginCardPanel.add(userIdLabel, gbc); // Using userIdLabel
 
         userIdField = new JTextField(20);
         userIdField.setFont(new Font("Arial", Font.PLAIN, 16));
         userIdField.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(173, 216, 230), 1), // Light blue border
-                new EmptyBorder(5, 10, 5, 10) 
+                new LineBorder(new Color(173, 216, 230), 1),
+                new EmptyBorder(5, 10, 5, 10)
         ));
         gbc.gridx = 1;
         gbc.weightx = 1.0; // Allow text field to take extra horizontal space
         loginCardPanel.add(userIdField, gbc);
         row++;
 
-        // Password Input 
-        JLabel passwordLabel = new JLabel("Password:");
+        // Password Input
+        JLabel passwordLabel = new JLabel("Password:"); // <-- REMAINS "Password:"
         passwordLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         passwordLabel.setForeground(new Color(70, 130, 180)); // Steel Blue
         gbc.gridx = 0;
@@ -106,56 +102,55 @@ public class LoginPanel extends JPanel {
         passwordField = new JPasswordField(20);
         passwordField.setFont(new Font("Arial", Font.PLAIN, 16));
         passwordField.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(173, 216, 230), 1), // Light blue border
-                new EmptyBorder(5, 10, 5, 10) // Inner padding
+                new LineBorder(new Color(173, 216, 230), 1),
+                new EmptyBorder(5, 10, 5, 10)
         ));
         gbc.gridx = 1;
         gbc.weightx = 1.0;
         loginCardPanel.add(passwordField, gbc);
         row++;
 
-        // Message Label 
+        // Message Label
         messageLabel = new JLabel("", SwingConstants.CENTER);
         messageLabel.setFont(new Font("Arial", Font.ITALIC, 14));
-        messageLabel.setForeground(Color.RED); // Default color for error messages
+        messageLabel.setForeground(Color.RED);
         gbc.gridx = 0;
         gbc.gridy = row;
-        gbc.gridwidth = 2; 
-        gbc.weighty = 0.1; 
+        gbc.gridwidth = 2;
+        gbc.weighty = 0.1;
         loginCardPanel.add(messageLabel, gbc);
         row++;
 
-        // Login Button 
+        // Login Button
         loginButton = new JButton("Login");
         loginButton.setFont(new Font("Arial", Font.BOLD, 18));
         loginButton.setBackground(new Color(65, 105, 225)); // Royal Blue
-        loginButton.setForeground(Color.WHITE); // White text
-        loginButton.setFocusPainted(false); // Remove focus border
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFocusPainted(false);
         loginButton.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(65, 105, 225), 1, true), // Matching border, rounded
-                new EmptyBorder(10, 25, 10, 25) // Padding
+                new LineBorder(new Color(65, 105, 225), 1, true),
+                new EmptyBorder(10, 25, 10, 25)
         ));
-        loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Hand cursor on hover
-        // Add a subtle hover effect
+        loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginButton.setBackground(new Color(50, 85, 200)); // Slightly darker blue on hover
+                loginButton.setBackground(new Color(50, 85, 200));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginButton.setBackground(new Color(65, 105, 225)); 
+                loginButton.setBackground(new Color(65, 105, 225));
             }
         });
 
         gbc.gridx = 0;
         gbc.gridy = row;
-        gbc.gridwidth = 2; // Span across both columns
-        gbc.weighty = 0.2; // Give it more vertical weight to push it down
-        gbc.anchor = GridBagConstraints.CENTER; // Center the button
+        gbc.gridwidth = 2;
+        gbc.weighty = 0.2;
+        gbc.anchor = GridBagConstraints.CENTER;
         loginCardPanel.add(loginButton, gbc);
 
-        add(loginCardPanel, new GridBagConstraints()); 
+        add(loginCardPanel, new GridBagConstraints());
 
-        // Attach Action Listener 
+        // Attach Action Listener
         loginButton.addActionListener(new LoginButtonListener());
     }
 
@@ -164,42 +159,33 @@ public class LoginPanel extends JPanel {
         userIdField.setText("");
         passwordField.setText("");
     }
-    
+
     private class LoginButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Get user input from the View's components
             String userId = userIdField.getText().trim();
             String password = new String(passwordField.getPassword()).trim();
 
-            // Clear previous message and reset color
-            messageLabel.setText("");
+            messageLabel.setText(""); // Clear previous message
             messageLabel.setForeground(Color.RED);
 
-            // Basic client-side validation for empty fields
             if (userId.isEmpty() || password.isEmpty()) {
-                messageLabel.setText("Please enter User ID and Password.");
+                messageLabel.setText("Please enter User ID and Password."); // <-- CHANGED MESSAGE HERE
                 return;
             }
 
-            // Call authentication service
-            Optional<User> authenticatedUserOptional = authService.authenticateUser(userId, password);
+            AuthResult result = authService.authenticateUser(userId, password);
 
-            if (authenticatedUserOptional.isPresent()) {
-                User loggedInUser = authenticatedUserOptional.get();
-                messageLabel.setText("Login successful! Welcome, " + loggedInUser.getFullName() + "!");
+            messageLabel.setText(result.getMessage());
+            if (result.isSuccess()) {
                 messageLabel.setForeground(new Color(0, 128, 0)); // Green for success
-
                 clearFields(); // Clear fields after successful login
-
-                navigator.navigateTo(loggedInUser.getRole() + "Dashboard", loggedInUser);
+                navigator.navigateTo(result.getAuthenticatedUser().get().getRole() + "Dashboard", result.getAuthenticatedUser().get());
             } else {
-                messageLabel.setText("Login failed. Invalid User ID or Password, or account locked.");
-                messageLabel.setForeground(Color.RED);
-                clearFields(); // Clear fields on failed login attempt
+                messageLabel.setForeground(Color.RED); // Red for failure
+                clearFields();
             }
         }
     }
 }
-
 
