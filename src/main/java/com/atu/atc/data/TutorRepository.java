@@ -24,8 +24,8 @@ public void load() {
         if (parts.length == 8) {
             try {
                 String userId = parts[0].trim();
-                String fullName = parts[2].trim();
-                String password = parts[1].trim();
+                String fullName = parts[1].trim();
+                String password = parts[2].trim();
                 String phoneNumber = parts[3].trim();
                 String email = parts[4].trim();
                 String gender = parts[5].trim();
