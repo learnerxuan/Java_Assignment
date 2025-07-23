@@ -5,7 +5,7 @@ public class Tutor extends User {
     private String subject;
     private String level;
 
-    public Tutor(String userId, String fullName, String password, String phoneNumber, String email, String gender, String subject, String level) {
+    public Tutor(String userId, String fullName, String password, String phoneNumber, String email, String gender, String level, String subject) {
         // Calls the constructor of the superclass (User)
         super(userId, password, "Tutor", fullName, phoneNumber, email, gender);
         this.subject = subject;
