@@ -14,6 +14,8 @@ import com.atu.atc.model.Payment;
 import com.atu.atc.model.Classes;
 import com.atu.atc.model.Subject;
 import com.atu.atc.model.Request;
+import com.atu.atc.model.Tutor;
+import com.atu.atc.data.TutorRepository;
 import com.atu.atc.util.IDGenerator;
 import com.atu.atc.util.Validator;
 
@@ -34,10 +36,12 @@ public class ReceptionistService {
     private final ClassesRepository classesRepo;
     private final SubjectRepository subjectRepo;
     private final RequestRepository requestRepo;
+    private final TutorRepository tutorRepo;
 
     public ReceptionistService(StudentRepository studentRepo, ReceptionistRepository receptionistRepo,
                                EnrollmentRepository enrollmentRepo, PaymentRepository paymentRepo,
-                               ClassesRepository classesRepo, SubjectRepository subjectRepo, RequestRepository requestRepo){
+                               ClassesRepository classesRepo, SubjectRepository subjectRepo, RequestRepository requestRepo,
+                               TutorRepository tutorRepo){
         this.studentRepo = studentRepo;
         this.receptionistRepo = receptionistRepo;
         this.enrollmentRepo = enrollmentRepo;
@@ -45,6 +49,7 @@ public class ReceptionistService {
         this.classesRepo = classesRepo;
         this.subjectRepo = subjectRepo;
         this.requestRepo = requestRepo;
+        this.tutorRepo = tutorRepo;
     }
 
     // Register a new student
@@ -187,6 +192,22 @@ public class ReceptionistService {
                     return subject != null && subject.getLevel().equals(studentLevel);
                 })
                 .collect(Collectors.toList());
+    }
+
+    public List<Enrollment> getEnrollmentsByStudentId(String studentId) {
+        return enrollmentRepo.getByStudentId(studentId);
+    }
+
+    public Optional<Classes> getClassById(String classId){
+        return classesRepo.getById(classId);
+    }
+
+    public Optional<Subject> getSubjectById(String subjectId){
+        return subjectRepo.getSubjectById(subjectId);
+    }
+
+    public Optional<Tutor> getTutorById(String tutorId){
+        return Optional.ofNullable(tutorRepo.getById(tutorId));
     }
 
     // Withdraw from one subject
