@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.Collections;
 
 /**
  * @author henge
@@ -175,7 +176,7 @@ public class ReceptionistService {
     }
 
     public List<Classes> getAvailableClassesMatchingStudentLevel(String studentId) {
-        Student student = studentRepo.getById(studentId).orElse(null);
+        Student student = studentRepo.getById(studentId);
         if (student == null) return Collections.emptyList();
 
         String studentLevel = student.getLevel();
