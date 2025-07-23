@@ -98,7 +98,7 @@ public class IDGenerator {
     }
     
     public String generateClassId() {
-        return generateUniqueId("C"); // Assuming 'C' for Class
+        return generateUniqueId("CLS"); // Assuming 'C' for Class
     }
     
     public String generateEnrollmentId() {
@@ -131,7 +131,7 @@ public class IDGenerator {
     }
     
     public void setLastClassId(String lastId) {
-        setLastId("C", lastId);
+        setLastId("CLS", lastId);
     }
     
     public void setLastEnrollmentId(String lastId) {
