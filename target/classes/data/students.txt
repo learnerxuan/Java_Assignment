@@ -1,4 +1,5 @@
 student_id,student_name,password,phone_number,email,gender,IC/Passport,address,month_of_enroll,level
+S001,Emma Watson,emma123,111-222-3333,emma.watson@example.com,Female,990101123456,123 Flower St,2024-05-10,5
 S002,Noah Johnson,noah456,222-333-4444,noah.johnson@example.com,Male,981202234567,45 Maple Ave,2024-06-03,4
 S003,Ava Martinez,ava789,333-444-5555,ava.martinez@example.com,Female,971223345678,89 Sunset Blvd,2024-05-15,3
 S004,Liam Brown,liam2023,444-555-6666,liam.brown@example.com,Male,961114456789,21 River Rd,2024-07-01,2

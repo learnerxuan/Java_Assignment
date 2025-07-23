@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c5e6d389-35fc-468f-93c5-e1bcc16078f1" name="Changes" comment="Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/AppLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/AppLauncher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/data/TutorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/data/TutorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ManageEnrollmentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/ManageEnrollmentPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/service/ReceptionistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/service/ReceptionistService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/AppLauncher.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atu/atc/AppLauncher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atu/atc/gui/panels/ManageEnrollmentPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atu/atc/gui/panels/ManageEnrollmentPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/StudentDashboardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/StudentDashboardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/SubjectChangeRequestPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atu/atc/gui/panels/SubjectChangeRequestPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/data/students.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data/students.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -28,11 +28,11 @@ public class SubjectChangeRequestPanel extends JPanel {
         
         setLayout(new BorderLayout());
         
-        JLabel titleLabel = new JLabel("Request Subject Change", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        JLabel titleLabel = new JLabel("Change Subject Request", SwingConstants.LEFT);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         add(titleLabel, BorderLayout.NORTH);
         
-        JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel formPanel = new JPanel(new GridLayout(4, 2, 8, 4));
         
         formPanel.add(new JLabel("Current Enrolled Course:"));
         currentSubjectCombo = new JComboBox<>();

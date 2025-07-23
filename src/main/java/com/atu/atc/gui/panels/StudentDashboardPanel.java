@@ -38,8 +38,8 @@ public class StudentDashboardPanel extends JPanel implements DashboardPanelInter
         
         // Welcome Label
         welcomeLabel = new JLabel();
-        welcomeLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        welcomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(welcomeLabel, BorderLayout.NORTH);
         
         // Button Panel
@@ -51,16 +51,16 @@ public class StudentDashboardPanel extends JPanel implements DashboardPanelInter
         deletePendingRequestButton = new JButton("Delete Pending Subject Change Request");
         viewPaymentStatusButton = new JButton("View Payment Status");
         updateProfileButton = new JButton("Update My Profile");
-        logoutButton = new JButton("Logout");
         viewRequestStatusButton = new JButton("View Request Status");
+        logoutButton = new JButton("Logout");
         
         buttonPanel.add(viewScheduleButton);
         buttonPanel.add(requestSubjectChangeButton);
         buttonPanel.add(deletePendingRequestButton);
         buttonPanel.add(viewPaymentStatusButton);
         buttonPanel.add(updateProfileButton);
-        buttonPanel.add(logoutButton);
         buttonPanel.add(viewRequestStatusButton);
+        buttonPanel.add(logoutButton);
         
         add(buttonPanel, BorderLayout.CENTER);
         
@@ -106,7 +106,7 @@ public class StudentDashboardPanel extends JPanel implements DashboardPanelInter
     public void updateUserContext(User user) {
         if (user instanceof Student) {
             this.loggedInStudent = (Student) user;
-            welcomeLabel.setText("Welcome, " + loggedInStudent.getFullName() + "!");
+            welcomeLabel.setText("Welcome Back, " + loggedInStudent.getFullName() + "!");
         } else {
             welcomeLabel.setText("Welcome, Student!");
         }
