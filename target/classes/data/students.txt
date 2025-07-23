@@ -1,9 +1,0 @@
-student_id,student_name,password,phone_number,email,gender,IC/Passport,address,month_of_enroll,level
-S001,Emma Watson,emma123,111-222-3333,emma.watson@example.com,Female,990101123456,123 Flower St,2024-05-10,5
-S002,Noah Johnson,noah456,222-333-4444,noah.johnson@example.com,Male,981202234567,45 Maple Ave,2024-06-03,4
-S003,Ava Martinez,ava789,333-444-5555,ava.martinez@example.com,Female,971223345678,89 Sunset Blvd,2024-05-15,3
-S004,Liam Brown,liam2023,444-555-6666,liam.brown@example.com,Male,961114456789,21 River Rd,2024-07-01,2
-S005,Olivia Davis,oliviaPass,555-666-7777,olivia.davis@example.com,Female,950505567890,5 Orchard Ln,2024-05-20,5
-S006,Ethan Wilson,ethan101,666-777-8888,ethan.wilson@example.com,Male,940808678901,67 Garden Dr,2024-04-28,1
-S007,Sophia Taylor,sophiaSafe,777-888-9999,sophia.taylor@example.com,Female,930909789012,10 Jasmine Ct,2024-06-12,4
-S008,James Anderson,jamesKey,888-999-0000,james.anderson@example.com,Male,920707890123,34 Pine Rd,2024-05-18,3
