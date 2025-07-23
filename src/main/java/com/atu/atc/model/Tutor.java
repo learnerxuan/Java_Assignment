@@ -5,9 +5,9 @@ public class Tutor extends User {
     private String subject;
     private String level;
 
-    public Tutor(String userId, String password, String fullName, String phoneNumber, String email, String gender, String subject, String level) {
+    public Tutor(String userId, String fullName, String password, String phoneNumber, String email, String gender, String subject, String level) {
         // Calls the constructor of the superclass (User)
-        super(userId, password, "Tutor", fullName, phoneNumber, email, gender);
+        super(userId, fullName, "Tutor", password, phoneNumber, email, gender);
         this.subject = subject;
         this.level = level;
     }
@@ -24,8 +24,8 @@ public class Tutor extends User {
     }
 
     @Override
-    public void updateProfile(String newId, String newPassword, String newFullName, String newPhoneNumber, String newEmail, String newGender) {
-        super.updateProfile(newId, newPassword, newFullName, newPhoneNumber, newEmail, newGender);
+    public void updateProfile(String newId, String newFullName, String newPassword,  String newPhoneNumber, String newEmail, String newGender) {
+        super.updateProfile(newId, newFullName, newPassword,  newPhoneNumber, newEmail, newGender);
         System.out.println("Tutor " + getId() + ": Profile updated locally (persistence handled by service layer).");
     }
 
@@ -49,13 +49,13 @@ public class Tutor extends User {
     public String toFileString() {
         // Corrected getId() to getUserId()
         return getId() + "," +
-                getPassword() + "," +
                 getFullName() + "," +
+                getPassword() + "," +
                 getPhoneNumber() + "," +
                 getEmail() + "," +
                 getGender() + "," +
-                subject + "," +
-                level;
+                level + "," +
+                subject;
     }
     
     @Override

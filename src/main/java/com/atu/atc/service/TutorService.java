@@ -1,9 +1,6 @@
 package com.atu.atc.service;
 
-import com.atu.atc.data.TutorRepository;
-import com.atu.atc.data.StudentRepository;
-import com.atu.atc.data.EnrollmentRepository;
-import com.atu.atc.data.SubjectRepository;
+import com.atu.atc.data.*;
 import com.atu.atc.model.Tutor;
 import com.atu.atc.model.Course;
 import com.atu.atc.model.Student;
@@ -23,10 +20,12 @@ public class TutorService {
     private final StudentRepository studentRepository;
     private final EnrollmentRepository enrollmentRepository;
 
-    public TutorService(TutorRepository tutorRepository, 
-                        SubjectRepository subjectRepository, 
+    public TutorService(TutorRepository tutorRepository,
+                        SubjectRepository subjectRepository,
                         StudentRepository studentRepository,
-                        EnrollmentRepository enrollmentRepository) {
+                        EnrollmentRepository enrollmentRepository,
+                        ClassesRepository classesRepository,
+                        IDGenerator idGenerator) {
         this.tutorRepository = tutorRepository;
         this.subjectRepository = subjectRepository;
         this.studentRepository = studentRepository;
