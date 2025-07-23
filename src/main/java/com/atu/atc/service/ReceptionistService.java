@@ -174,6 +174,20 @@ public class ReceptionistService {
         System.out.println("Subject added to enrollment.");
     }
 
+    public List<Classes> getAvailableClassesMatchingStudentLevel(String studentId) {
+        Student student = studentRepo.getById(studentId).orElse(null);
+        if (student == null) return Collections.emptyList();
+
+        String studentLevel = student.getLevel();
+
+        return classesRepo.getAll().stream()
+                .filter(cls -> {
+                    Subject subject = subjectRepo.getSubjectById(cls.getSubjectId()).orElse(null);
+                    return subject != null && subject.getLevel().equals(studentLevel);
+                })
+                .collect(Collectors.toList());
+    }
+
     // Withdraw from one subject
     public void withdrawSubject(String studentId, String classIdToRemove){
         List<Enrollment> current = enrollmentRepo.getByStudentId(studentId);
