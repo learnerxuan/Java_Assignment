@@ -23,7 +23,7 @@ public class SubjectRepository {
         List<String> lines = FileUtils.readDataLines(FILE_PATH);
 
         for (String line : lines) {
-            String[] parts = line.split("\\|", -1);
+            String[] parts = line.split(",", -1);
             if (parts.length == 4) { 
                 try {
                     String subjectId = parts[0].trim();
