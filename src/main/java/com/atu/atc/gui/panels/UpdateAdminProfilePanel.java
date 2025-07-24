@@ -152,7 +152,7 @@ public class UpdateAdminProfilePanel extends JPanel{
         gbc.gridx = 0; gbc.gridy = row;
         formCardPanel.add(genderLabel, gbc);
         gbc.gridx = 1;
-        String[] genders = {"", "Male", "Female", "Other"};
+        String[] genders = {"", "Male", "Female"};
         genderComboBox = new JComboBox<>(genders);
         genderComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
         genderComboBox.setBackground(Color.WHITE);
