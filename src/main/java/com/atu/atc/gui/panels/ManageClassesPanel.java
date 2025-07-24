@@ -1,25 +1,19 @@
 package com.atu.atc.gui.panels;
 
 import com.atu.atc.gui.MainFrame;
-import com.atu.atc.model.Classes;
-import com.atu.atc.model.Subject;
 import com.atu.atc.model.Tutor;
 import com.atu.atc.model.User;
 import com.atu.atc.service.TutorService;
-import com.atu.atc.data.SubjectRepository;
-import com.atu.atc.data.ClassesRepository;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class ManageClassesPanel extends JPanel {
 
     private final TutorService tutorService;
-    private final SubjectRepository subjectRepository = new SubjectRepository();
-    private final ClassesRepository classesRepository = new ClassesRepository();
     private final MainFrame.PanelNavigator navigator;
     private Tutor loggedInTutor;
 
@@ -38,155 +32,176 @@ public class ManageClassesPanel extends JPanel {
     }
 
     private void initUI() {
-        setLayout(new BorderLayout());
+        setBackground(new Color(245, 250, 255));
+        setLayout(new BorderLayout(20, 20));
+        setBorder(new EmptyBorder(30, 40, 30, 40));
 
-        JLabel titleLabel = new JLabel("Manage My Classes");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("📚 Manage My Classes", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        titleLabel.setForeground(new Color(44, 62, 80));
         add(titleLabel, BorderLayout.NORTH);
 
-        JPanel inputPanel = new JPanel(new GridLayout(5, 2, 10, 10));
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 150, 10, 150));
+        // Form
+        JPanel formPanel = new JPanel(new GridLayout(5, 2, 15, 15));
+        formPanel.setBackground(Color.WHITE);
+        formPanel.setBorder(new EmptyBorder(20, 30, 20, 30));
 
-        inputPanel.add(new JLabel("Class ID:"));
-        classIdField.setEditable(false);
-        inputPanel.add(classIdField);
+        formPanel.add(new JLabel("Class ID:"));
+        formPanel.add(classIdField);
 
-        inputPanel.add(new JLabel("Subject:"));
+        formPanel.add(new JLabel("Subject:"));
         populateSubjectComboBox();
-        inputPanel.add(subjectComboBox);
+        formPanel.add(subjectComboBox);
 
-        inputPanel.add(new JLabel("Day:"));
-        inputPanel.add(dayField);
+        formPanel.add(new JLabel("Day:"));
+        formPanel.add(dayField);
 
-        inputPanel.add(new JLabel("Start Time (HH:MM):"));
-        inputPanel.add(startTimeField);
+        formPanel.add(new JLabel("Start Time (HH:MM):"));
+        formPanel.add(startTimeField);
 
-        inputPanel.add(new JLabel("End Time (HH:MM):"));
-        inputPanel.add(endTimeField);
+        formPanel.add(new JLabel("End Time (HH:MM):"));
+        formPanel.add(endTimeField);
 
-        JButton viewBtn = new JButton("View My Classes");
-        JButton addBtn = new JButton("Add Class");
-        JButton updateBtn = new JButton("Update Class");
-        JButton deleteBtn = new JButton("Delete Class");
-        JButton backBtn = new JButton("Back");
+        // Buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+        buttonPanel.setBackground(Color.WHITE);
 
-        JPanel buttonPanel = new JPanel();
+        JButton viewBtn = createStyledButton("🔍 View Classes");
+        JButton addBtn = createStyledButton("➕ Add Class");
+        JButton updateBtn = createStyledButton("✏️ Update");
+        JButton deleteBtn = createStyledButton("❌ Delete");
+        JButton backBtn = createBackButton("🔙 Back");
+
         buttonPanel.add(viewBtn);
         buttonPanel.add(addBtn);
         buttonPanel.add(updateBtn);
         buttonPanel.add(deleteBtn);
         buttonPanel.add(backBtn);
 
-        JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.add(inputPanel, BorderLayout.NORTH);
-        centerPanel.add(buttonPanel, BorderLayout.CENTER);
+        // Card Layout
+        JPanel centerCard = new JPanel(new BorderLayout(10, 10));
+        centerCard.setBackground(Color.WHITE);
+        centerCard.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(200, 220, 240), 2, true),
+            new EmptyBorder(20, 20, 20, 20)
+        ));
 
-        classArea.setEditable(false);
+        centerCard.add(formPanel, BorderLayout.NORTH);
+        centerCard.add(buttonPanel, BorderLayout.CENTER);
+
+        // Output
         JScrollPane scrollPane = new JScrollPane(classArea);
-        centerPanel.add(scrollPane, BorderLayout.SOUTH);
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Your Classes"));
+        classArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        classArea.setEditable(false);
 
-        add(centerPanel, BorderLayout.CENTER);
+        centerCard.add(scrollPane, BorderLayout.SOUTH);
+        add(centerCard, BorderLayout.CENTER);
 
-        viewBtn.addActionListener(e -> {
-            if (loggedInTutor == null) {
-                classArea.setText("Tutor context not available.");
-                return;
-            }
-            List<Classes> tutorClasses = classesRepository.getByTutorId(loggedInTutor.getId());
-            if (tutorClasses.isEmpty()) {
-                classArea.setText("You have no classes yet.");
-            } else {
-                String text = tutorClasses.stream().map(Classes::toString).collect(Collectors.joining("\n"));
-                classArea.setText(text);
-            }
-        });
-
-        addBtn.addActionListener(e -> {
-            if (loggedInTutor == null) return;
-            String subjectName = (String) subjectComboBox.getSelectedItem();
-            String day = dayField.getText().trim();
-            String startTime = startTimeField.getText().trim();
-            String endTime = endTimeField.getText().trim();
-
-            if (day.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Day, Start Time and End Time cannot be empty.");
-                return;
-            }
-
-            Optional<Subject> subjectOpt = subjectRepository.getAllSubjects().stream()
-                    .filter(s -> s.getName().equals(subjectName))
-                    .findFirst();
-
-            if (subjectOpt.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Invalid subject selected.");
-                return;
-            }
-
-            String schedule = day + " " + startTime + "-" + endTime;
-            Classes newClass = new Classes("", subjectOpt.get().getSubjectId(), loggedInTutor.getId(), day, startTime, endTime);
-            boolean added = tutorService.addClassInformation(
-                newClass.getSubjectId(),
-                "N/A",    // Level (not available from UI)
-                0.0,      // Charges (not available from UI)
-                newClass.getDay() + " " + newClass.getStartTime() + "-" + newClass.getEndTime(),
-                newClass.getTutorId()
-            );
-            JOptionPane.showMessageDialog(this, added ? "Class added." : "Failed to add class.");
-        });
-
-        updateBtn.addActionListener(e -> {
-            if (loggedInTutor == null) return;
-
-            String classId = classIdField.getText().trim();
-            String subjectName = (String) subjectComboBox.getSelectedItem();
-            String day = dayField.getText().trim();
-            String startTime = startTimeField.getText().trim();
-            String endTime = endTimeField.getText().trim();
-
-            if (classId.isEmpty() || day.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "All fields are required for update.");
-                return;
-            }
-
-            Optional<Subject> subjectOpt = subjectRepository.getAllSubjects().stream()
-                    .filter(s -> s.getName().equals(subjectName))
-                    .findFirst();
-
-            if (subjectOpt.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Invalid subject selected.");
-                return;
-            }
-
-            // ✅ This matches the TutorService method (which requires 6 arguments)
-            boolean success = tutorService.updateClassInformation(
-                classId,
-                subjectOpt.get().getSubjectId(),
-                "N/A", // level not stored in Classes
-                0.0,   // charges not stored in Classes
-                day + " " + startTime + "-" + endTime,
-                loggedInTutor.getId()
-            );
-
-            JOptionPane.showMessageDialog(this, success ? "Class updated." : "Update failed.");
-        });
-
-        deleteBtn.addActionListener(e -> {
-            String classId = classIdField.getText().trim();
-            if (classId.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Enter Class ID to delete.");
-                return;
-            }
-            boolean deleted = tutorService.deleteClassInformation(classId);
-            JOptionPane.showMessageDialog(this, deleted ? "Class deleted." : "Failed to delete.");
-        });
-
+        // Listeners
+        viewBtn.addActionListener(e -> viewClasses());
+        addBtn.addActionListener(e -> addClass());
+        updateBtn.addActionListener(e -> updateClass());
+        deleteBtn.addActionListener(e -> deleteClass());
         backBtn.addActionListener(e -> navigator.navigateTo(MainFrame.TUTOR_DASHBOARD, loggedInTutor));
+    }
+
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setBackground(new Color(100, 149, 237));
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(70, 130, 180), 1, true),
+            new EmptyBorder(8, 20, 8, 20)
+        ));
+        return button;
+    }
+
+    private JButton createBackButton(String text) {
+        JButton button = new JButton(text);
+        button.setBackground(new Color(255, 230, 230));
+        button.setForeground(new Color(150, 50, 50));
+        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(220, 150, 150), 1, true),
+            new EmptyBorder(8, 20, 8, 20)
+        ));
+        return button;
+    }
+
+    private void viewClasses() {
+        if (loggedInTutor == null) {
+            classArea.setText("Tutor context not available.");
+            return;
+        }
+        List<String[]> classes = tutorService.getClassesByTutorId(loggedInTutor.getId());
+        if (classes.isEmpty()) {
+            classArea.setText("You have no classes yet.");
+        } else {
+            StringBuilder sb = new StringBuilder();
+            for (String[] cls : classes) {
+                sb.append("Class ID: ").append(cls[0])
+                  .append(" | Subject: ").append(cls[1])
+                  .append(" | Day: ").append(cls[2])
+                  .append(" | Time: ").append(cls[3]).append("-").append(cls[4])
+                  .append("\n");
+            }
+            classArea.setText(sb.toString());
+        }
+    }
+
+    private void addClass() {
+        String subjectId = loggedInTutor.getSubject();
+        String day = dayField.getText().trim();
+        String start = startTimeField.getText().trim();
+        String end = endTimeField.getText().trim();
+        if (day.isEmpty() || start.isEmpty() || end.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required.");
+            return;
+        }
+        String schedule = day + " " + start + "-" + end;
+        boolean added = tutorService.addClassInformation(subjectId, loggedInTutor.getLevel(), 0.0, schedule, loggedInTutor.getId());
+        JOptionPane.showMessageDialog(this, added ? "Class added." : "Failed to add class.");
+    }
+
+    private void updateClass() {
+        String classId = classIdField.getText().trim();
+        String subjectId = loggedInTutor.getSubject();
+        String day = dayField.getText().trim();
+        String start = startTimeField.getText().trim();
+        String end = endTimeField.getText().trim();
+        if (classId.isEmpty() || day.isEmpty() || start.isEmpty() || end.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required.");
+            return;
+        }
+        String schedule = day + " " + start + "-" + end;
+        boolean updated = tutorService.updateClassInformation(classId, subjectId, loggedInTutor.getLevel(), 0.0, schedule, loggedInTutor.getId());
+        JOptionPane.showMessageDialog(this, updated ? "Class updated." : "Failed to update class.");
+    }
+
+    private void deleteClass() {
+        String classId = classIdField.getText().trim();
+        if (classId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter Class ID to delete.");
+            return;
+        }
+        boolean deleted = tutorService.deleteClassInformation(classId);
+        JOptionPane.showMessageDialog(this, deleted ? "Class deleted." : "Failed to delete class.");
     }
 
     private void populateSubjectComboBox() {
         subjectComboBox.removeAllItems();
-        subjectRepository.getAllSubjects().forEach(s -> subjectComboBox.addItem(s.getName()));
+        if (loggedInTutor != null) {
+            String tutorSubject = loggedInTutor.getSubject();
+            subjectComboBox.addItem(tutorSubject);
+            subjectComboBox.setSelectedItem(tutorSubject);
+            subjectComboBox.setEnabled(false);
+        }
     }
 
     public void updateUserContext(User user) {
