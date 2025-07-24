@@ -57,14 +57,14 @@ public class ManageTutorsPanel extends JPanel {
         this.loggedInAdmin = loggedInAdmin;
 
         // Panel Layout and Styling
-        setLayout(new BorderLayout(15, 15)); // Add gaps between regions
+        setLayout(new BorderLayout(15, 15));
         setBorder(new EmptyBorder(20, 20, 20, 20)); 
-        setBackground(new Color(240, 248, 255)); // Alice Blue 
+        setBackground(new Color(240, 248, 255));
 
         // Title
         JLabel titleLabel = new JLabel("Manage Tutors", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        titleLabel.setForeground(new Color(25, 25, 112)); // Midnight Blue
+        titleLabel.setForeground(new Color(25, 25, 112)); 
         add(titleLabel, BorderLayout.NORTH);
 
         // Main Content Panel (CENTER) 
@@ -369,11 +369,11 @@ public class ManageTutorsPanel extends JPanel {
             boolean success = adminService.deleteTutor(tutorId);
 
             if (success) {
+                loadTutors(); // Refresh table after deletion
                 tableMessageLabel.setText("Tutor '" + tutorName + "' deleted successfully.");
                 tableMessageLabel.setForeground(new Color(0, 128, 0)); // Green for success
-                loadTutors(); // Refresh table after deletion
             } else {
-                tableMessageLabel.setText("Deletion failed for '" + tutorName + "'. Check console for details.");
+                tableMessageLabel.setText("Deletion failed for " + tutorName);
             }
         }
     }
