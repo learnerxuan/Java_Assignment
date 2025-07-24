@@ -273,6 +273,10 @@ public class ReceptionistService {
         }
     }
 
+    public List<Student> getAllStudents(){
+        return studentRepo.getAll();
+    }
+
     // Update receptionist's own profile
     public void updateProfile(Receptionist receptionist, String newPassword, String newFullName, String newPhoneNumber, String newEmail, String newGender){
         if (!Validator.isValidEmail(newEmail)) {
