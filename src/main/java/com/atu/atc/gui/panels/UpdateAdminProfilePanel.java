@@ -7,7 +7,6 @@ package com.atu.atc.gui.panels;
 import com.atu.atc.gui.MainFrame;
 import com.atu.atc.service.AdminService;
 import com.atu.atc.model.Admin;
-import com.atu.atc.model.User;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -42,12 +41,12 @@ public class UpdateAdminProfilePanel extends JPanel{
         this.navigator = navigator;
         this.loggedInAdmin = loggedInAdmin;
 
-        setLayout(new BorderLayout(15, 15)); 
-        setBorder(new EmptyBorder(20, 20, 20, 20)); 
-        setBackground(new Color(240, 248, 255)); 
+        setLayout(new BorderLayout(15, 15));
+        setBorder(new EmptyBorder(20, 20, 20, 20));
+        setBackground(new Color(240, 248, 255));
 
         JLabel titleLabel = new JLabel("Update My Profile", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 30)); 
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
         titleLabel.setForeground(new Color(25, 25, 112));
         add(titleLabel, BorderLayout.NORTH);
 
@@ -59,7 +58,7 @@ public class UpdateAdminProfilePanel extends JPanel{
                 new EmptyBorder(25, 30, 25, 30)
         ));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); 
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         int row = 0;
@@ -73,7 +72,7 @@ public class UpdateAdminProfilePanel extends JPanel{
         gbc.gridx = 1;
         idField = new JTextField(25);
         idField.setEditable(false);
-        idField.setBackground(new Color(230, 230, 230)); 
+        idField.setBackground(new Color(230, 230, 230));
         idField.setFont(new Font("Arial", Font.PLAIN, 16));
         idField.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(new Color(173, 216, 230), 1),
@@ -153,7 +152,7 @@ public class UpdateAdminProfilePanel extends JPanel{
         gbc.gridx = 0; gbc.gridy = row;
         formCardPanel.add(genderLabel, gbc);
         gbc.gridx = 1;
-        String[] genders = {"", "Male", "Female", "Other"}; // Added "Other" for consistency if needed
+        String[] genders = {"", "Male", "Female", "Other"};
         genderComboBox = new JComboBox<>(genders);
         genderComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
         genderComboBox.setBackground(Color.WHITE);
@@ -163,23 +162,22 @@ public class UpdateAdminProfilePanel extends JPanel{
         // Message Label (placed within the formCardPanel for better positioning)
         messageLabel = new JLabel("", SwingConstants.CENTER);
         messageLabel.setFont(new Font("Arial", Font.ITALIC, 14));
-        messageLabel.setForeground(Color.RED); // Red for errors
+        messageLabel.setForeground(Color.RED);
         gbc.gridx = 0;
         gbc.gridy = row;
-        gbc.gridwidth = 2; // Span across two columns
+        gbc.gridwidth = 2;
         formCardPanel.add(messageLabel, gbc);
         row++;
 
-
         // Add formCardPanel to the center, wrapped in a panel for centering
         JPanel centerWrapperPanel = new JPanel(new GridBagLayout());
-        centerWrapperPanel.setBackground(new Color(240, 248, 255)); // Match main background
+        centerWrapperPanel.setBackground(new Color(240, 248, 255));
         centerWrapperPanel.add(formCardPanel);
         add(centerWrapperPanel, BorderLayout.CENTER);
 
         // Control Panel (SOUTH)
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        controlPanel.setBackground(new Color(240, 248, 255)); // Match main background
+        controlPanel.setBackground(new Color(240, 248, 255));
         updateButton = new JButton("Update Profile");
         backButton = new JButton("Back to Dashboard");
 
@@ -202,28 +200,27 @@ public class UpdateAdminProfilePanel extends JPanel{
     private void styleButton(JButton button) {
         button.setFont(new Font("Arial", Font.BOLD, 16));
         button.setBackground(new Color(65, 105, 225)); // Royal Blue
-        button.setForeground(Color.WHITE); // White text
-        button.setFocusPainted(false); // Remove focus border
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
         button.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(65, 105, 225), 1, true), // Matching border, rounded
-                new EmptyBorder(8, 20, 8, 20) // Padding
+                new LineBorder(new Color(65, 105, 225), 1, true),
+                new EmptyBorder(8, 20, 8, 20)
         ));
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Hand cursor on hover
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Add subtle hover effect
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(new Color(50, 85, 200)); // Slightly darker blue on hover
+                button.setBackground(new Color(50, 85, 200));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(new Color(65, 105, 225)); // Original color on exit
+                button.setBackground(new Color(65, 105, 225));
             }
         });
     }
 
     private void populateFields() {
         if (loggedInAdmin != null) {
-            idField.setText(loggedInAdmin.getId()); // Assuming getId() or getUserId() for ID
+            idField.setText(loggedInAdmin.getId()); // Assuming getUserId() for ID
             fullNameField.setText(loggedInAdmin.getFullName());
             passwordField.setText(loggedInAdmin.getPassword());
             phoneField.setText(loggedInAdmin.getPhoneNumber());
@@ -272,13 +269,19 @@ public class UpdateAdminProfilePanel extends JPanel{
         boolean success = adminService.updateAdminProfile(updatedAdmin);
 
         if (success) {
-            this.loggedInAdmin = updatedAdmin;
+            this.loggedInAdmin = updatedAdmin; // Update the local reference to the new Admin object
             messageLabel.setText("Profile updated successfully!");
             messageLabel.setForeground(new Color(0, 128, 0)); // Green for success
-            populateFields();
+
+            // Navigate back to the dashboard with the updated Admin object
+            // This ensures the DashboardPanel is re-initialized with the latest data
+            navigator.navigateTo(MainFrame.ADMIN_DASHBOARD, this.loggedInAdmin);
+            System.out.println("Admin profile updated. Navigating back to dashboard.");
+
         } else {
             messageLabel.setText("Profile update failed. Check inputs or console for details.");
         }
     }
 }
+
 
