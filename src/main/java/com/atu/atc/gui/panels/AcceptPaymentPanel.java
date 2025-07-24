@@ -188,7 +188,16 @@ public class AcceptPaymentPanel extends JPanel {
 
                 // Call service
                 String receipt = receptionistService.acceptPayment(studentId, amount, method, receptionist.getId());
-                JOptionPane.showMessageDialog(this, "Payment Successful!\n" + receipt);
+                
+                JTextArea receiptArea = new JTextArea(receipt);
+                receiptArea.setFont(new Font("Monospaced", Font.PLAIN, 16)); // Larger font
+                receiptArea.setEditable(false);
+                receiptArea.setOpaque(false); // Make it transparent
+                
+                JScrollPane scrollPane = new JScrollPane(receiptArea);
+                scrollPane.setPreferredSize(new Dimension(400, 300)); // Set preferred size for the scroll pane
+                
+                JOptionPane.showMessageDialog(this, scrollPane, "Payment Successful!", JOptionPane.PLAIN_MESSAGE);
 
                 // Clear inputs
                 studentIdField.setText("");

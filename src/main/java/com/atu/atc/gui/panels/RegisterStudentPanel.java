@@ -39,14 +39,7 @@ public class RegisterStudentPanel extends JPanel {
     private void initUI() {
         setBackground(new Color(240, 248, 255));
         setLayout(new GridBagLayout());
-
-        JPanel cardPanel = new JPanel(new GridBagLayout());
-        cardPanel.setBackground(Color.WHITE);
-        cardPanel.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(173, 216, 230), 2, true),
-                new EmptyBorder(20, 30, 20, 30)
-        ));
-        cardPanel.setPreferredSize(new Dimension(550, 800));
+        setBorder(new EmptyBorder(20, 30, 20, 30));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 5, 10, 5);
@@ -60,7 +53,7 @@ public class RegisterStudentPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = row++;
         gbc.gridwidth = 2;
-        cardPanel.add(titleLabel, gbc);
+        add(titleLabel, gbc);
 
         JTextField nameField = createInputField();
         JPasswordField passwordField = createPasswordField();
@@ -74,17 +67,17 @@ public class RegisterStudentPanel extends JPanel {
 
         styleComboBox(levelDropdown);
 
-        addField(cardPanel, gbc, row++, "Full Name:", nameField);
-        addField(cardPanel, gbc, row++, "Password:", passwordField);
-        addField(cardPanel, gbc, row++, "Phone Number:", phoneField);
-        addField(cardPanel, gbc, row++, "Email:", emailField);
-        addField(cardPanel, gbc, row++, "Gender:", genderDropdown);
-        addField(cardPanel, gbc, row++, "IC/Passport:", icField);
-        addField(cardPanel, gbc, row++, "Address:", addressField);
-        addField(cardPanel, gbc, row++, "Form (1-5):", levelDropdown);
-        addField(cardPanel, gbc, row++, "Class 1:", class1Dropdown);
-        addField(cardPanel, gbc, row++, "Class 2 (optional):", class2Dropdown);
-        addField(cardPanel, gbc, row++, "Class 3 (optional):", class3Dropdown);
+        addField(this, gbc, row++, "Full Name:", nameField);
+        addField(this, gbc, row++, "Password:", passwordField);
+        addField(this, gbc, row++, "Phone Number:", phoneField);
+        addField(this, gbc, row++, "Email:", emailField);
+        addField(this, gbc, row++, "Gender:", genderDropdown);
+        addField(this, gbc, row++, "IC/Passport:", icField);
+        addField(this, gbc, row++, "Address:", addressField);
+        addField(this, gbc, row++, "Form (1-5):", levelDropdown);
+        addField(this, gbc, row++, "Class 1:", class1Dropdown);
+        addField(this, gbc, row++, "Class 2 (optional):", class2Dropdown);
+        addField(this, gbc, row++, "Class 3 (optional):", class3Dropdown);
 
         loadAvailableClassesToDropdowns();
 
@@ -94,17 +87,9 @@ public class RegisterStudentPanel extends JPanel {
         gbc.gridy = row;
         gbc.gridwidth = 1;
         gbc.gridx = 0;
-        cardPanel.add(backBtn, gbc);
+        add(backBtn, gbc);
         gbc.gridx = 1;
-        cardPanel.add(submitBtn, gbc);
-
-        GridBagConstraints rootGbc = new GridBagConstraints();
-        rootGbc.gridx = 0;
-        rootGbc.gridy = 0;
-        rootGbc.weightx = 1.0;
-        rootGbc.weighty = 1.0;
-        rootGbc.fill = GridBagConstraints.BOTH;
-        add(cardPanel, rootGbc);
+        add(submitBtn, gbc);
 
         submitBtn.addActionListener((ActionEvent e) -> {
             String name = nameField.getText().trim();
