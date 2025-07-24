@@ -6,6 +6,8 @@ import com.atu.atc.model.User;
 import com.atu.atc.service.TutorService;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class TutorDashboardPanel extends JPanel implements DashboardPanelInterface {
@@ -26,31 +28,49 @@ public class TutorDashboardPanel extends JPanel implements DashboardPanelInterfa
         this.loggedInTutor = loggedInTutor;
         this.navigator = navigator;
 
-        setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        setBackground(new Color(245, 250, 255)); // Light background
+        setLayout(new BorderLayout(20, 20));
+        setBorder(new EmptyBorder(30, 40, 30, 40));
 
-        // Welcome Label
-        welcomeLabel = new JLabel();
-        welcomeLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(welcomeLabel, BorderLayout.NORTH);
+        // Top Title
+        JLabel titleLabel = new JLabel("Tutor Dashboard", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        titleLabel.setForeground(new Color(44, 62, 80));
+        add(titleLabel, BorderLayout.NORTH);
 
-        // Button Panel
-        JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 10, 10));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
+        // Welcome Message
+        welcomeLabel = new JLabel("", SwingConstants.CENTER);
+        welcomeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        welcomeLabel.setForeground(new Color(70, 70, 70));
 
-        manageClassesButton = new JButton("Manage My Classes");
-        viewEnrolledStudentsButton = new JButton("View Enrolled Students");
-        updateProfileButton = new JButton("Update My Profile");
-        logoutButton = new JButton("Logout");
+        // Styled Buttons
+        manageClassesButton = createStyledButton("📚  Manage My Classes");
+        viewEnrolledStudentsButton = createStyledButton("👥  View Enrolled Students");
+        updateProfileButton = createStyledButton("✏️  Update My Profile");
+        logoutButton = createLogoutButton("🚪  Logout");
 
-        buttonPanel.add(manageClassesButton);
-        buttonPanel.add(viewEnrolledStudentsButton);
-        buttonPanel.add(updateProfileButton);
-        buttonPanel.add(logoutButton);
+        // Central Panel with Buttons
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setBackground(Color.WHITE);
+        centerPanel.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(200, 220, 240), 2, true),
+            new EmptyBorder(30, 60, 30, 60)
+        ));
 
-        add(buttonPanel, BorderLayout.CENTER);
-        
+        centerPanel.add(welcomeLabel);
+        centerPanel.add(Box.createVerticalStrut(20));
+        centerPanel.add(manageClassesButton);
+        centerPanel.add(Box.createVerticalStrut(15));
+        centerPanel.add(viewEnrolledStudentsButton);
+        centerPanel.add(Box.createVerticalStrut(15));
+        centerPanel.add(updateProfileButton);
+        centerPanel.add(Box.createVerticalStrut(15));
+        centerPanel.add(logoutButton);
+
+        add(centerPanel, BorderLayout.CENTER);
+
+        // Button Actions
         manageClassesButton.addActionListener(e -> {
             navigator.navigateTo(MainFrame.MANAGE_CLASSES_PANEL, loggedInTutor);
             System.out.println("Tutor: Navigating to Manage Classes Panel.");
@@ -71,6 +91,40 @@ public class TutorDashboardPanel extends JPanel implements DashboardPanelInterfa
         });
 
         updateUserContext(loggedInTutor);
+    }
+
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        button.setBackground(new Color(100, 149, 237)); // Cornflower Blue
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+        button.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(70, 130, 180), 1, true),
+            new EmptyBorder(10, 25, 10, 25)
+        ));
+        return button;
+    }
+
+    private JButton createLogoutButton(String text) {
+        JButton button = new JButton(text);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        button.setBackground(new Color(255, 230, 230)); // Light red
+        button.setForeground(new Color(180, 60, 60));
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+        button.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(220, 150, 150), 1, true),
+            new EmptyBorder(10, 25, 10, 25)
+        ));
+        return button;
     }
 
     @Override
