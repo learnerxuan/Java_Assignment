@@ -50,12 +50,11 @@ public class Subject {
         return "Subject{" +
                "subjectId='" + subjectId + '\'' +
                ", name='" + name + '\'' +
-               ", tutorIds=" + tutorId + // List will be printed nicely by default
+               ", tutorIds=" + tutorId + 
                ", level='" + level + '\'' +
                '}';
     }
     public String toFileString() {
-        // Here, tutorId is already a single string, so no need to join a list.
         return String.join("|", subjectId, name, tutorId, level);
     }
 }
