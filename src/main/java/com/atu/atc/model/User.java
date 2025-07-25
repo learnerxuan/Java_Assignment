@@ -94,7 +94,6 @@ public abstract class User {
         System.out.println(this.role + " profile updated for " + this.id);
     }
 
-    // A simple method to display user details (common to all users)
     public void displayUserDetails() {
         System.out.println("Username: " + id);
         System.out.println("Full Name: " + fullName);
