@@ -2,7 +2,6 @@ package com.atu.atc.gui.panels;
 
 import com.atu.atc.gui.MainFrame;
 import com.atu.atc.model.Tutor;
-import com.atu.atc.model.User;
 import com.atu.atc.service.TutorService;
 
 import javax.swing.*;
@@ -10,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class UpdateTutorProfilePanel extends JPanel implements DashboardPanelInterface {
+public class UpdateTutorProfilePanel extends JPanel {
 
     private final MainFrame.PanelNavigator navigator;
     private final TutorService tutorService;
@@ -26,26 +25,26 @@ public class UpdateTutorProfilePanel extends JPanel implements DashboardPanelInt
     private JButton backButton;
     private JLabel messageLabel;
 
-    public UpdateTutorProfilePanel(TutorService tutorService, MainFrame.PanelNavigator navigator) {
+    public UpdateTutorProfilePanel(TutorService tutorService, MainFrame.PanelNavigator navigator, Tutor loggedInTutor) {
         this.tutorService = tutorService;
         this.navigator = navigator;
+        this.loggedInTutor = loggedInTutor;
 
         setBackground(new Color(245, 250, 255));
         setLayout(new BorderLayout());
 
         initUI();
         addListeners();
+        populateFields();
     }
 
     private void initUI() {
-        // Title
         JLabel titleLabel = new JLabel("✏️ Update My Profile", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
         titleLabel.setForeground(new Color(44, 62, 80));
         titleLabel.setBorder(new EmptyBorder(30, 0, 20, 0));
         add(titleLabel, BorderLayout.NORTH);
 
-        // Form Panel
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setBackground(Color.WHITE);
         formPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -82,13 +81,11 @@ public class UpdateTutorProfilePanel extends JPanel implements DashboardPanelInt
         passwordField = new JPasswordField(20);
         gbc.gridx = 1; formPanel.add(passwordField, gbc);
 
-        // Message
         gbc.gridx = 0; gbc.gridy = ++y; gbc.gridwidth = 2;
         messageLabel = new JLabel(" ");
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         formPanel.add(messageLabel, gbc);
 
-        // Button Panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         buttonPanel.setBackground(Color.WHITE);
         saveButton = createStyledButton("💾 Save Changes", new Color(70, 130, 180));
@@ -96,7 +93,6 @@ public class UpdateTutorProfilePanel extends JPanel implements DashboardPanelInt
         buttonPanel.add(saveButton);
         buttonPanel.add(backButton);
 
-        // Wrapper
         JPanel centerWrapper = new JPanel(new BorderLayout());
         centerWrapper.setBackground(new Color(245, 250, 255));
         centerWrapper.setBorder(new EmptyBorder(10, 20, 20, 20));
@@ -104,6 +100,20 @@ public class UpdateTutorProfilePanel extends JPanel implements DashboardPanelInt
         centerWrapper.add(buttonPanel, BorderLayout.SOUTH);
 
         add(centerWrapper, BorderLayout.CENTER);
+    }
+
+    private void populateFields() {
+        if (loggedInTutor != null) {
+            tutorIdLabel.setText(loggedInTutor.getId());
+            fullNameField.setText(loggedInTutor.getFullName());
+            phoneNumberField.setText(loggedInTutor.getPhoneNumber());
+            emailField.setText(loggedInTutor.getEmail());
+            genderField.setText(loggedInTutor.getGender());
+            passwordField.setText("");
+            messageLabel.setText(" ");
+        } else {
+            showMessage("❌ Error: No tutor loaded.", Color.RED);
+        }
     }
 
     private JButton createStyledButton(String text, Color color) {
@@ -125,23 +135,12 @@ public class UpdateTutorProfilePanel extends JPanel implements DashboardPanelInt
         backButton.addActionListener(e -> navigator.navigateTo(MainFrame.TUTOR_DASHBOARD, loggedInTutor));
     }
 
-    @Override
-    public void updateUserContext(User user) {
-        if (user instanceof Tutor) {
-            this.loggedInTutor = (Tutor) user;
-            tutorIdLabel.setText(loggedInTutor.getId());
-            fullNameField.setText(loggedInTutor.getFullName());
-            phoneNumberField.setText(loggedInTutor.getPhoneNumber());
-            emailField.setText(loggedInTutor.getEmail());
-            genderField.setText(loggedInTutor.getGender());
-            passwordField.setText("");
-            messageLabel.setText(" ");
-        } else {
-            showMessage("❌ Error: Invalid user context.", Color.RED);
-        }
-    }
-
     private void saveProfileChanges() {
+        if (loggedInTutor == null) {
+            showMessage("❌ Error: No tutor loaded.", Color.RED);
+            return;
+        }
+
         String newPassword = new String(passwordField.getPassword());
         String newFullName = fullNameField.getText().trim();
         String newPhone = phoneNumberField.getText().trim();
