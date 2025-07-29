@@ -37,15 +37,15 @@ public class LoginPanel extends JPanel {
         this.navigator = navigator;
 
         // Panel Styling
-        setBackground(new Color(240, 248, 255)); // Alice Blue
-        setLayout(new GridBagLayout()); // Use GridBagLayout for centering the login form
+        setBackground(new Color(240, 248, 255)); 
+        setLayout(new GridBagLayout()); 
 
         // Main Login Card Panel
         JPanel loginCardPanel = new JPanel(new GridBagLayout());
-        loginCardPanel.setBackground(Color.WHITE); // White background for the card
+        loginCardPanel.setBackground(Color.WHITE); 
         loginCardPanel.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(173, 216, 230), 2, true), // Light blue border, rounded corners
-                new EmptyBorder(30, 40, 30, 40) // Inner padding
+                new LineBorder(new Color(173, 216, 230), 2, true), 
+                new EmptyBorder(30, 40, 30, 40) 
         ));
         loginCardPanel.setPreferredSize(new Dimension(450, 400));
         loginCardPanel.setMaximumSize(new Dimension(450, 400));
@@ -54,7 +54,7 @@ public class LoginPanel extends JPanel {
         // GridBagConstraints for layout within loginCardPanel
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 5, 10, 5);
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Components fill horizontal space
+        gbc.fill = GridBagConstraints.HORIZONTAL; 
 
         int row = 0;
 
@@ -64,20 +64,20 @@ public class LoginPanel extends JPanel {
         titleLabel.setForeground(new Color(25, 25, 112));
         gbc.gridx = 0;
         gbc.gridy = row;
-        gbc.gridwidth = 2; // Span across two columns
+        gbc.gridwidth = 2; 
         gbc.weighty = 0.1;
         loginCardPanel.add(titleLabel, gbc);
         row++;
 
-        // User ID Input (Changed back to "User ID:")
-        JLabel userIdLabel = new JLabel("User ID:"); // <-- CHANGED TEXT BACK TO "User ID:"
+        // User ID Input 
+        JLabel userIdLabel = new JLabel("User ID:"); 
         userIdLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        userIdLabel.setForeground(new Color(70, 130, 180)); // Steel Blue
+        userIdLabel.setForeground(new Color(70, 130, 180)); 
         gbc.gridx = 0;
         gbc.gridy = row;
-        gbc.gridwidth = 1; // Reset to 1 column
-        gbc.anchor = GridBagConstraints.WEST; // Align label to the left
-        loginCardPanel.add(userIdLabel, gbc); // Using userIdLabel
+        gbc.gridwidth = 1; 
+        gbc.anchor = GridBagConstraints.WEST; 
+        loginCardPanel.add(userIdLabel, gbc); 
 
         userIdField = new JTextField(20);
         userIdField.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -86,17 +86,17 @@ public class LoginPanel extends JPanel {
                 new EmptyBorder(5, 10, 5, 10)
         ));
         gbc.gridx = 1;
-        gbc.weightx = 1.0; // Allow text field to take extra horizontal space
+        gbc.weightx = 1.0; 
         loginCardPanel.add(userIdField, gbc);
         row++;
 
         // Password Input
-        JLabel passwordLabel = new JLabel("Password:"); // <-- REMAINS "Password:"
+        JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        passwordLabel.setForeground(new Color(70, 130, 180)); // Steel Blue
+        passwordLabel.setForeground(new Color(70, 130, 180)); 
         gbc.gridx = 0;
         gbc.gridy = row;
-        gbc.weightx = 0; // Reset weight for label
+        gbc.weightx = 0; 
         loginCardPanel.add(passwordLabel, gbc);
 
         passwordField = new JPasswordField(20);
@@ -170,7 +170,7 @@ public class LoginPanel extends JPanel {
             messageLabel.setForeground(Color.RED);
 
             if (userId.isEmpty() || password.isEmpty()) {
-                messageLabel.setText("Please enter User ID and Password."); // <-- CHANGED MESSAGE HERE
+                messageLabel.setText("Please enter User ID and Password."); 
                 return;
             }
 
