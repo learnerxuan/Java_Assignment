@@ -59,25 +59,4 @@ public class FileUtils {
             return false;
         }
     }
-    
-//    public static void main(String[] args) {
-//        // Replace with an actual file path on your system
-//        String testFilePath = "src/main/resources/data/classes.txt"; 
-//        List<String> linesToWrite = Arrays.asList(
-//            "This is the first line written by writeLines.",
-//            "This is the second line.",
-//            "And here is the third line, overriding previous content."
-//        );
-//
-//        // Calling the static method without creating an object
-//        List<String> lines = readLines(testFilePath);
-//
-//        // Printing the results
-//        System.out.println("File contents:");
-//        for (String line : lines) {
-//            System.out.println(line);
-//        }
-//        
-//        boolean writeSuccess = writeLines(testFilePath, linesToWrite);
-//    }
 }
