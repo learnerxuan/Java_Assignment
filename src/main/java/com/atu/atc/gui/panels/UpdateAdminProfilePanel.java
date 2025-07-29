@@ -220,7 +220,7 @@ public class UpdateAdminProfilePanel extends JPanel{
 
     private void populateFields() {
         if (loggedInAdmin != null) {
-            idField.setText(loggedInAdmin.getId()); // Assuming getUserId() for ID
+            idField.setText(loggedInAdmin.getId()); 
             fullNameField.setText(loggedInAdmin.getFullName());
             passwordField.setText(loggedInAdmin.getPassword());
             phoneField.setText(loggedInAdmin.getPhoneNumber());
@@ -258,7 +258,7 @@ public class UpdateAdminProfilePanel extends JPanel{
 
         // Create an updated Admin object
         Admin updatedAdmin = new Admin(
-            loggedInAdmin.getId(), // Keep existing ID
+            loggedInAdmin.getId(), 
             newPassword,
             newFullName,
             newPhone,
@@ -271,17 +271,14 @@ public class UpdateAdminProfilePanel extends JPanel{
         if (success) {
             this.loggedInAdmin = updatedAdmin; // Update the local reference to the new Admin object
             messageLabel.setText("Profile updated successfully!");
-            messageLabel.setForeground(new Color(0, 128, 0)); // Green for success
+            messageLabel.setForeground(new Color(0, 128, 0));
 
             // Navigate back to the dashboard with the updated Admin object
-            // This ensures the DashboardPanel is re-initialized with the latest data
             navigator.navigateTo(MainFrame.ADMIN_DASHBOARD, this.loggedInAdmin);
             System.out.println("Admin profile updated. Navigating back to dashboard.");
 
         } else {
-            messageLabel.setText("Profile update failed. Check inputs or console for details.");
+            messageLabel.setText("Profile update failed.");
         }
     }
 }
-
-
