@@ -34,8 +34,6 @@ public class IDGenerator {
         //Store the latest count into the map
         saveLastIds();
         
-        // Format the ID with leading zeros (e.g., 1 becomes 001, 12 becomes 012).
-        // %03d means format as an integer, padded with leading zeros to a width of 3.
         return String.format("%s%03d", prefix, currentCount);
     }
     
@@ -72,7 +70,7 @@ public class IDGenerator {
         if (!success) {
             System.err.println("IDGenerator: Failed to save ID counters to file.");
         } else {
-            System.out.println("IDGenerator: Saved last IDs: " + lastIds); // For debugging
+            System.out.println("IDGenerator: Saved last IDs: " + lastIds); 
         } 
     }
     
@@ -98,18 +96,17 @@ public class IDGenerator {
     }
     
     public String generateClassId() {
-        return generateUniqueId("CLS"); // Assuming 'C' for Class
+        return generateUniqueId("CLS"); 
     }
     
     public String generateEnrollmentId() {
-        return generateUniqueId("E"); // Assuming 'E' for Enrollment
+        return generateUniqueId("E"); 
     }
     
     public String generatePaymentId() {
-        return generateUniqueId("P"); // Assuming 'P' for Payment
+        return generateUniqueId("P"); 
     }
     
-    // [ADDITION] Methods to set starting counters for specific ID types (for DataLoader)
     public void setLastStudentId(String lastId) {
         setLastId("S", lastId);
     }
@@ -157,22 +154,4 @@ public class IDGenerator {
             }
         }
     }
-    
-//        public static void main(String[] args) {
-//          System.out.println("--- Testing IDGenerator ---");
-
-        // First run: Should start from 1 for each new prefix
-//        System.out.println("Generating IDs for the first time (or continuing from last saved):");
-//        System.out.println("Class ID: " + IDGenerator.generateUniqueId("CLS"));
-//        System.out.println("Course ID: " + IDGenerator.generateUniqueId("CE"));
-//        System.out.println("Student ID: " + IDGenerator.generateUniqueId("S"));
-//
-//
-//        System.out.println("\n--- Testing complete. Close the program and run again to see persistence. ---");
-//        System.out.println("Check 'data/id_counters.txt' in your project folder.");
-        // Simulate a second run (you would close and re-run the main method)
-        // If you run this file multiple times, you should see the counters increment.
-        // For example, if the first run generated U001, U002, U003,
-        // the second run (after restarting the app) should generate U004, U005, etc.
-//    }
 }
