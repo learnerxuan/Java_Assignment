@@ -5,6 +5,8 @@ import com.atu.atc.model.Tutor;
 import com.atu.atc.service.TutorService;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
@@ -26,45 +28,85 @@ public class ViewEnrolledStudentsPanel extends JPanel {
         this.navigator = navigator;
         this.loggedInTutor = loggedInTutor;
 
-        setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
+        setBackground(new Color(245, 250, 255));
+        setLayout(new BorderLayout(20, 20));
+        setBorder(new EmptyBorder(30, 40, 30, 40));
 
-        JLabel titleLabel = new JLabel("View Enrolled Students", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        // Title
+        JLabel titleLabel = new JLabel("📚 Enrolled Students", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        titleLabel.setForeground(new Color(44, 62, 80));
         add(titleLabel, BorderLayout.NORTH);
 
+        // Table setup
         String[] columns = {"Student ID", "Full Name", "IC/Passport", "Email", "Phone", "Level", "Enrolled Month"};
         tableModel = new DefaultTableModel(columns, 0);
         studentTable = new JTable(tableModel);
         studentTable.setEnabled(false);
-        add(new JScrollPane(studentTable), BorderLayout.CENTER);
+        studentTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        studentTable.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        studentTable.setRowHeight(24);
 
-        infoLabel = new JLabel("Showing students enrolled in your subjects.", SwingConstants.CENTER);
-        infoLabel.setFont(new Font("Arial", Font.ITALIC, 16));
-        add(infoLabel, BorderLayout.SOUTH);
+        JScrollPane scrollPane = new JScrollPane(studentTable);
+        scrollPane.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(200, 220, 240), 1, true),
+            new EmptyBorder(10, 10, 10, 10)
+        ));
+        add(scrollPane, BorderLayout.CENTER);
+
+        // Info label
+        infoLabel = new JLabel(" ", SwingConstants.CENTER);
+        infoLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        infoLabel.setForeground(new Color(90, 90, 90));
+
+        // Buttons
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setBackground(new Color(245, 250, 255));
+        bottomPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        bottomPanel.add(infoLabel, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        refreshButton = new JButton("Refresh");
-        backButton = new JButton("Back to Dashboard");
+        buttonPanel.setBackground(new Color(245, 250, 255));
+
+        refreshButton = createStyledButton("🔄 Refresh", new Color(52, 152, 219));
+        backButton = createStyledButton("🔙 Back to Dashboard", new Color(231, 76, 60));
 
         buttonPanel.add(refreshButton);
         buttonPanel.add(backButton);
-        add(buttonPanel, BorderLayout.SOUTH);
 
+        bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        // Event listeners
         refreshButton.addActionListener(e -> loadStudentData());
         backButton.addActionListener(e -> navigator.navigateTo(MainFrame.TUTOR_DASHBOARD, loggedInTutor));
 
         loadStudentData();
     }
 
+    private JButton createStyledButton(String text, Color color) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        button.setForeground(Color.WHITE);
+        button.setBackground(color);
+        button.setFocusPainted(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        button.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(color.darker(), 1, true),
+            new EmptyBorder(8, 20, 8, 20)
+        ));
+        return button;
+    }
+
     private void loadStudentData() {
-        tableModel.setRowCount(0); // Clear existing rows
+        tableModel.setRowCount(0); // Clear table
 
         try {
             List<String> studentLines = tutorService.viewStudentsEnrolledInMySubjects(loggedInTutor.getId());
 
             if (studentLines.isEmpty()) {
-                infoLabel.setText("No students currently enrolled in your subjects.");
+                infoLabel.setText("⚠️ No students currently enrolled in your subjects.");
                 return;
             }
 
@@ -72,23 +114,18 @@ public class ViewEnrolledStudentsPanel extends JPanel {
                 String[] parts = line.split(",", -1); // allow empty fields
                 if (parts.length >= 7) {
                     tableModel.addRow(new Object[]{
-                        parts[0].trim(), // Student ID
-                        parts[1].trim(), // Full Name
-                        parts[2].trim(), // IC/Passport
-                        parts[3].trim(), // Email
-                        parts[4].trim(), // Phone
-                        parts[5].trim(), // Level
-                        parts[6].trim()  // Enrolled Month
+                        parts[0].trim(), parts[1].trim(), parts[2].trim(),
+                        parts[3].trim(), parts[4].trim(), parts[5].trim(), parts[6].trim()
                     });
                 } else {
-                    System.err.println("Invalid student record: " + line);
+                    System.err.println("❌ Invalid student record: " + line);
                 }
             }
 
-            infoLabel.setText("Showing " + studentLines.size() + " enrolled student(s).");
+            infoLabel.setText("✅ Showing " + tableModel.getRowCount() + " enrolled student(s).");
 
         } catch (Exception ex) {
-            infoLabel.setText("Error loading data: " + ex.getMessage());
+            infoLabel.setText("❌ Error loading data: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

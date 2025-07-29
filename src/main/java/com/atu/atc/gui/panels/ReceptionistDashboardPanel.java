@@ -1,25 +1,25 @@
 package com.atu.atc.gui.panels;
 
-/**
- * @author henge
- */
-
 import com.atu.atc.gui.MainFrame;
 import com.atu.atc.model.Receptionist;
 import com.atu.atc.model.User;
 import com.atu.atc.service.ReceptionistService;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+/**
+ * @author henge
+ */
 public class ReceptionistDashboardPanel extends JPanel implements DashboardPanelInterface {
     private Receptionist receptionist;
     private final ReceptionistService receptionistService;
     private final MainFrame.PanelNavigator navigator;
+    private JLabel welcomeLabel;
 
-    public ReceptionistDashboardPanel(ReceptionistService receptionistService, Receptionist receptionist, MainFrame.PanelNavigator navigator){
+    public ReceptionistDashboardPanel(ReceptionistService receptionistService, Receptionist receptionist, MainFrame.PanelNavigator navigator) {
         this.receptionistService = receptionistService;
         this.receptionist = receptionist;
         this.navigator = navigator;
@@ -27,75 +27,108 @@ public class ReceptionistDashboardPanel extends JPanel implements DashboardPanel
         initUI();
     }
 
-    // Called when MainFrame switches to this dashboard and passes updated user context
     @Override
-    public void updateUserContext(User user){
-        if(user instanceof Receptionist){
+    public void updateUserContext(User user) {
+        if (user instanceof Receptionist) {
             this.receptionist = (Receptionist) user;
-            // Optionally update welcome label
+            welcomeLabel.setText("Welcome, " + receptionist.getFullName() + " (ID: " + receptionist.getId() + ")");
         }
     }
 
-    private void initUI(){
-        setLayout(new BorderLayout());
+    private void initUI() {
+        setBackground(new Color(240, 248, 255)); // Alice Blue
+        setLayout(new BorderLayout(20, 20));
+        setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // Top welcome message
-        JLabel welcomeLabel = new JLabel("Welcome, " + receptionist.getFullName() + " (ID: " + receptionist.getId() + ")");
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(welcomeLabel, BorderLayout.NORTH);
+        // Header
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setBackground(new Color(240, 248, 255));
 
-        // Center panel for buttons
-        JPanel buttonPanel = new JPanel(new GridLayout(6, 1, 10, 10));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(30, 200, 30, 200));
+        // Panel for centered titles
+        JPanel titleContainer = new JPanel();
+        titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.Y_AXIS));
+        titleContainer.setBackground(new Color(240, 248, 255));
 
-        JButton registerBtn = new JButton("Register Student");
-        JButton manageEnrollBtn = new JButton("Manage Enrollments");
-        JButton paymentBtn = new JButton("Accept Payment");
-        JButton deleteBtn = new JButton("Delete Student");
-        JButton profileBtn = new JButton("Update My Profile");
-        JButton requestBtn = new JButton("Handle Student Requests");
-        JButton logoutBtn = new JButton("Logout");
+        JLabel titleLabel = new JLabel("Receptionist Dashboard");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        titleLabel.setForeground(new Color(25, 25, 112));
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        buttonPanel.add(registerBtn);
-        buttonPanel.add(manageEnrollBtn);
-        buttonPanel.add(paymentBtn);
-        buttonPanel.add(deleteBtn);
-        buttonPanel.add(profileBtn);
-        buttonPanel.add(requestBtn);
-        buttonPanel.add(logoutBtn);
+        welcomeLabel = new JLabel("Welcome, " + receptionist.getFullName() + " (ID: " + receptionist.getId() + ")");
+        welcomeLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        welcomeLabel.setForeground(new Color(70, 130, 180));
+        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        welcomeLabel.setBorder(new EmptyBorder(5, 0, 0, 0)); // Top padding
 
-        add(buttonPanel, BorderLayout.CENTER);
+        titleContainer.add(titleLabel);
+        titleContainer.add(welcomeLabel);
 
-        // Button Actions
-        registerBtn.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.REGISTER_STUDENT_PANEL, receptionist);
-        });
+        headerPanel.add(titleContainer, BorderLayout.CENTER);
 
-        manageEnrollBtn.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.MANAGE_ENROLLMENT_PANEL, receptionist);
-        });
-
-        paymentBtn.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.ACCEPT_PAYMENT_PANEL, receptionist);
-        });
-
-        deleteBtn.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.DELETE_STUDENT_PANEL, receptionist);
-        });
-
-        profileBtn.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.UPDATE_RECEPTIONIST_PROFILE_PANEL, receptionist);
-        });
-
-        requestBtn.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.MANAGE_REQUESTS_PANEL, receptionist);
-        });
-
-        logoutBtn.addActionListener(e -> {
+        // Panel for logout button
+        JPanel logoutPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        logoutPanel.setBackground(new Color(240, 248, 255));
+        JButton logoutButton = new JButton("Logout");
+        styleButton(logoutButton, new Color(220, 53, 69), new Color(200, 43, 59)); // Red color for logout
+        logoutButton.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION){
-                navigator.logout(); // Goes back to login panel
+            if (confirm == JOptionPane.YES_OPTION) {
+                navigator.logout();
+            }
+        });
+        logoutPanel.add(logoutButton);
+        headerPanel.add(logoutPanel, BorderLayout.EAST);
+
+        add(headerPanel, BorderLayout.NORTH);
+
+        // Main content - Grid of cards
+        JPanel mainContentPanel = new JPanel(new GridLayout(2, 3, 20, 20));
+        mainContentPanel.setBackground(new Color(240, 248, 255));
+        mainContentPanel.setBorder(new EmptyBorder(20, 0, 20, 0));
+
+        // Create and add styled buttons
+        mainContentPanel.add(createDashboardButton("Register Student", "register_student.png", MainFrame.REGISTER_STUDENT_PANEL));
+        mainContentPanel.add(createDashboardButton("Manage Enrollments", "manage_enrollment.png", MainFrame.MANAGE_ENROLLMENT_PANEL));
+        mainContentPanel.add(createDashboardButton("Accept Payment", "accept_payment.png", MainFrame.ACCEPT_PAYMENT_PANEL));
+        mainContentPanel.add(createDashboardButton("Delete Student", "delete_student.png", MainFrame.DELETE_STUDENT_PANEL));
+        mainContentPanel.add(createDashboardButton("Update My Profile", "update_profile.png", MainFrame.UPDATE_RECEPTIONIST_PROFILE_PANEL));
+        mainContentPanel.add(createDashboardButton("Handle Student Requests", "manage_requests.png", MainFrame.MANAGE_REQUESTS_PANEL));
+
+        add(mainContentPanel, BorderLayout.CENTER);
+    }
+
+    private JPanel createDashboardButton(String text, String iconName, String panelName) {
+        JButton button = new JButton("<html><center>" + text + "</center></html>");
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        styleButton(button, new Color(65, 105, 225), new Color(50, 85, 200));
+
+        button.addActionListener(e -> navigator.navigateTo(panelName, receptionist));
+
+        JPanel cardPanel = new JPanel(new BorderLayout());
+        cardPanel.setBackground(Color.WHITE);
+        cardPanel.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(new Color(173, 216, 230), 2, true),
+                new EmptyBorder(15, 15, 15, 15)
+        ));
+        cardPanel.add(button, BorderLayout.CENTER);
+        return cardPanel;
+    }
+
+    private void styleButton(JButton button, Color bgColor, Color hoverColor) {
+        button.setFont(new Font("Arial", Font.BOLD, 18));
+        button.setBackground(bgColor);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorder(new EmptyBorder(20, 20, 20, 20));
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(hoverColor);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(bgColor);
             }
         });
     }

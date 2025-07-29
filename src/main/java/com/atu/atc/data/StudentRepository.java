@@ -22,10 +22,6 @@ public class StudentRepository extends UserRepository<Student> {
         // Skip header line if present
         boolean isFirstLine = true;
         for (String line : lines) {
-            if (isFirstLine) {
-                isFirstLine = false;
-                continue;
-            }
 
             String[] parts = line.split(",", -1);
             if (parts.length == 10) {

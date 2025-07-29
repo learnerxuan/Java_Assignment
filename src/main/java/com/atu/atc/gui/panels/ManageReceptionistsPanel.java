@@ -115,7 +115,7 @@ public class ManageReceptionistsPanel extends JPanel {
         gbc.gridx = 0; gbc.gridy = row;
         registerPanel.add(new JLabel("Gender:"), gbc);
         gbc.gridx = 1;
-        String[] genders = {"", "Male", "Female", "Other"};
+        String[] genders = {"", "Male", "Female"};
         genderComboBox = new JComboBox<>(genders);
         registerPanel.add(genderComboBox, gbc);
         row++;
@@ -126,7 +126,7 @@ public class ManageReceptionistsPanel extends JPanel {
         registerButton = new JButton("Register Receptionist");
         // Apply button styling directly
         registerButton.setFont(new Font("Arial", Font.BOLD, 16));
-        registerButton.setBackground(new Color(65, 105, 225)); // Royal Blue
+        registerButton.setBackground(new Color(65, 105, 225)); 
         registerButton.setForeground(Color.WHITE);
         registerButton.setFocusPainted(false);
         registerButton.setBorder(BorderFactory.createCompoundBorder(
@@ -340,11 +340,11 @@ public class ManageReceptionistsPanel extends JPanel {
             boolean success = adminService.deleteReceptionist(receptionistId);
 
             if (success) {
-                tableMessageLabel.setText("Receptionist '" + receptionistName + "' deleted successfully.");
-                tableMessageLabel.setForeground(new Color(0, 128, 0)); // Green for success
                 loadReceptionists(); // Refresh table after deletion
+                tableMessageLabel.setText("Receptionist '" + receptionistName + "' deleted successfully.");
+                tableMessageLabel.setForeground(new Color(0, 128, 0)); // Green for success         
             } else {
-                tableMessageLabel.setText("Deletion failed for '" + receptionistName + "'. Check console for details.");
+                tableMessageLabel.setText("Deletion failed for " + receptionistName);
             }
         }
     }

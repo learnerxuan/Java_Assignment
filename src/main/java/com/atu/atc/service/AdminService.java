@@ -98,7 +98,7 @@ public class AdminService {
         }
 
         // Create new Tutor object
-        Tutor newTutor = new Tutor(tutorId, password, fullName, phoneNumber, email, gender, subject, level);
+        Tutor newTutor = new Tutor(tutorId, password, fullName, phoneNumber, email, gender, level, subject);
 
         // Add the new tutor to the repository
         tutorRepository.add(newTutor);
@@ -128,7 +128,7 @@ public class AdminService {
         if (deleted){
             System.out.println("Successfully deleted tutor: "+tutorId);
         } else {
-            System.err.println("Failed to detele tutor: "+ tutorId);
+            System.err.println("Failed to delete tutor: "+ tutorId);
         }
         
         return deleted;

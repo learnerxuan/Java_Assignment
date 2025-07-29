@@ -5,20 +5,19 @@
 .idea/tasks.xml
 .idea/dictionaries
 .idea/shelf/
+out/
 
 # NetBeans
 nbproject/private/
-build/
 nbbuild/
 dist/
 nbdist/
 .nb-gradle/
 
 # Common build artifacts
-/out/
-target/
 build/
-*.class
+target/
+**/*.class
 
 # Logs
 *.log
@@ -33,9 +32,5 @@ Thumbs.db
 # Node
 node_modules/
 
-# Maven
-target/
-
 # Gradle
 .gradle/
-build/

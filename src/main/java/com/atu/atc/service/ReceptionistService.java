@@ -128,6 +128,10 @@ public class ReceptionistService {
         System.out.println("Student " + studentId + " enrolled in " + successEnrollCount + " class(es).");
     }
 
+    public List<Classes> getAllClasses(){
+        return classesRepo.getAll();
+    }
+
     // Enroll student in new subject (check enrollment < 3)
     public void addSubjectEnrollment(String studentId, String newClassId){
         List<Enrollment> current = enrollmentRepo.getByStudentId(studentId);
@@ -244,15 +248,19 @@ public class ReceptionistService {
 
     // Generate receipt
     private String generateReceipt(Payment payment) {
-        return "\n----- Receipt -----\n" +
-                "Payment ID      : " + payment.getPaymentId() + "\n" +
-                "Student ID      : " + payment.getStudentId() + "\n" +
-                "Amount          : RM " + String.format("%.2f", payment.getAmount()) + "\n" +
-                "Date            : " + payment.getDate() + "\n" +
-                "Method          : " + payment.getPaymentMethod() + "\n" +
-                "Status          : " + payment.getStatus() + "\n" +
-                "Receptionist ID : " + payment.getReceptionistId() + "\n" +
-                "------------------------\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("        *** PAYMENT RECEIPT ***\n\n");
+        sb.append(String.format(" %-20s: %s\n", "Payment ID", payment.getPaymentId()));
+        sb.append(String.format(" %-20s: %s\n", "Student ID", payment.getStudentId()));
+        sb.append(String.format(" %-20s: %s\n", "Date", payment.getDate()));
+        sb.append(String.format(" %-20s: %s\n", "Payment Method", payment.getPaymentMethod()));
+        sb.append(String.format(" %-20s: %s\n", "Status", payment.getStatus()));
+        sb.append(String.format(" %-20s: %s\n", "Receptionist ID", payment.getReceptionistId()));
+        sb.append("\n ----------------------------------------\n");
+        sb.append(String.format(" %-20s: RM %.2f\n", "AMOUNT PAID", payment.getAmount()));
+        sb.append(" ----------------------------------------\n");
+        sb.append("\n              Thank you!\n");
+        return sb.toString();
     }
 
     // Delete a student who have completed their studies
@@ -267,6 +275,10 @@ public class ReceptionistService {
         }else{
             System.err.println("Student not found.");
         }
+    }
+
+    public List<Student> getAllStudents(){
+        return studentRepo.getAll();
     }
 
     // Update receptionist's own profile

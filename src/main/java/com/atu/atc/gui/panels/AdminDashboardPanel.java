@@ -47,14 +47,14 @@ public class AdminDashboardPanel extends JPanel implements DashboardPanelInterfa
     }
 
     private void initializeComponents() {
-        setBackground(new Color(240, 248, 255)); // Alice Blue - light background
-        setLayout(new BorderLayout(20, 20)); // Add some padding around the edges
+        setBackground(new Color(240, 248, 255)); 
+        setLayout(new BorderLayout(20, 20)); 
 
         welcomeLabel = new JLabel();
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 28)); // Larger, bolder font
-        welcomeLabel.setForeground(new Color(25, 25, 112)); // Midnight Blue
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 28)); 
+        welcomeLabel.setForeground(new Color(25, 25, 112)); 
         welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        welcomeLabel.setBorder(new EmptyBorder(20, 0, 10, 0)); // Padding below title
+        welcomeLabel.setBorder(new EmptyBorder(20, 0, 10, 0)); 
 
         manageTutorsButton = createStyledButton("Manage Tutors");
         manageReceptionistsButton = createStyledButton("Manage Receptionists");
@@ -66,13 +66,13 @@ public class AdminDashboardPanel extends JPanel implements DashboardPanelInterfa
     private JButton createStyledButton(String label) {
         JButton button = new JButton(label);
         button.setFont(new Font("Arial", Font.BOLD, 18));
-        button.setBackground(new Color(65, 105, 225)); // Royal Blue
+        button.setBackground(new Color(65, 105, 225)); 
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         button.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(65, 105, 225), 1, true), // Matching border, rounded
-                new EmptyBorder(10, 25, 10, 25) // Padding
+                new LineBorder(new Color(65, 105, 225), 1, true), 
+                new EmptyBorder(10, 25, 10, 25) 
         ));
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,13 +93,13 @@ public class AdminDashboardPanel extends JPanel implements DashboardPanelInterfa
     private JButton createLogoutButton(String label) {
         JButton button = new JButton(label);
         button.setFont(new Font("Arial", Font.BOLD, 18));
-        button.setBackground(new Color(255, 245, 245)); // Very light red/pink
-        button.setForeground(new Color(180, 65, 65)); // Darker red for text
+        button.setBackground(new Color(255, 245, 245)); 
+        button.setForeground(new Color(180, 65, 65)); 
         button.setFocusPainted(false);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         button.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(255, 200, 200), 1, true), // Light red border
-                new EmptyBorder(10, 25, 10, 25) // Padding
+                new LineBorder(new Color(255, 200, 200), 1, true), 
+                new EmptyBorder(10, 25, 10, 25) 
         ));
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -119,21 +119,21 @@ public class AdminDashboardPanel extends JPanel implements DashboardPanelInterfa
 
     private void setupLayout() {
         JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(new Color(240, 248, 255)); // Match main background
+        headerPanel.setBackground(new Color(240, 248, 255)); 
         headerPanel.add(welcomeLabel, BorderLayout.CENTER);
 
         JLabel subtitleLabel = new JLabel("Administrator Dashboard", SwingConstants.CENTER);
         subtitleLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         subtitleLabel.setForeground(new Color(100, 120, 140)); // Muted blue-gray
-        subtitleLabel.setBorder(new EmptyBorder(0, 0, 20, 0)); // Padding below subtitle
+        subtitleLabel.setBorder(new EmptyBorder(0, 0, 20, 0)); 
         headerPanel.add(subtitleLabel, BorderLayout.SOUTH);
 
         // Button Panel (Central Card)
-        JPanel buttonCardPanel = new JPanel(new GridLayout(5, 1, 15, 15)); // 5 rows, 1 column, with gaps
+        JPanel buttonCardPanel = new JPanel(new GridLayout(5, 1, 15, 15)); 
         buttonCardPanel.setBackground(Color.WHITE); // White background for the card
         buttonCardPanel.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(new Color(173, 216, 230), 2, true), // Light blue border, rounded corners
-                new EmptyBorder(30, 80, 30, 80) // Inner padding for buttons
+                new EmptyBorder(30, 80, 30, 80) 
         ));
 
         buttonCardPanel.add(manageTutorsButton);
@@ -182,6 +182,8 @@ public class AdminDashboardPanel extends JPanel implements DashboardPanelInterfa
         if (user instanceof Admin) {
             this.loggedInAdmin = (Admin) user;
             welcomeLabel.setText("Welcome back, " + loggedInAdmin.getFullName() + "!");
+            welcomeLabel.revalidate();
+            welcomeLabel.repaint();
         } else {
             welcomeLabel.setText("Welcome, Administrator!");
         }

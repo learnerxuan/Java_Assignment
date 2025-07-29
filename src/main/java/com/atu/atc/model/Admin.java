@@ -1,7 +1,9 @@
-// src/main/java/com/atu/atc/model/Admin.java (REVERTED/SIMPLIFIED FOR PHASE 2/3)
-
 package com.atu.atc.model;
 
+/**
+ *
+ * @author Xuan
+ */
 
 public class Admin extends User {
 
@@ -12,8 +14,6 @@ public class Admin extends User {
 
     @Override
     public boolean login(String enteredId, String enteredPassword) {
-        // This basic login check remains specific to the User model.
-        // AuthenticationService will orchestrate the full login process later.
         if (getId().equals(enteredId) && getPassword().equals(enteredPassword)) {
             System.out.println("Admin " + getId() + " logged in successfully.");
             return true;
@@ -26,7 +26,6 @@ public class Admin extends User {
     @Override
     public void updateProfile(String newId, String newPassword, String newFullName,String newPhoneNumber, String newEmail, String newGender) {
         super.updateProfile(newId, newFullName, newPassword, newPhoneNumber, newEmail, newGender); 
-        System.out.println("Admin " + getId() + ": Profile updated locally (persistence not yet implemented).");
     }
     
     public String toFileString(){

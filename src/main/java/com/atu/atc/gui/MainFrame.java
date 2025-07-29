@@ -164,7 +164,7 @@ public class MainFrame extends JFrame {
                         break;
                     case UPDATE_TUTOR_PROFILE_PANEL: 
                         if (user instanceof  com.atu.atc.model.Tutor tutorUser) {
-                            targetPanel = new UpdateTutorProfilePanel(tutorService, this);
+                            targetPanel = new UpdateTutorProfilePanel(tutorService, this,tutorUser);
                         } else {
                             System.err.println("MainFrame Navigator Error: Attempted to navigate to UpdateTutorProfilePanel with non-Tutor user or null.");
                             return;

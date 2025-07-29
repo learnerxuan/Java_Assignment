@@ -4,22 +4,31 @@ import com.atu.atc.model.Receptionist;
 import com.atu.atc.service.ReceptionistService;
 import com.atu.atc.util.Validator;
 import com.atu.atc.gui.MainFrame;
+import com.atu.atc.model.Subject;
+import com.atu.atc.model.Tutor;
+import com.atu.atc.model.Classes;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 /**
  * @author henge
  */
-public class RegisterStudentPanel extends JPanel{
+public class RegisterStudentPanel extends JPanel {
     private final ReceptionistService receptionistService;
     private final Receptionist receptionist;
     private final MainFrame.PanelNavigator navigator;
 
-    public RegisterStudentPanel(ReceptionistService receptionistService, Receptionist receptionist, MainFrame.PanelNavigator navigator){
+    private final JComboBox<String> class1Dropdown = new JComboBox<>();
+    private final JComboBox<String> class2Dropdown = new JComboBox<>();
+    private final JComboBox<String> class3Dropdown = new JComboBox<>();
+
+    public RegisterStudentPanel(ReceptionistService receptionistService, Receptionist receptionist, MainFrame.PanelNavigator navigator) {
         this.receptionistService = receptionistService;
         this.receptionist = receptionist;
         this.navigator = navigator;
@@ -27,144 +36,196 @@ public class RegisterStudentPanel extends JPanel{
         initUI();
     }
 
-    private void initUI(){
-        setLayout(new BorderLayout());
+    private void initUI() {
+        setBackground(new Color(240, 248, 255));
+        setLayout(new GridBagLayout());
+        setBorder(new EmptyBorder(20, 30, 20, 30));
 
-        JLabel titleLabel = new JLabel("Register New Student");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(titleLabel, BorderLayout.NORTH);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 5, 10, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JPanel formPanel = new JPanel(new GridLayout(11, 2, 10, 10));
-        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
+        int row = 0;
 
-        JTextField nameField = new JTextField();
-        JPasswordField passwordField = new JPasswordField();
-        JTextField phoneField = new JTextField();
-        JTextField emailField = new JTextField();
-        JTextField genderField = new JTextField();
-        JTextField icField = new JTextField();
-        JTextField addressField = new JTextField();
-        JTextField levelField = new JTextField();
+        JLabel titleLabel = new JLabel("Register New Student", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(new Color(25, 25, 112));
+        gbc.gridx = 0;
+        gbc.gridy = row++;
+        gbc.gridwidth = 2;
+        add(titleLabel, gbc);
 
-        JTextField class1Field = new JTextField();
-        JTextField class2Field = new JTextField();
-        JTextField class3Field = new JTextField();
+        JTextField nameField = createInputField();
+        JPasswordField passwordField = createPasswordField();
+        JTextField phoneField = createInputField();
+        JTextField emailField = createInputField();
+        JComboBox<String> genderDropdown = new JComboBox<>(new String[]{"Male", "Female"});
+        styleComboBox(genderDropdown);
+        JTextField icField = createInputField();
+        JTextField addressField = createInputField();
+        JComboBox<String> levelDropdown = new JComboBox<>(new String[]{"1", "2", "3", "4", "5"});
 
-        formPanel.add(new JLabel("Full Name:"));
-        formPanel.add(nameField);
+        styleComboBox(levelDropdown);
 
-        formPanel.add(new JLabel("Password: "));
-        formPanel.add(passwordField);
+        addField(this, gbc, row++, "Full Name:", nameField);
+        addField(this, gbc, row++, "Password:", passwordField);
+        addField(this, gbc, row++, "Phone Number:", phoneField);
+        addField(this, gbc, row++, "Email:", emailField);
+        addField(this, gbc, row++, "Gender:", genderDropdown);
+        addField(this, gbc, row++, "IC/Passport:", icField);
+        addField(this, gbc, row++, "Address:", addressField);
+        addField(this, gbc, row++, "Form (1-5):", levelDropdown);
+        addField(this, gbc, row++, "Class 1:", class1Dropdown);
+        addField(this, gbc, row++, "Class 2 (optional):", class2Dropdown);
+        addField(this, gbc, row++, "Class 3 (optional):", class3Dropdown);
 
-        formPanel.add(new JLabel("Phone Number: "));
-        formPanel.add(phoneField);
+        loadAvailableClassesToDropdowns();
 
-        formPanel.add(new JLabel("Email:"));
-        formPanel.add(emailField);
+        JButton submitBtn = createButton("Register", new Color(65, 105, 225));
+        JButton backBtn = createButton("Back", Color.GRAY);
 
-        formPanel.add(new JLabel("Gender:"));
-        formPanel.add(genderField);
+        gbc.gridy = row;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        add(backBtn, gbc);
+        gbc.gridx = 1;
+        add(submitBtn, gbc);
 
-        formPanel.add(new JLabel("IC/Passport:"));
-        formPanel.add(icField);
-
-        formPanel.add(new JLabel("Address:"));
-        formPanel.add(addressField);
-
-        formPanel.add(new JLabel("Level (1-5):"));
-        formPanel.add(levelField);
-
-        formPanel.add(new JLabel("Class ID #1:"));
-        formPanel.add(class1Field);
-
-        formPanel.add(new JLabel("Class ID #2 (optional):"));
-        formPanel.add(class2Field);
-
-        formPanel.add(new JLabel("Class ID #3 (optional):"));
-        formPanel.add(class3Field);
-
-        add(formPanel, BorderLayout.CENTER);
-
-        JPanel btnPanel = new JPanel();
-        JButton submitBtn = new JButton("Register");
-        JButton backBtn = new JButton("Back");
-        btnPanel.add(submitBtn);
-        btnPanel.add(backBtn);
-
-        add(btnPanel, BorderLayout.SOUTH);
-
-        // Submit Action
         submitBtn.addActionListener((ActionEvent e) -> {
             String name = nameField.getText().trim();
             String password = new String(passwordField.getPassword()).trim();
             String phone = phoneField.getText().trim();
             String email = emailField.getText().trim();
-            String gender = genderField.getText().trim();
+            String gender = (String) genderDropdown.getSelectedItem();
             String ic = icField.getText().trim();
             String address = addressField.getText().trim();
-            String level = levelField.getText().trim();
+            String level = (String) levelDropdown.getSelectedItem();
 
             List<String> classIds = new ArrayList<>();
-
-            if (!class1Field.getText().trim().isEmpty()){
-                classIds.add(class1Field.getText().trim());
-            }
-            if (!class2Field.getText().trim().isEmpty()){
-                classIds.add(class2Field.getText().trim());
-            }
-            if (!class3Field.getText().trim().isEmpty()){
-                classIds.add(class3Field.getText().trim());
+            for (JComboBox<String> cb : List.of(class1Dropdown, class2Dropdown, class3Dropdown)) {
+                String selected = (String) cb.getSelectedItem();
+                if (selected != null && !selected.isEmpty()) {
+                    classIds.add(selected.split(" - ")[0]);
+                }
             }
 
-            // Basic validations
             if (name.isEmpty() || password.isEmpty() || phone.isEmpty() || email.isEmpty()
-            || gender.isEmpty() || ic.isEmpty() || address.isEmpty() || level.isEmpty()){
+                    || gender.isEmpty() || ic.isEmpty() || address.isEmpty() || level == null) {
                 JOptionPane.showMessageDialog(this, "Please fill in all required fields.");
                 return;
             }
 
-            if (!Validator.isValidEmail(email)){
+            if (!Validator.isValidEmail(email)) {
                 JOptionPane.showMessageDialog(this, "Invalid email format.");
                 return;
             }
 
-            if (!Validator.isValidPhoneNumber(phone)){
+            if (!Validator.isValidPhoneNumber(phone)) {
                 JOptionPane.showMessageDialog(this, "Invalid phone number.");
                 return;
             }
 
-            if (!Validator.isFormValid(level)){
-                JOptionPane.showMessageDialog(this, "Level must be between 1 and 5.");
+            if (!Validator.isFormValid(level)) {
+                JOptionPane.showMessageDialog(this, "Form must be between 1 and 5.");
                 return;
             }
 
-            if (classIds.size() > 3){
+            if (classIds.size() > 3) {
                 JOptionPane.showMessageDialog(this, "You can only enroll in up to 3 classes.");
                 return;
             }
 
-            // Call service
             receptionistService.registerStudent(name, password, phone, email, gender, ic, address, level, classIds);
             JOptionPane.showMessageDialog(this, "Student registered successfully.");
 
-            // Clear fields
             nameField.setText("");
             passwordField.setText("");
             phoneField.setText("");
             emailField.setText("");
-            genderField.setText("");
+            genderDropdown.setSelectedIndex(0);
             icField.setText("");
             addressField.setText("");
-            levelField.setText("");
-            class1Field.setText("");
-            class2Field.setText("");
-            class3Field.setText("");
+            levelDropdown.setSelectedIndex(0);
+            class1Dropdown.setSelectedIndex(-1);
+            class2Dropdown.setSelectedIndex(-1);
+            class3Dropdown.setSelectedIndex(-1);
         });
 
-        // Back action
-        backBtn.addActionListener(e -> {
-            navigator.navigateTo(MainFrame.RECEPTIONIST_DASHBOARD, receptionist);
-        });
+        backBtn.addActionListener(e -> navigator.navigateTo(MainFrame.RECEPTIONIST_DASHBOARD, receptionist));
+    }
+
+    private void addField(JPanel panel, GridBagConstraints gbc, int row, String label, JComponent field) {
+        gbc.gridy = row;
+        gbc.gridx = 0;
+        gbc.weightx = 0;
+        gbc.gridwidth = 1;
+        JLabel jLabel = new JLabel(label);
+        jLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        jLabel.setForeground(new Color(70, 130, 180));
+        panel.add(jLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        panel.add(field, gbc);
+    }
+
+    private JTextField createInputField() {
+        JTextField field = new JTextField();
+        field.setFont(new Font("Arial", Font.PLAIN, 16));
+        field.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(new Color(173, 216, 230), 1),
+                new EmptyBorder(5, 10, 5, 10)
+        ));
+        return field;
+    }
+
+    private JPasswordField createPasswordField() {
+        JPasswordField field = new JPasswordField();
+        field.setFont(new Font("Arial", Font.PLAIN, 16));
+        field.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(new Color(173, 216, 230), 1),
+                new EmptyBorder(5, 10, 5, 10)
+        ));
+        return field;
+    }
+
+    private JButton createButton(String text, Color bgColor) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.BOLD, 16));
+        button.setBackground(bgColor);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        button.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(bgColor.darker(), 1, true),
+                new EmptyBorder(8, 20, 8, 20)
+        ));
+        return button;
+    }
+
+    private void styleComboBox(JComboBox<?> box) {
+        box.setFont(new Font("Arial", Font.PLAIN, 16));
+        box.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(new Color(173, 216, 230), 1),
+                new EmptyBorder(5, 5, 5, 5)
+        ));
+    }
+
+    private void loadAvailableClassesToDropdowns() {
+        List<Classes> allClasses = receptionistService.getAllClasses();
+        for (Classes c : allClasses) {
+            Subject subject = receptionistService.getSubjectById(c.getSubjectId()).orElse(null);
+            Tutor tutor = receptionistService.getTutorById(c.getTutorId()).orElse(null);
+            if (subject != null && tutor != null) {
+                String entry = c.getClassId() + " - " + " Form " + subject.getLevel() + " " + subject.getName() + " | " + tutor.getFullName()
+                        + " | " + c.getDay() + " | " + c.getStartTime() + "-" + c.getEndTime();
+                class1Dropdown.addItem(entry);
+                class2Dropdown.addItem(entry);
+                class3Dropdown.addItem(entry);
+            }
+        }
+        class1Dropdown.setSelectedIndex(-1);
+        class2Dropdown.setSelectedIndex(-1);
+        class3Dropdown.setSelectedIndex(-1);
     }
 }
