@@ -20,8 +20,7 @@ public class Request {
         this.status = status;
         this.requestDate = requestDate;
     }
-
-    // Getters
+    
     public String getRequestId() {
         return requestId;
     }
@@ -45,8 +44,7 @@ public class Request {
     public LocalDate getRequestDate() {
         return requestDate;
     }
-
-    // Setters
+    
     public void setRequestId(String requestId) {
         this.requestId = requestId;
     }
@@ -70,8 +68,7 @@ public class Request {
     public void setRequestDate(LocalDate requestDate) {
         this.requestDate = requestDate;
     }
-
-    // For saving to file
+    
     public String toFileString() {
         return String.join(",",
                 requestId,
@@ -79,7 +76,7 @@ public class Request {
                 currentSubjectId,
                 requestedSubjectId,
                 status,
-                requestDate.toString()  // ISO_LOCAL_DATE, same as in Payment
+                requestDate.toString()
         );
     }
 
@@ -87,12 +84,12 @@ public class Request {
         String[] parts = fileString.split(",");
         if (parts.length == 6) {
             return new Request(
-                    parts[0], // requestId
-                    parts[1], // studentId
-                    parts[2], // currentSubjectId
-                    parts[3], // requestedSubjectId
-                    parts[4], // status
-                    LocalDate.parse(parts[5]) // Default ISO_LOCAL_DATE format
+                    parts[0],
+                    parts[1],
+                    parts[2],
+                    parts[3],
+                    parts[4],
+                    LocalDate.parse(parts[5])
             );
         }
         return null;

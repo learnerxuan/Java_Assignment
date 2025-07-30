@@ -28,7 +28,7 @@ public class ViewRequestStatusPanel extends JPanel {
         
         setLayout(new BorderLayout());
         
-        JLabel titleLabel = new JLabel("Your Request Status", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Request Status", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         add(titleLabel, BorderLayout.NORTH);
         

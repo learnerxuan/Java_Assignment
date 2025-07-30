@@ -34,7 +34,6 @@ public class StudentService {
         this.tutorRepo = tutorRepo;
     }
     
-    // View class schedule based on student ID.
     public List<Classes> getSchedule(String studentId) {
         List<String> enrolledClassIds = enrollmentRepo.getByStudentId(studentId).stream()
                 .map(Enrollment::getClassId)
@@ -46,7 +45,6 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
     
-    // Send a subject change request to receptionist.
     public void submitSubjectChangeRequest(String studentId, String currentSubjectId, String requestedSubjectId) {
         List<Request> existingRequests = requestRepo.getByStudentId(studentId);
         String requestId = IDGenerator.generateUniqueId("RQ");
@@ -61,7 +59,6 @@ public class StudentService {
         requestRepo.add(newRequest);
     }
     
-    // Delete a pending subject change request.
     public boolean deletePendingRequest(String requestId) {
         Optional<Request> request = requestRepo.getRequestById(requestId);
         if (request.isPresent() && request.get().getStatus().equalsIgnoreCase("Pending")) {
@@ -70,21 +67,18 @@ public class StudentService {
         return false;
     }
     
-    // View all requests sent by the student.
     public List<Request> getRequestsByStudentId(String studentId) {
         return requestRepo.getAll().stream()
                 .filter(r -> r.getStudentId().equals(studentId))
                 .collect(Collectors.toList());
     }
     
-    // View payment records of student.
     public List<Payment> getPayments(String studentId) {
         return paymentRepo.getAll().stream()
                 .filter(p -> p.getStudentId().equals(studentId))
                 .collect(Collectors.toList());
     }
     
-    // Calculate total unpaid balance.
     public double getTotalBalance(String studentId) {
         return getPayments(studentId).stream()
                 .filter(p -> !p.getStatus().equalsIgnoreCase("Paid"))
@@ -92,7 +86,6 @@ public class StudentService {
                 .sum();
     }
     
-    // Update profile details of student.
     public void updateProfile(Student student, String newPassword, String newPhone, String newEmail, String newAddress) {
         if (!Validator.isValidEmail(newEmail)) {
             System.err.println("Invalid email format.");

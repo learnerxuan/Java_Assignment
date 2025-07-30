@@ -18,8 +18,7 @@ public class StudentRepository extends UserRepository<Student> {
     public void load() {
         users.clear();
         List<String> lines = FileUtils.readDataLines(filePath);
-
-        // Skip header line if present
+        
         boolean isFirstLine = true;
         for (String line : lines) {
 

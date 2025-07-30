@@ -16,7 +16,6 @@ public class Student extends User {
         this.level = level;
     }
     
-    // Getters
     public String getIcPassport() {
         return icPassport;
     }
@@ -32,8 +31,7 @@ public class Student extends User {
     public String getLevel() {
         return level;
     }
-    
-    // Setters
+
     public void setIcPassport(String icPassport) {
         this.icPassport = icPassport;
     }
@@ -58,16 +56,16 @@ public class Student extends User {
     @Override
     public String toFileString() {
         return String.join(",",
-                getId(),             // student_id
-                getFullName(),       // student_name
-                getPassword(),       // password
-                getPhoneNumber(),    // phone_number
-                getEmail(),          // email
-                getGender(),         // gender
-                icPassport,          // IC/Passport
-                address,             // address
-                monthOfEnroll,       // month_of_enroll
-                level                // level
+                getId(),
+                getFullName(),
+                getPassword(),
+                getPhoneNumber(),
+                getEmail(),
+                getGender(),
+                icPassport,
+                address,
+                monthOfEnroll,
+                level
         );
     }
     
@@ -75,16 +73,16 @@ public class Student extends User {
         String[] parts = fileString.split(",", -1);
         if (parts.length == 10) {
             return new Student(
-                    parts[0], // student_id
-                    parts[1], // student_name
-                    parts[2], // password
-                    parts[3], // phone_number
-                    parts[4], // email
-                    parts[5], // gender
-                    parts[6], // IC/Passport
-                    parts[7], // address
-                    parts[8], // month_of_enroll
-                    parts[9]  // level
+                    parts[0],
+                    parts[1],
+                    parts[2],
+                    parts[3],
+                    parts[4],
+                    parts[5],
+                    parts[6],
+                    parts[7],
+                    parts[8],
+                    parts[9]
             );
         }
         return null;
