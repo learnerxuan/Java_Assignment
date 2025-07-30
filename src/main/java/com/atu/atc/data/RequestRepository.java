@@ -20,7 +20,7 @@ public class RequestRepository {
         requests.clear();
         List<String> lines = FileUtils.readDataLines(filePath);
         for (String line : lines) {
-            if (line.trim().isEmpty() || line.startsWith("request_id")) continue;
+            if (line.trim().isEmpty() || line.startsWith("request_id,student_id,current_subject_id,requested_subject_id,status,request_date")) continue;
             Request r = Request.fromFileString(line);
             if (r != null) {
                 requests.add(r);
@@ -32,7 +32,7 @@ public class RequestRepository {
     
     public void save() {
         List<String> lines = new ArrayList<>();
-        lines.add("request_id;student_id;current_subject_id;requested_subject_id;status;request_date");
+        lines.add("request_id,student_id,current_subject_id,requested_subject_id,status,request_date");
         for (Request r : requests) {
             lines.add(r.toFileString());
         }

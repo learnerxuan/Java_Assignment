@@ -7,6 +7,7 @@ import com.atu.atc.util.Validator;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import com.atu.atc.util.IDGenerator;
 
 public class StudentService {
     private final StudentRepository studentRepo;
@@ -48,7 +49,7 @@ public class StudentService {
     // Send a subject change request to receptionist.
     public void submitSubjectChangeRequest(String studentId, String currentSubjectId, String requestedSubjectId) {
         List<Request> existingRequests = requestRepo.getByStudentId(studentId);
-        String requestId = "RQ" + String.format("%03d", existingRequests.size() + 1);
+        String requestId = IDGenerator.generateUniqueId("RQ");
         Request newRequest = new Request(
                 requestId,
                 studentId,
