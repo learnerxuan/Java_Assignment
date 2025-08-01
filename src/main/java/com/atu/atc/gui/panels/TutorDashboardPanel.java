@@ -28,62 +28,58 @@ public class TutorDashboardPanel extends JPanel implements DashboardPanelInterfa
         this.loggedInTutor = loggedInTutor;
         this.navigator = navigator;
 
-        setBackground(new Color(245, 250, 255)); // Light background
+        setBackground(new Color(245, 250, 255));
         setLayout(new BorderLayout(20, 20));
         setBorder(new EmptyBorder(30, 40, 30, 40));
 
-        // Top Title
         JLabel titleLabel = new JLabel("Tutor Dashboard", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
         titleLabel.setForeground(new Color(44, 62, 80));
         add(titleLabel, BorderLayout.NORTH);
 
-        // Welcome Message
         welcomeLabel = new JLabel("", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         welcomeLabel.setForeground(new Color(70, 70, 70));
+        welcomeLabel.setBorder(new EmptyBorder(0, 0, 20, 0)); // 添加底部边距
 
-        // Styled Buttons
-        manageClassesButton = createStyledButton("📚  Manage My Classes");
-        viewEnrolledStudentsButton = createStyledButton("👥  View Enrolled Students");
-        updateProfileButton = createStyledButton("✏️  Update My Profile");
-        logoutButton = createLogoutButton("🚪  Logout");
-
-        // Central Panel with Buttons
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        manageClassesButton = createStyledButton("Manage My Classes");
+        viewEnrolledStudentsButton = createStyledButton("View Enrolled Students");
+        updateProfileButton = createStyledButton("Update My Profile");
+        logoutButton = createLogoutButton("Logout");
+        
+        // 使用 GridBagLayout 来精确控制组件的对齐和大小
+        JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setBackground(Color.WHITE);
         centerPanel.setBorder(BorderFactory.createCompoundBorder(
             new LineBorder(new Color(200, 220, 240), 2, true),
             new EmptyBorder(30, 60, 30, 60)
         ));
 
-        centerPanel.add(welcomeLabel);
-        centerPanel.add(Box.createVerticalStrut(20));
-        centerPanel.add(manageClassesButton);
-        centerPanel.add(Box.createVerticalStrut(15));
-        centerPanel.add(viewEnrolledStudentsButton);
-        centerPanel.add(Box.createVerticalStrut(15));
-        centerPanel.add(updateProfileButton);
-        centerPanel.add(Box.createVerticalStrut(15));
-        centerPanel.add(logoutButton);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 0, 5, 0); // 按钮之间的间距
+        gbc.anchor = GridBagConstraints.CENTER;
+
+        centerPanel.add(welcomeLabel, gbc);
+        centerPanel.add(manageClassesButton, gbc);
+        centerPanel.add(viewEnrolledStudentsButton, gbc);
+        centerPanel.add(updateProfileButton, gbc);
+        centerPanel.add(Box.createVerticalStrut(15), gbc); // 按钮和注销按钮之间的额外空间
+        centerPanel.add(logoutButton, gbc);
 
         add(centerPanel, BorderLayout.CENTER);
 
-        // Button Actions
         manageClassesButton.addActionListener(e -> {
             navigator.navigateTo(MainFrame.MANAGE_CLASSES_PANEL, loggedInTutor);
-            System.out.println("Tutor: Navigating to Manage Classes Panel.");
         });
 
         viewEnrolledStudentsButton.addActionListener(e -> {
             navigator.navigateTo(MainFrame.VIEW_ENROLLED_STUDENTS_PANEL, loggedInTutor);
-            System.out.println("Tutor: Navigating to View Enrolled Students Panel.");
         });
 
         updateProfileButton.addActionListener(e -> {
             navigator.navigateTo(MainFrame.UPDATE_TUTOR_PROFILE_PANEL, loggedInTutor);
-            System.out.println("Tutor: Navigating to Update My Profile Panel.");
         });
 
         logoutButton.addActionListener(e -> {
@@ -95,14 +91,11 @@ public class TutorDashboardPanel extends JPanel implements DashboardPanelInterfa
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        button.setBackground(new Color(100, 149, 237)); // Cornflower Blue
+        button.setBackground(new Color(100, 149, 237));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        button.setHorizontalTextPosition(SwingConstants.CENTER);
-        button.setVerticalTextPosition(SwingConstants.CENTER);
         button.setBorder(BorderFactory.createCompoundBorder(
             new LineBorder(new Color(70, 130, 180), 1, true),
             new EmptyBorder(10, 25, 10, 25)
@@ -112,14 +105,11 @@ public class TutorDashboardPanel extends JPanel implements DashboardPanelInterfa
 
     private JButton createLogoutButton(String text) {
         JButton button = new JButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        button.setBackground(new Color(255, 230, 230)); // Light red
+        button.setBackground(new Color(255, 230, 230));
         button.setForeground(new Color(180, 60, 60));
         button.setFocusPainted(false);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        button.setHorizontalTextPosition(SwingConstants.CENTER);
-        button.setVerticalTextPosition(SwingConstants.CENTER);
         button.setBorder(BorderFactory.createCompoundBorder(
             new LineBorder(new Color(220, 150, 150), 1, true),
             new EmptyBorder(10, 25, 10, 25)
