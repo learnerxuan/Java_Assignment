@@ -34,11 +34,11 @@ public class SubjectChangeRequestPanel extends JPanel {
         
         JPanel formPanel = new JPanel(new GridLayout(4, 2, 8, 4));
         
-        formPanel.add(new JLabel("Current Enrolled Course:"));
+        formPanel.add(new JLabel("Current Enrolled Subject:"));
         currentSubjectCombo = new JComboBox<>();
         formPanel.add(currentSubjectCombo);
         
-        formPanel.add(new JLabel("Requested New Course:"));
+        formPanel.add(new JLabel("Requested New Subject:"));
         requestedSubjectCombo = new JComboBox<>();
         formPanel.add(requestedSubjectCombo);
         
@@ -96,7 +96,7 @@ public class SubjectChangeRequestPanel extends JPanel {
         String requested = (String) requestedSubjectCombo.getSelectedItem();
         
         if (current == null || requested == null) {
-            JOptionPane.showMessageDialog(this, "Please select both current and requested courses.", "Incomplete", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select both current and requested subjects.", "Incomplete", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
