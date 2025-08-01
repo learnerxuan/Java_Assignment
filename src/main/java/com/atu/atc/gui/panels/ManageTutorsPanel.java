@@ -126,7 +126,8 @@ public class ManageTutorsPanel extends JPanel {
         gbc.gridx = 0; gbc.gridy = row;
         registerPanel.add(new JLabel("Subject:"), gbc);
         gbc.gridx = 1;
-        String[] subjects = {"", "Mathematics", "Science", "English", "History", "Biology", "Chemistry", "Geography", "Computer Science", "Additional Mathematics"};
+        String[] subjects = {"","Mathematics","Art","English","History","Additional Mathematics","Physics","Chemistry","Geography","Literature"};
+
         subjectComboBox = new JComboBox<>(subjects);
         registerPanel.add(subjectComboBox, gbc);
         row++;
@@ -315,7 +316,7 @@ public class ManageTutorsPanel extends JPanel {
             clearRegistrationFields();
             loadTutors(); // Refresh table after successful registration
         } else {
-            registerMessageLabel.setText("Tutor registration failed. Check inputs or console for details.");
+            registerMessageLabel.setText("Tutor registration failed. Invalid input.");
         }
     }
 
