@@ -33,7 +33,7 @@ public class ViewEnrolledStudentsPanel extends JPanel {
         setBorder(new EmptyBorder(30, 40, 30, 40));
 
         // Title
-        JLabel titleLabel = new JLabel("📚 Enrolled Students", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Enrolled Students", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
         titleLabel.setForeground(new Color(44, 62, 80));
         add(titleLabel, BorderLayout.NORTH);
@@ -69,8 +69,8 @@ public class ViewEnrolledStudentsPanel extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         buttonPanel.setBackground(new Color(245, 250, 255));
 
-        refreshButton = createStyledButton("🔄 Refresh", new Color(52, 152, 219));
-        backButton = createStyledButton("🔙 Back to Dashboard", new Color(231, 76, 60));
+        refreshButton = createStyledButton("Refresh", new Color(52, 152, 219));
+        backButton = createStyledButton("Back to Dashboard", new Color(231, 76, 60));
 
         buttonPanel.add(refreshButton);
         buttonPanel.add(backButton);
@@ -106,7 +106,7 @@ public class ViewEnrolledStudentsPanel extends JPanel {
             List<String> studentLines = tutorService.viewStudentsEnrolledInMySubjects(loggedInTutor.getId());
 
             if (studentLines.isEmpty()) {
-                infoLabel.setText("⚠️ No students currently enrolled in your subjects.");
+                infoLabel.setText("No students currently enrolled in your subjects.");
                 return;
             }
 
@@ -118,14 +118,14 @@ public class ViewEnrolledStudentsPanel extends JPanel {
                         parts[3].trim(), parts[4].trim(), parts[5].trim(), parts[6].trim()
                     });
                 } else {
-                    System.err.println("❌ Invalid student record: " + line);
+                    System.err.println("Invalid student record: " + line);
                 }
             }
 
-            infoLabel.setText("✅ Showing " + tableModel.getRowCount() + " enrolled student(s).");
+            infoLabel.setText("Showing " + tableModel.getRowCount() + " enrolled student(s).");
 
         } catch (Exception ex) {
-            infoLabel.setText("❌ Error loading data: " + ex.getMessage());
+            infoLabel.setText("Error loading data: " + ex.getMessage());
             ex.printStackTrace();
         }
     }
