@@ -39,7 +39,7 @@ public class UpdateTutorProfilePanel extends JPanel {
     }
 
     private void initUI() {
-        JLabel titleLabel = new JLabel("✏️ Update My Profile", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Update My Profile", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
         titleLabel.setForeground(new Color(44, 62, 80));
         titleLabel.setBorder(new EmptyBorder(30, 0, 20, 0));
@@ -88,8 +88,8 @@ public class UpdateTutorProfilePanel extends JPanel {
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         buttonPanel.setBackground(Color.WHITE);
-        saveButton = createStyledButton("💾 Save Changes", new Color(70, 130, 180));
-        backButton = createStyledButton("🔙 Back", new Color(220, 150, 150));
+        saveButton = createStyledButton("Save Changes", new Color(70, 130, 180));
+        backButton = createStyledButton("Back", new Color(220, 150, 150));
         buttonPanel.add(saveButton);
         buttonPanel.add(backButton);
 
@@ -112,7 +112,7 @@ public class UpdateTutorProfilePanel extends JPanel {
             passwordField.setText("");
             messageLabel.setText(" ");
         } else {
-            showMessage("❌ Error: No tutor loaded.", Color.RED);
+            showMessage("Error: No tutor loaded.", Color.RED);
         }
     }
 
@@ -137,7 +137,7 @@ public class UpdateTutorProfilePanel extends JPanel {
 
     private void saveProfileChanges() {
         if (loggedInTutor == null) {
-            showMessage("❌ Error: No tutor loaded.", Color.RED);
+            showMessage("Error: No tutor loaded.", Color.RED);
             return;
         }
 
@@ -148,7 +148,7 @@ public class UpdateTutorProfilePanel extends JPanel {
         String newGender = genderField.getText().trim();
 
         if (newFullName.isEmpty() || newPhone.isEmpty() || newEmail.isEmpty() || newGender.isEmpty()) {
-            showMessage("⚠️ Fields cannot be empty.", Color.RED);
+            showMessage("Fields cannot be empty.", Color.RED);
             return;
         }
 
@@ -166,9 +166,9 @@ public class UpdateTutorProfilePanel extends JPanel {
             loggedInTutor.setGender(newGender);
 
             passwordField.setText("");
-            showMessage("✅ " + result, new Color(0, 128, 0));
+            showMessage(result, new Color(0, 128, 0));
         } else {
-            showMessage("❌ " + result, Color.RED);
+            showMessage(result, Color.RED);
         }
     }
 
