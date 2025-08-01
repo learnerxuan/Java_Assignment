@@ -289,7 +289,7 @@ public class ManageReceptionistsPanel extends JPanel {
             clearRegistrationFields();
             loadReceptionists(); // Refresh table after successful registration
         } else {
-            registerMessageLabel.setText("Registration failed. Check inputs or console for details.");
+            registerMessageLabel.setText("Registration failed. Pls recheck your inputs.");
         }
     }
 
