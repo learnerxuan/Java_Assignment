@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.atu.atc;
+package com.mycompany.tuition_centre_management_system;
 
 import com.atu.atc.gui.MainFrame;
 
@@ -33,7 +33,7 @@ import javax.swing.SwingUtilities;
  * @author Xuan
  */
 
-public class AppLauncher {
+public class Tuition_Centre_Management_System{
     
     public static void main(String[] args){
         SwingUtilities.invokeLater(()-> {
