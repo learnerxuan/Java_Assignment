@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
-// This utility class provides helper methods for reading from and writing to text files.
-// It handles the basic file I/O operations, centralizing them for easier management.
+// helper methods for reading from and writing to text files.
 public class FileUtils {
     
     // Read lines from a specific file
@@ -20,7 +19,7 @@ public class FileUtils {
         // Define a list 
         List<String> lines = new ArrayList<>();
             
-        // Read lines from the file. try-catch block is used to handle exceptions when reading the file.
+        // Read lines from the file
         try (BufferedReader reader = new BufferedReader(new FileReader(file_path))){
             // Define a variable called line for temporary use.
             String line;

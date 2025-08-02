@@ -8,7 +8,6 @@ public class Course {
     private String level;
     private double charges;
     private String schedule;
-    // private Tutor assignedTutor; // You'll eventually add a Tutor object here
 
     public Course(String courseId, String subjectName, String level, double charges, String schedule) {
         this.courseId = courseId;
@@ -25,6 +24,4 @@ public class Course {
     public double getCharges() { return charges; }
     public String getSchedule() { return schedule; }
 
-    // You can add setters and other methods as needed for course management
-    // e.g., updateCourseDetails()
 }

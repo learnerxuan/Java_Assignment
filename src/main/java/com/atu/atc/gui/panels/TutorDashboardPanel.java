@@ -46,8 +46,7 @@ public class TutorDashboardPanel extends JPanel implements DashboardPanelInterfa
         viewEnrolledStudentsButton = createStyledButton("View Enrolled Students");
         updateProfileButton = createStyledButton("Update My Profile");
         logoutButton = createLogoutButton("Logout");
-        
-        // 使用 GridBagLayout 来精确控制组件的对齐和大小
+
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setBackground(Color.WHITE);
         centerPanel.setBorder(BorderFactory.createCompoundBorder(
