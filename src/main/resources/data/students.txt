@@ -7,3 +7,13 @@ S005,Olivia Davis,oliviaPass,555-666-7777,olivia.davis@example.com,Female,950505
 S006,Ethan Wilson,ethan101,666-777-8888,ethan.wilson@example.com,Male,940808678901,67 Garden Dr,2024-04-28,1
 S007,Sophia Taylor,sophiaSafe,777-888-9999,sophia.taylor@example.com,Female,930909789012,10 Jasmine Ct,2024-06-12,4
 S008,James Anderson,jamesKey,888-999-0000,james.anderson@example.com,Male,920707890123,34 Pine Rd,2024-05-18,3
+S009,Daniel Lim,pass,011-23456789,daniel.lim@example.com,Male,050101123456,789 Cherry Lane,2025-01-15,1
+S010,Sarah Tan,pass,012-34567890,sarah.tan@example.com,Female,050202234567,101 Oak Avenue,2025-02-20,1
+S011,Marcus Wong,pass,013-45678901,marcus.wong@example.com,Male,040303345678,202 Palm Drive,2025-03-05,2
+S012,Chloe Lee,pass,014-56789012,chloe.lee@example.com,Female,040404456789,303 Birch Court,2025-04-10,2
+S013,Jason Ng,pass,015-67890123,jason.ng@example.com,Male,030505567890,404 Cedar Street,2025-05-25,3
+S014,Michelle Yeoh,pass,016-78901234,michelle.yeoh@example.com,Female,030606678901,505 Fir Road,2025-06-30,3
+S015,Ryan Chen,pass,017-89012345,ryan.chen@example.com,Male,020707789012,606 Spruce Loop,2025-07-01,4
+S016,Emily Ong,pass,018-90123456,emily.ong@example.com,Female,020808890123,707 Willow Way,2025-08-08,4
+S017,David Khoo,pass,019-01234567,david.khoo@example.com,Male,010909901234,808 Aspen Close,2025-09-19,5
+S018,Jessica Lim,pass,010-12345678,jessica.lim@example.com,Female,011010012345,909 Elm Garden,2025-10-24,5
